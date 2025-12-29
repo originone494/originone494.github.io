@@ -115,47 +115,27 @@
 <li>编辑后执行命令<code>npx hexo clean &amp;&amp; npx hexo generate &amp;&amp; npx hexo deploy</code>，博客里面的内容就会改变</li>
 </ol>
 <h1 id="二、在github上配置SSH"><a href="#二、在github上配置SSH" class="headerlink" title="二、在github上配置SSH"></a>二、在github上配置SSH</h1><ol>
-<li>打开git bash</li>
-</ol>
-<img src="/2025/12/29/HowBuildBlog/HowBuildBlog"  title="" alt="" style="zoom:25%;" />
-
-<ol start="2">
+<li>打开git bash<br><img src="/images/HowBuildBlog/pic2.png" alt="图片"></li>
 <li>生成秘钥对<br><code>ssh-keygen -t rsa -C &quot;你的github邮箱@xxx.com&quot;</code><br>一路回车即可</li>
 <li>查看公钥内容，复制到剪切板上<br><code>cat ~/.ssh/id_rsa.pub</code></li>
 <li>打开github，新建一个仓库，仓库名为<strong>你的名字.github.io</strong></li>
-<li>在上方导航栏点开仓库的<strong>Setting</strong>，在左侧导航栏找到<strong>Deploy keys</strong></li>
+<li>在上方导航栏点开仓库的<strong>Setting</strong>，在左侧导航栏找到<strong>Deploy keys</strong><br><img src="/images/HowBuildBlog/pic3.png" alt="图片"></li>
+<li>在<strong>Deploy Keys</strong>界面点击<strong>Add deploy key</strong>按钮<br><img src="/images/HowBuildBlog/pic4.png" alt="图片"></li>
+<li><strong>Title</strong>随便填，将之前复制的公钥内容粘贴到<strong>Key</strong>里面，然后点击<strong>Add key</strong><br><img src="/images/HowBuildBlog/pic5.png" alt="图片"></li>
+<li>在git bash中输入命令<code>ssh -T git@github.com</code>，如果出现successfully的信息，就代表成功了。<br><img src="/images/HowBuildBlog/pic6.png" alt="图片"></li>
 </ol>
-<img src="/2025/12/29/HowBuildBlog/HowBuildBlog"  title="" alt="" style="zoom:25%;" />
-
-<ol start="3">
-<li>在<strong>Deploy Keys</strong>界面点击<strong>Add deploy key</strong>按钮</li>
-</ol>
-<img src="/2025/12/29/HowBuildBlog/HowBuildBlog"  title="" alt="" style="zoom:25%;" />
-
-<ol start="4">
-<li><strong>Title</strong>随便填，将之前复制的公钥内容粘贴到<strong>Key</strong>里面，然后点击<strong>Add key</strong></li>
-</ol>
-<img src="/2025/12/29/HowBuildBlog/HowBuildBlog"  title="" alt="" style="zoom:25%;" />
-
-<ol start="5">
-<li>在git bash中输入命令<code>ssh -T git@github.com</code>，如果出现successfully的信息，就代表成功了。</li>
-</ol>
-<img src="/2025/12/29/HowBuildBlog/HowBuildBlog"  title="" alt="" style="zoom:25%;" />
-
 <h1 id="三、部署Hexo博客到Github-Pages上"><a href="#三、部署Hexo博客到Github-Pages上" class="headerlink" title="三、部署Hexo博客到Github Pages上"></a>三、部署Hexo博客到Github Pages上</h1><ol>
-<li>记录仓库的SSH地址<br>如果上述步骤都没问题的话，那么SSH地址应该是<a href="mailto:&#103;&#105;&#116;&#64;&#x67;&#105;&#x74;&#104;&#117;&#98;&#46;&#99;&#x6f;&#109;">git@github.com</a>:你的github的名字&#x2F;你的github的名字.github.io.git</li>
+<li>记录仓库的SSH地址<br>如果上述步骤都没问题的话，那么SSH地址应该是<a href="mailto:&#103;&#x69;&#116;&#x40;&#x67;&#105;&#116;&#104;&#117;&#x62;&#x2e;&#99;&#111;&#x6d;">git@github.com</a>:你的github的名字&#x2F;你的github的名字.github.io.git</li>
 <li>安装Hexo部署插件<br>在之前建立的博客根目录中在终端中执行命令<br><code>npm install hexo-deployer-git</code></li>
-<li>编辑部署信息<br>打开根目录中的_config.yml文件，找到deploy配置项</li>
+<li>编辑部署信息<br>打开根目录中的_config.yml文件，找到deploy配置项<br><img src="/images/HowBuildBlog/pic7.png" alt="图片"><br>要注意冒号后面有个空格</li>
+<li>部署博客到github<br>在终端执行命令：<br><code>hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</code><br>之后访问https:&#x2F;&#x2F;你的用户名.github.io，即可公网访问你的博客</li>
 </ol>
-<img src="/2025/12/29/HowBuildBlog/HowBuildBlog"  title="" alt="" style="zoom:25%;" />
-
-<p>要注意冒号后面有个空格<br>4. 部署博客到github<br>在终端执行命令：<br><code>hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</code><br>之后访问https:&#x2F;&#x2F;你的用户名.github.io，即可公网访问你的博客</p>
 <h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_37294163/article/details/103099424">https://blog.csdn.net/qq_37294163/article/details/103099424</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_73527660/article/details/156200825">https://blog.csdn.net/weixin_73527660/article/details/156200825</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/12/29/HowBuildBlog/" data-id="cuid-5w3lAHBEpcQyUdMFJuVQ" data-title="如何建立一个博客" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/12/29/HowBuildBlog/" data-id="cuid01EbrDF4GLqrmO2vLh0mW" data-title="如何建立一个博客" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
