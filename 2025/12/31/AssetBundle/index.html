@@ -22,7 +22,7 @@
 
   <meta name="description" content="一、热更新流程 在资源需要变化时，向资源服务器（FTP、HTTP等）上传AB包和资源对比文件。 每次通过游戏客户端进入时：  下载服务器上的资源对比文件 用下载下来的资源对比文件和本地文件进行对比，记录需要进行更新的AB包 将需要更新的AB包进行更新，再更新资源对比文件 完成后，正式进入游戏  二、准备打包AB包的脚本 在github上下载AssetBundles Browser 可以通过url在">
 <meta property="og:type" content="article">
-<meta property="og:title" content="热更新中AB包的上传和下载">
+<meta property="og:title" content="热更新中AB包的上传和下载（一）">
 <meta property="og:url" content="https://originone494.github.io/2025/12/31/AssetBundle/index.html">
 <meta property="og:site_name" content="OneBlog">
 <meta property="og:description" content="一、热更新流程 在资源需要变化时，向资源服务器（FTP、HTTP等）上传AB包和资源对比文件。 每次通过游戏客户端进入时：  下载服务器上的资源对比文件 用下载下来的资源对比文件和本地文件进行对比，记录需要进行更新的AB包 将需要更新的AB包进行更新，再更新资源对比文件 完成后，正式进入游戏  二、准备打包AB包的脚本 在github上下载AssetBundles Browser 可以通过url在">
@@ -58,9 +58,19 @@
 <meta property="og:image" content="https://originone494.github.io/2025/12/31/AssetBundle/pic29.png">
 <meta property="og:image" content="https://originone494.github.io/2025/12/31/AssetBundle/pic30.png">
 <meta property="og:image" content="https://originone494.github.io/2025/12/31/AssetBundle/pic31.png">
-<meta property="og:image" content="https://originone494.github.io/2025/12/31/AssetBundle/pic31.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/AssetBundle/pic32.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/AssetBundle/pic33.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/AssetBundle/pic34.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/AssetBundle/pic35.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/AssetBundle/pic36.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/AssetBundle/pic37.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/AssetBundle/pic38.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/AssetBundle/pic39.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/AssetBundle/pic40.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/AssetBundle/pic41.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/AssetBundle/pic42.png">
 <meta property="article:published_time" content="2025-12-31T02:42:24.000Z">
-<meta property="article:modified_time" content="2025-12-31T06:54:00.246Z">
+<meta property="article:modified_time" content="2025-12-31T15:09:22.095Z">
 <meta property="article:author" content="ITTT">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://originone494.github.io/2025/12/31/AssetBundle/pic1.png">
@@ -78,7 +88,7 @@
   };
 </script>
 
-  <title>热更新中AB包的上传和下载 | OneBlog</title>
+  <title>热更新中AB包的上传和下载（一） | OneBlog</title>
   
 
 
@@ -230,7 +240,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          热更新中AB包的上传和下载
+          热更新中AB包的上传和下载（一）
         </h1>
 
         <div class="post-meta">
@@ -241,7 +251,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2025-12-31 10:42:24 / 修改时间：14:54:00" itemprop="dateCreated datePublished" datetime="2025-12-31T10:42:24+08:00">2025-12-31</time>
+              <time title="创建时间：2025-12-31 10:42:24 / 修改时间：23:09:22" itemprop="dateCreated datePublished" datetime="2025-12-31T10:42:24+08:00">2025-12-31</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -253,7 +263,21 @@
                 </span>
             </span>
 
-          
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>11 分钟</span>
+            </span>
 
         </div>
       </header>
@@ -309,7 +333,7 @@
 <img src="/2025/12/31/AssetBundle/pic13.png" class="" title="图片">
 <p>将路径Assets/ArtRes/AB/PC放到Output Path中</p>
 <img src="/2025/12/31/AssetBundle/pic14.png" class="" title="图片">
-<p>在高级设置里，只需要将压缩方式改为LZ4方式，这时一种比较好的压缩方式，其他的选项都不用动</p>
+<p>在高级设置里，只需要将压缩方式改为LZ4方式，是一种比较好的压缩方式，其他的选项都不用动</p>
 <img src="/2025/12/31/AssetBundle/pic15.png" class="" title="图片">
 <p>最终设置为：</p>
 <img src="/2025/12/31/AssetBundle/pic16.png" class="" title="图片">
@@ -354,10 +378,16 @@
 <h1>七、搭建FTP服务器</h1>
 <p>用于模拟资源服务器，用于存储资源和资源对比文件</p>
 <ol>
-<li>下载Serv-U<br>
-可以通过这个网址下载：<a target="_blank" rel="noopener" href="https://www.yxtown.com/my/course/65/material?type=material&amp;page=2">https://www.yxtown.com/my/course/65/material?type=material&amp;page=2</a><br>
-是否定义新域，点击是</li>
+<li>
+<p>下载Serv-U<br>
+可以通过这个网址下载：<br>
+<a target="_blank" rel="noopener" href="https://www.yxtown.com/my/course/65/material?type=material&amp;page=2">https://www.yxtown.com/my/course/65/material?type=material&amp;page=2</a></p>
+</li>
+<li>
+<p>注册上传账号和下载账号（匿名）</p>
+</li>
 </ol>
+<p>是否定义新域，点击是</p>
 <img src="/2025/12/31/AssetBundle/pic23.png" class="" title="图片">
 <p>名称随便填一个</p>
 <img src="/2025/12/31/AssetBundle/pic24.png" class="" title="图片">
@@ -376,7 +406,36 @@
 <p>设置根目录，之后上传的文件会放在这里</p>
 <img src="/2025/12/31/AssetBundle/pic31.png" class="" title="图片">
 <p>选择完全访问，点击完成</p>
-<img src="/2025/12/31/AssetBundle/pic31.png" class="" title="图片">
+<img src="/2025/12/31/AssetBundle/pic32.png" class="" title="图片">
+<p>接下来需要一个匿名用户，点击向导</p>
+<img src="/2025/12/31/AssetBundle/pic33.png" class="" title="图片">
+<p>登录ID输入 Anonvmous，点下一步</p>
+<img src="/2025/12/31/AssetBundle/pic34.png" class="" title="图片">
+<p>密码为空，匿名账号不需要密码，点下一步</p>
+<img src="/2025/12/31/AssetBundle/pic35.png" class="" title="图片">
+<p>根目录和之前一样</p>
+<img src="/2025/12/31/AssetBundle/pic36.png" class="" title="图片">
+<p>选择只读访问，点完成</p>
+<img src="/2025/12/31/AssetBundle/pic37.png" class="" title="图片">
+<p>最终会出现两个账号</p>
+<img src="/2025/12/31/AssetBundle/pic38.png" class="" title="图片">
+<ol start="3">
+<li>验证<br>
+在资源管理器输入<a href="ftp://127.0.0.1">ftp://127.0.0.1</a></li>
+</ol>
+<img src="/2025/12/31/AssetBundle/pic39.png" class="" title="图片">
+<p>可以看到文件夹为空<br>
+在之前设置的根目录中随便新建一个文件</p>
+<img src="/2025/12/31/AssetBundle/pic40.png" class="" title="图片">
+<p>可以看到ftp服务器上多出了一个文件</p>
+<img src="/2025/12/31/AssetBundle/pic41.png" class="" title="图片">
+<h1>八、上传AB包和资源对比文件</h1>
+<p>新建脚本UploadAB，用来向资源服务器上传AB包和资源对比文件<br>
+完整代码：</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.IO;</span><br><span class="line"><span class="keyword">using</span> System.Net;</span><br><span class="line"><span class="keyword">using</span> System.Threading.Tasks;</span><br><span class="line"><span class="keyword">using</span> UnityEditor;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">UploadAB</span></span><br><span class="line">&#123;</span><br><span class="line">    [<span class="meta">MenuItem(<span class="string">&quot;Tool/上传AB包和对比文件&quot;</span>)</span>]</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">UploadAllABFile</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//获取文件夹信息</span></span><br><span class="line">        DirectoryInfo directory = Directory.CreateDirectory(</span><br><span class="line">            Application.dataPath + <span class="string">&quot;/ArtRes/AB/PC&quot;</span>);</span><br><span class="line">        <span class="comment">//获取该目录下所有文件</span></span><br><span class="line">        FileInfo[] files = directory.GetFiles();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">foreach</span> (FileInfo <span class="keyword">file</span> <span class="keyword">in</span> files)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">file</span>.Extension == <span class="string">&quot;&quot;</span> || <span class="keyword">file</span>.Extension == <span class="string">&quot;txt&quot;</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                FtpUploadFile(<span class="keyword">file</span>.FullName, <span class="keyword">file</span>.Name);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">async</span> <span class="keyword">void</span> <span class="title">FtpUploadFile</span>(<span class="params"><span class="built_in">string</span> filePath, <span class="built_in">string</span> fileName</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//异步处理，在上传文件时，不会卡住主线程</span></span><br><span class="line">        <span class="keyword">await</span> Task.Run(() =&gt;</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">try</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">//1.创建FTP连接用于上传</span></span><br><span class="line">                FtpWebRequest req = FtpWebRequest.Create(<span class="keyword">new</span> Uri(<span class="string">&quot;ftp://127.0.0.1/AB/PC/&quot;</span> + fileName)) <span class="keyword">as</span> FtpWebRequest;</span><br><span class="line"></span><br><span class="line">                <span class="comment">//2.设置一个通信凭证，这样才能上传</span></span><br><span class="line">                NetworkCredential n = <span class="keyword">new</span> NetworkCredential(<span class="string">&quot;qwe&quot;</span>, <span class="string">&quot;123000&quot;</span>);</span><br><span class="line">                req.Credentials = n;</span><br><span class="line"></span><br><span class="line">                <span class="comment">//3.其他设置</span></span><br><span class="line"></span><br><span class="line">                req.Proxy = <span class="literal">null</span>;<span class="comment">//设置代理为空</span></span><br><span class="line">                req.KeepAlive = <span class="literal">false</span>;<span class="comment">//请求完毕后，是否关闭控制连接</span></span><br><span class="line">                req.Method = WebRequestMethods.Ftp.UploadFile;<span class="comment">//操作命令-上传</span></span><br><span class="line">                req.UseBinary = <span class="literal">true</span>;<span class="comment">//指定传输的类型-2进制</span></span><br><span class="line"></span><br><span class="line">                <span class="comment">//4.上传文件</span></span><br><span class="line">                Stream upLoadStream = req.GetRequestStream();<span class="comment">//ftp的流对象</span></span><br><span class="line">                                                             <span class="comment">//读取文件信息，写入该流对象</span></span><br><span class="line"></span><br><span class="line">                <span class="keyword">using</span> (FileStream <span class="keyword">file</span> = File.OpenRead(filePath))</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="comment">//一点一点上传</span></span><br><span class="line">                    <span class="built_in">byte</span>[] bytes = <span class="keyword">new</span> <span class="built_in">byte</span>[<span class="number">2048</span>];</span><br><span class="line">                    <span class="comment">//读取了多少字节</span></span><br><span class="line">                    <span class="built_in">int</span> contentLength = <span class="keyword">file</span>.Read(bytes, <span class="number">0</span>, bytes.Length);</span><br><span class="line"></span><br><span class="line">                    <span class="comment">//循环上传文件</span></span><br><span class="line">                    <span class="keyword">while</span> (contentLength != <span class="number">0</span>)</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="comment">//写入到上传流中</span></span><br><span class="line">                        upLoadStream.Write(bytes, <span class="number">0</span>, contentLength);</span><br><span class="line">                        <span class="comment">//写完再读</span></span><br><span class="line">                        contentLength = <span class="keyword">file</span>.Read(bytes, <span class="number">0</span>, bytes.Length);</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    <span class="comment">//循环完毕后，上传完毕</span></span><br><span class="line">                    <span class="keyword">file</span>.Close();</span><br><span class="line">                    upLoadStream.Close();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">catch</span> (Exception ex)</span><br><span class="line">            &#123;</span><br><span class="line">                Debug.Log(<span class="string">&quot;上传失败 &quot;</span> + ex.Message);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            Debug.Log(fileName + <span class="string">&quot;上传成功&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行Tool选项里面的上传按钮后，会在资源服务器里看到上传的结果<br>
+要注意因为上传的路径是<a href="ftp://127.0.0.1/AB/PC/%EF%BC%8C%E5%9B%A0%E6%AD%A4%E5%A6%82%E6%9E%9C%E8%B5%84%E6%BA%90%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%87%8C%E6%B2%A1%E6%9C%89/AB/PC%E6%96%87%E4%BB%B6%E5%A4%B9%E7%9A%84%E8%AF%9D%EF%BC%8C%E4%BC%9A%E5%8F%91%E7%94%9F%E6%8A%A5%E9%94%99%EF%BC%8C%E5%9B%A0%E4%B8%BA%E7%A8%8B%E5%BA%8F%E5%8F%AA%E8%B4%9F%E8%B4%A3%E4%B8%8A%E4%BC%A0%EF%BC%8C%E4%B8%8D%E4%BC%9A%E8%87%AA%E5%8A%A8%E5%88%9B%E5%BB%BA%E6%96%B0%E6%96%87%E4%BB%B6%E5%A4%B9">ftp://127.0.0.1/AB/PC/，因此如果资源服务器里没有/AB/PC文件夹的话，会发生报错，因为程序只负责上传，不会自动创建新文件夹</a></p>
+<img src="/2025/12/31/AssetBundle/pic42.png" class="" title="图片">
 <h1>参考内容</h1>
 <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1VP411G7w2?spm_id_from=333.788.videopod.sections&amp;vd_source=5ddeed13107206194ba5b740648582d3">https://www.bilibili.com/video/BV1VP411G7w2?spm_id_from=333.788.videopod.sections&amp;vd_source=5ddeed13107206194ba5b740648582d3</a></p>
 
@@ -456,7 +515,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">一、热更新流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">二、准备打包AB包的脚本</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">三、准备需要打包的内容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">四、进行打包</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">五、获取AB包文件的MD5码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">六、生成AB包资源对比文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">7.</span> <span class="nav-text">七、搭建FTP服务器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">8.</span> <span class="nav-text">参考内容</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">一、热更新流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">二、准备打包AB包的脚本</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">三、准备需要打包的内容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">四、进行打包</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">五、获取AB包文件的MD5码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">六、生成AB包资源对比文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">七、搭建FTP服务器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">八、上传AB包和资源对比文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">参考内容</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -519,6 +578,16 @@
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">ITTT</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">33k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:01</span>
 </div>
 
         
