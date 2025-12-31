@@ -179,6 +179,188 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://originone494.github.io/2025/12/31/AssetBundle/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ITTT">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="OneBlog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/12/31/AssetBundle/" class="post-title-link" itemprop="url">热更新中AB包的上传和下载</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-12-31 10:42:24 / 修改时间：14:48:35" itemprop="dateCreated datePublished" datetime="2025-12-31T10:42:24+08:00">2025-12-31</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Unity/" itemprop="url" rel="index"><span itemprop="name">Unity</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1>一、热更新流程</h1>
+<p>在资源需要变化时，向资源服务器（FTP、HTTP等）上传AB包和资源对比文件。<br>
+每次通过游戏客户端进入时：</p>
+<ol>
+<li>下载服务器上的资源对比文件</li>
+<li>用下载下来的资源对比文件和本地文件进行对比，记录需要进行更新的AB包</li>
+<li>将需要更新的AB包进行更新，再更新资源对比文件</li>
+<li>完成后，正式进入游戏</li>
+</ol>
+<h1>二、准备打包AB包的脚本</h1>
+<p>在github上下载AssetBundles Browser<br>
+可以通过url在包管理器里添加，也可以直接在<a target="_blank" rel="noopener" href="https://github.com/Unity-Technologies/AssetBundles-Browser%E7%9B%B4%E6%8E%A5%E4%B8%8B%E8%BD%BD%E5%8E%8B%E7%BC%A9%E5%8C%85%E3%80%82">https://github.com/Unity-Technologies/AssetBundles-Browser直接下载压缩包。</a><br>
+如果是直接在github上下载压缩包，需要将里面的Test文件删除，不然直接在unity里会报错</p>
+<img src="/2025/12/31/AssetBundle/pic1.png" class="" title="图片">
+<p>删除以后，就可以直接将压缩包里面的文件粘贴到Unity项目的Packages文件夹下</p>
+<img src="/2025/12/31/AssetBundle/pic2.png" class="" title="图片">
+<p>添加后，在Unity按下Ctrl+R即可刷新，包就导入到项目中了<br>
+接着就能在窗口选项里面找到AssetBundle Browser的选项</p>
+<img src="/2025/12/31/AssetBundle/pic3.png" class="" title="图片">
+<p>点开后得到这样的界面：</p>
+<img src="/2025/12/31/AssetBundle/pic4.png" class="" title="图片">
+<h1>三、准备需要打包的内容</h1>
+<p>在场景中创建简单的立方体、球体和圆柱体，用来模拟需要打包的内容。<br>
+将创建好的物体拖到自己创建好的Assets/ArtRes/Prefab文件夹下。</p>
+<img src="/2025/12/31/AssetBundle/pic5.png" class="" title="图片">
+<p>同时，创建好Assets/ArtRes/Lua文件夹用来存放lua脚本。<br>
+打开Assets/ArtRes/Lua文件夹的资源管理器，在里面新建两个txt文本用来模拟lua脚本</p>
+<img src="/2025/12/31/AssetBundle/pic6.png" class="" title="图片">
+<p>将三个刚刚创建的预制体添加到model包（自己创建）里</p>
+<img src="/2025/12/31/AssetBundle/pic7.png" class="" title="图片">
+<p>接着，我们就可以在AssetBundle Browser视窗看到我们model包下的物体了</p>
+<img src="/2025/12/31/AssetBundle/pic8.png" class="" title="图片">
+<p>也可以通过直接在AssetBundle Browser视窗，直接新建一个包</p>
+<img src="/2025/12/31/AssetBundle/pic9.png" class="" title="图片">
+<p>这里新建一个lua包，用来装lua脚本</p>
+<img src="/2025/12/31/AssetBundle/pic10.png" class="" title="图片">
+<p>将之前新建的用来模拟lua脚本的txt文件放入lua包中</p>
+<img src="/2025/12/31/AssetBundle/pic11.png" class="" title="图片">
+<h1>四、进行打包</h1>
+<p>点击build按钮，来到build界面。</p>
+<img src="/2025/12/31/AssetBundle/pic12.png" class="" title="图片">
+<p>我们需要新建Assets/ArtRes/AB/PC文件夹来存储build的输出结果</p>
+<img src="/2025/12/31/AssetBundle/pic13.png" class="" title="图片">
+<p>将路径Assets/ArtRes/AB/PC放到Output Path中</p>
+<img src="/2025/12/31/AssetBundle/pic14.png" class="" title="图片">
+<p>在高级设置里，只需要将压缩方式改为LZ4方式，这时一种比较好的压缩方式，其他的选项都不用动</p>
+<img src="/2025/12/31/AssetBundle/pic15.png" class="" title="图片">
+<p>最终设置为：</p>
+<img src="/2025/12/31/AssetBundle/pic16.png" class="" title="图片">
+<p>点击Build，等待，然后就可以在Assets/ArtRes/AB/PC文件夹下看到打包出来的资源</p>
+<img src="/2025/12/31/AssetBundle/pic17.png" class="" title="图片">
+<h1>五、获取AB包文件的MD5码</h1>
+<ol>
+<li>MD5码是什么</li>
+</ol>
+<p>MD5是信息摘要算法的简称，是一种广泛使用的密码散列函数，可以生成一个16字节的散列值，用于确保信息的完整一致性<br>
+当我们把数据经过MD5算法计算后，不管我们传入的数据有多大，都会生成一个固定长度的MD5码<br>
+相同的数据，经过MD5算法计算后的结果是一样的<br>
+如果数据发生变化，MD5码会发生变化<br>
+因此，我们通过MD5码作为文件的唯一标识，通过其判断文件内容是否发生变化</p>
+<ol start="2">
+<li>编写获得MD5码的脚本</li>
+</ol>
+<p>流程：根据文件路径获得文件流信息-&gt;利用MOD加密服务提供商（通过MD5CryptoServiceProvider新建一个）对象，根据流信息，计算出MD5码-&gt;将字节数组形式的MD5码转为16进制字符串</p>
+<p>完整代码：</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.IO;</span><br><span class="line"><span class="keyword">using</span> System.Security.Cryptography;</span><br><span class="line"><span class="keyword">using</span> System.Text;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">GetMD5</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// Start is called before the first frame update</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Start</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        print(getfileMd5(Application.dataPath + <span class="string">&quot;/ArtRes/AB/PC/lua&quot;</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Update is called once per frame</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Update</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="built_in">string</span> <span class="title">getfileMd5</span>(<span class="params"><span class="built_in">string</span> filePath</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//将文件以流的形式打开</span></span><br><span class="line">        <span class="keyword">using</span>(FileStream <span class="keyword">file</span> = <span class="keyword">new</span> FileStream(filePath, FileMode.Open))</span><br><span class="line">        &#123;</span><br><span class="line">            MD5 md5 = <span class="keyword">new</span> MD5CryptoServiceProvider();<span class="comment">//声明一个MD5对象</span></span><br><span class="line">            <span class="built_in">byte</span>[] md5Info = md5.ComputeHash(<span class="keyword">file</span>);<span class="comment">//获得数据MD5码 16个字节的数组</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">//关闭文件流</span></span><br><span class="line">            <span class="keyword">file</span>.Close();</span><br><span class="line"></span><br><span class="line">            StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">            <span class="keyword">for</span>(<span class="built_in">int</span> i = <span class="number">0</span>;i &lt; md5Info.Length; i++)</span><br><span class="line">            &#123;</span><br><span class="line">                sb.Append(md5Info[i].ToString(<span class="string">&quot;x2&quot;</span>));<span class="comment">//转换成16进制字符串</span></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> sb.ToString();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行后，可以正确得到lua包的MD5码</p>
+<img src="/2025/12/31/AssetBundle/pic18.png" class="" title="图片">
+<p>当我们改变lua包里面的内容时，比如在lua包里新增一个lua脚本的txt文件，那么lua包的MD5码就会发生改变</p>
+<h1>六、生成AB包资源对比文件</h1>
+<p>功能：</p>
+<ol>
+<li>在菜单栏添加一个按钮，点击后能够生成AB包资源对比文件</li>
+<li>遍历AB包文件夹，获取所有AB包文件信息（文件名、大小、MD5码），将其存入资源对比文件</li>
+</ol>
+<p>首先在Assets文件夹下新建Editor文件夹，此文件夹下的代码不需要在游戏中使用，只在Unity编辑器中使用，因此放在此文件夹下使其不会被打包出去。<br>
+并在Editor文件夹下新建CreateABCompare脚本，用来实现对应功能</p>
+<img src="/2025/12/31/AssetBundle/pic19.png" class="" title="图片">
+<p>完整代码：</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.IO;</span><br><span class="line"><span class="keyword">using</span> System.Security.Cryptography;</span><br><span class="line"><span class="keyword">using</span> System.Text;</span><br><span class="line"><span class="keyword">using</span> UnityEditor;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">CreateABCompare</span></span><br><span class="line">&#123;</span><br><span class="line">    [<span class="meta">MenuItem(<span class="string">&quot;Tool/创建AB包对比文件&quot;</span>)</span>]</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">CreateABCompareFile</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//获取文件夹信息</span></span><br><span class="line">        DirectoryInfo directory = Directory.CreateDirectory(</span><br><span class="line">            Application.dataPath + <span class="string">&quot;/ArtRes/AB/PC&quot;</span>);</span><br><span class="line">        <span class="comment">//获取该目录下所有文件</span></span><br><span class="line">        FileInfo[] files = directory.GetFiles();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//用于存储信息的字符串</span></span><br><span class="line">        <span class="built_in">string</span> abCompareInfo = <span class="string">&quot;&quot;</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">foreach</span> (FileInfo <span class="keyword">file</span> <span class="keyword">in</span> files)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//没有后缀的是AB包</span></span><br><span class="line">            <span class="keyword">if</span>(<span class="keyword">file</span>.Extension == <span class="string">&quot;&quot;</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                abCompareInfo += <span class="keyword">file</span>.Name + <span class="string">&quot; &quot;</span> + <span class="keyword">file</span>.Length + <span class="string">&quot; &quot;</span> + getfileMd5(<span class="keyword">file</span>.FullName);</span><br><span class="line">                abCompareInfo += <span class="string">&quot;|&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//循环完毕后，截取最后一个“|”</span></span><br><span class="line">        abCompareInfo = abCompareInfo.Substring(<span class="number">0</span>,abCompareInfo.Length - <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//存储信息</span></span><br><span class="line">        File.WriteAllText(Application.dataPath + <span class="string">&quot;/ArtRes/AB/PC/ABCompareInfo.txt&quot;</span>,abCompareInfo);</span><br><span class="line"></span><br><span class="line">        AssetDatabase.Refresh();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="built_in">string</span> <span class="title">getfileMd5</span>(<span class="params"><span class="built_in">string</span> filePath</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//将文件以流的形式打开</span></span><br><span class="line">        <span class="keyword">using</span> (FileStream <span class="keyword">file</span> = <span class="keyword">new</span> FileStream(filePath, FileMode.Open))</span><br><span class="line">        &#123;</span><br><span class="line">            MD5 md5 = <span class="keyword">new</span> MD5CryptoServiceProvider();<span class="comment">//声明一个MD5对象</span></span><br><span class="line">            <span class="built_in">byte</span>[] md5Info = md5.ComputeHash(<span class="keyword">file</span>);<span class="comment">//获得数据MD5码 16个字节的数组</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">//关闭文件流</span></span><br><span class="line">            <span class="keyword">file</span>.Close();</span><br><span class="line"></span><br><span class="line">            StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">            <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; md5Info.Length; i++)</span><br><span class="line">            &#123;</span><br><span class="line">                sb.Append(md5Info[i].ToString(<span class="string">&quot;x2&quot;</span>));<span class="comment">//转换成16进制字符串</span></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> sb.ToString();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>可以得到以下结果：<br>
+左上角出现了tool栏，tool栏有创建AB包对比文件的选项</p>
+<img src="/2025/12/31/AssetBundle/pic20.png" class="" title="图片">
+<p>点击该按钮后，可以看到生成的文件</p>
+<img src="/2025/12/31/AssetBundle/pic21.png" class="" title="图片">
+<p>以及文件的内容</p>
+<img src="/2025/12/31/AssetBundle/pic22.png" class="" title="图片">
+<h1>七、搭建FTP服务器</h1>
+<p>用于模拟资源服务器，用于存储资源和资源对比文件</p>
+<ol>
+<li>下载Serv-U<br>
+可以通过这个网址下载：<a target="_blank" rel="noopener" href="https://www.yxtown.com/my/course/65/material?type=material&amp;page=2">https://www.yxtown.com/my/course/65/material?type=material&amp;page=2</a><br>
+是否定义新域，点击是</li>
+</ol>
+<img src="/2025/12/31/AssetBundle/pic23.png" class="" title="图片">
+<p>名称随便填一个</p>
+<img src="/2025/12/31/AssetBundle/pic24.png" class="" title="图片">
+<p>下一步</p>
+<img src="/2025/12/31/AssetBundle/pic25.png" class="" title="图片">
+<p>下一步</p>
+<img src="/2025/12/31/AssetBundle/pic26.png" class="" title="图片">
+<p>勾选单向加密，点完成</p>
+<img src="/2025/12/31/AssetBundle/pic27.png" class="" title="图片">
+<p>接着会弹出这个界面，点是</p>
+<img src="/2025/12/31/AssetBundle/pic28.png" class="" title="图片">
+<p>随便填，下一步</p>
+<img src="/2025/12/31/AssetBundle/pic29.png" class="" title="图片">
+<p>随便，下一步</p>
+<img src="/2025/12/31/AssetBundle/pic30.png" class="" title="图片">
+<p>设置根目录，之后上传的文件会放在这里</p>
+<img src="/2025/12/31/AssetBundle/pic31.png" class="" title="图片">
+<p>选择完全访问，点击完成</p>
+<img src="/2025/12/31/AssetBundle/pic31.png" class="" title="图片">
+<h1>参考内容</h1>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1VP411G7w2?spm_id_from=333.788.videopod.sections&amp;vd_source=5ddeed13107206194ba5b740648582d3">https://www.bilibili.com/video/BV1VP411G7w2?spm_id_from=333.788.videopod.sections&amp;vd_source=5ddeed13107206194ba5b740648582d3</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://originone494.github.io/2025/12/30/UISystem/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -270,7 +452,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2025-12-30 13:40:12 / 修改时间：13:58:55" itemprop="dateCreated datePublished" datetime="2025-12-30T13:40:12+08:00">2025-12-30</time>
+              <time title="创建时间：2025-12-30 13:40:12 / 修改时间：23:13:01" itemprop="dateCreated datePublished" datetime="2025-12-30T13:40:12+08:00">2025-12-30</time>
             </span>
 
           
@@ -285,8 +467,10 @@
 
       
           <h1>完整代码</h1>
-<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Singleton</span>&lt;<span class="title">T</span>&gt; <span class="keyword">where</span> <span class="title">T</span> : <span class="keyword">class</span>, <span class="title">new</span>()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> T m_instance;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">readonly</span> <span class="built_in">object</span> syslock = <span class="keyword">new</span> <span class="built_in">object</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> T Instance</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">get</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (m_instance == <span class="literal">null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">lock</span> (syslock)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">if</span> (m_instance == <span class="literal">null</span>)</span><br><span class="line">                    &#123;</span><br><span class="line">                        m_instance = <span class="keyword">new</span> T();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> m_instance;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Singleton</span>&lt;<span class="title">T</span>&gt; <span class="keyword">where</span> <span class="title">T</span> : <span class="keyword">class</span>, <span class="title">new</span>()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> T m_instance;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">readonly</span> <span class="built_in">object</span> syslock = <span class="keyword">new</span> <span class="built_in">object</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> T Instance</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">get</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (m_instance == <span class="literal">null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">lock</span> (syslock)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">if</span> (m_instance == <span class="literal">null</span>)</span><br><span class="line">                    &#123;</span><br><span class="line">                        m_instance = <span class="keyword">new</span> T();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> m_instance;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnDestroy</span>()</span>&#123;</span><br><span class="line">        m_instance = <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h1>使用方法</h1>
+<p>当其他地方第一次访问单例类时，会创建一个单例类。<br>
+当切换场景的时候，这个单例类就会被设置为null。</p>
 <ol>
 <li>创建单例类</li>
 </ol>
@@ -803,7 +987,7 @@ scaffolds/：文章模板文件，新建文章时会基于模板生成。</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -815,6 +999,14 @@ scaffolds/：文章模板文件，新建文章时会基于模板生成。</p>
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/originone494" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;originone494" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:2531293780@qq.com" title="E-Mail → mailto:2531293780@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
 
 
 
