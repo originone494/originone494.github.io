@@ -250,6 +250,7 @@ NexT.utils = {
       return target;
     });
 
+
     var tocElement = document.querySelector('.post-toc-wrap');
     function activateNavByIndex(target) {
       if (target.classList.contains('active-current')) return;
