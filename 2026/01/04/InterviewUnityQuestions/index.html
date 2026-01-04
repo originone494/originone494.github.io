@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"originone494.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="MIT许可证的主要要求是： 在软件的分发副本中必须包含原始版权声明和许可声明。它允许自由使用、修改、分发，包括用于商业用途，且不要求开源修改后的代码。 什么是“对象池”？在Unity中实现一个简单的对象池需要包含哪些核心功能？ 对象池是一种性能优化设计模式，通过预先创建并复用对象实例，避免运行时频繁的Instantiate和Destroy带来的内存分配与GC开销。 核心功能包括： 初始化：预生成一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unity面试可能遇到的问题">
+<meta property="og:url" content="https://originone494.github.io/2026/01/04/InterviewUnityQuestions/index.html">
+<meta property="og:site_name" content="OneBlog">
+<meta property="og:description" content="MIT许可证的主要要求是： 在软件的分发副本中必须包含原始版权声明和许可声明。它允许自由使用、修改、分发，包括用于商业用途，且不要求开源修改后的代码。 什么是“对象池”？在Unity中实现一个简单的对象池需要包含哪些核心功能？ 对象池是一种性能优化设计模式，通过预先创建并复用对象实例，避免运行时频繁的Instantiate和Destroy带来的内存分配与GC开销。 核心功能包括： 初始化：预生成一">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-01-04T04:59:01.000Z">
+<meta property="article:modified_time" content="2026-01-04T06:24:55.556Z">
+<meta property="article:author" content="ITTT">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://originone494.github.io/2026/01/04/InterviewUnityQuestions/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Unity面试可能遇到的问题 | OneBlog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">OneBlog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://originone494.github.io/2026/01/04/InterviewUnityQuestions/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ITTT">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="OneBlog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Unity面试可能遇到的问题
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2026-01-04 12:59:01 / 修改时间：14:24:55" itemprop="dateCreated datePublished" datetime="2026-01-04T12:59:01+08:00">2026-01-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Unity/" itemprop="url" rel="index"><span itemprop="name">Unity</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1><span id="mit许可证的主要要求是">MIT许可证的主要要求是：</span></h1>
+<p>在软件的分发副本中必须包含<strong>原始版权声明和许可声明</strong>。它允许自由使用、修改、分发，包括用于商业用途，且不要求开源修改后的代码。</p>
+<h1><span id="什么是对象池在unity中实现一个简单的对象池需要包含哪些核心功能">什么是“对象池”？在Unity中实现一个简单的对象池需要包含哪些核心功能？</span></h1>
+<p>对象池是一种性能优化设计模式，通过预先创建并复用对象实例，避免运行时频繁的Instantiate和Destroy带来的内存分配与GC开销。<br>
+核心功能包括：<br>
+初始化：预生成一定数量的对象，设为非激活状态。<br>
+获取对象：从池中返回一个可用（非激活）对象，并激活它；若无可用对象，则动态扩容（新建）。<br>
+回收对象：将使用完毕的对象设为非激活，返回到池中备用。<br>
+可选的清理功能：在场景切换或结束时，销毁池中所有对象。</p>
+<h1><span id="shadow-pass在视野外会被渲染吗">Shadow Pass在视野外会被渲染吗？</span></h1>
+<p>不会，阴影渲染（Shadow Pass）通常基于光源的视锥体和阴影距离设置。若物体不在光源的“可见”范围内或超出阴影距离，则不会渲染其阴影，以节省性能。</p>
+<h1><span id="动态链接库dll在程序运行时被加载到内存中可以被多个程序共享使用">动态链接库（DLL）在程序运行时被加载到内存中，可以被多个程序共享使用</span></h1>
+<h1><span id="initializeonload-是编辑器特性仅在unity编辑器启动或重新编译脚本后执行打包后不会执行">[InitializeOnLoad] 是编辑器特性，仅在Unity编辑器启动或重新编译脚本后执行，打包后不会执行</span></h1>
+<h1><span id="physicsraycast-的结果与-timetimescale-的关系">Physics.Raycast 的结果与 Time.timeScale 的关系</span></h1>
+<p>Physics.Raycast 属于物理系统，其查询基于物理状态，不受 Time.timeScale 影响</p>
+<h1><span id="development-build-和-release-build-的代码裁剪行为是完全一致的吗">Development Build 和 Release Build 的代码裁剪行为是完全一致的吗？</span></h1>
+<p>不是，Development Build 默认禁用或减少代码裁剪以便调试，而 Release Build 会进行激进的代码裁剪以减小包体</p>
+<h1><span id="root-motion-在-fixedupdate-下会更精确">Root Motion 在 FixedUpdate 下会更精确？</span></h1>
+<p>是的，root Motion（根运动）通常与动画和物理交互，在 FixedUpdate 中执行能与物理引擎的固定时间步长更好同步，避免因帧率波动导致位移不精确或“抖动”。</p>
+<h1><span id="简述-unity-中-monobehaviour-脚本的生命周期主要方法执行顺序">简述 Unity 中 MonoBehaviour 脚本的生命周期（主要方法执行顺序）</span></h1>
+<ol>
+<li>初始化阶段：Awake() → OnEnable() → Start()<br>
+Awake()：脚本实例被创建时调用一次（即使脚本未启用）。<br>
+OnEnable()：每当对象变为激活/启用状态时调用。<br>
+Start()：在第一次 Update 前，且脚本启用时调用一次。</li>
+<li>更新循环阶段（每帧）：FixedUpdate() → Update() → LateUpdate()<br>
+FixedUpdate()：按固定时间步长调用（默认0.02s），用于物理计算。<br>
+Update()：每帧调用一次，主要的游戏逻辑入口。<br>
+LateUpdate()：在 Update 和所有动画计算之后调用，常用于摄像机跟随。</li>
+<li>渲染与 GUI 阶段：<br>
+OnGUI ()：处理 GUI 绘制和事件（如按钮点击），调用次数不固定；<br>
+OnRenderObject ()：相机渲染完所有物体后调用，适合自定义渲染逻辑。</li>
+<li>结束/销毁阶段：<br>
+OnDisable()：当对象变为非激活/禁用状态时调用。<br>
+OnDestroy()：对象被销毁前调用。</li>
+</ol>
+<h1><span id="onrenderobject方法的作用">OnRenderObject()方法的作用</span></h1>
+<p>在场景渲染完成后被调用，可以用于自定义渲染</p>
+<h1><span id="请尽可能多地列举在-unity-中索引或引用-gameobject-的不同方式">请尽可能多地列举在 Unity 中索引或引用 GameObject 的不同方式</span></h1>
+<p>GameObject.Find(string name)：通过名称全局查找（性能差）。<br>
+Transform.Find(string path)：在特定父物体下按路径查找子物体。<br>
+GameObject.FindWithTag() / GameObject.FindGameObjectsWithTag()：通过标签查找。<br>
+GameObject.FindObjectOfType<t>() / FindObjectsOfType<t>()：通过组件类型查找。<br>
+GetComponent<t>() / GetComponentInChildren<t>() / GetComponentInParent<t>()：获取组件，间接引用其挂载的GameObject。<br>
+序列化字段：在Inspector面板中拖拽赋值（public GameObject target; 或 [SerializeField] private GameObject target;）。<br>
+资源加载：通过 Resources.Load<gameobject>(path) 或 AssetBundle/Addressables 加载预制体实例化。<br>
+父子层级遍历：通过 transform.GetChild(index) 访问子物体。<br>
+发送消息/Broadcast：使用 SendMessage 或事件系统间接通信。</gameobject></t></t></t></t></t></p>
+<h1><span id="请写出一种可以完整构造-mesh-的数据结构">请写出一种可以完整构造 Mesh 的数据结构</span></h1>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MeshData</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> Vector3[] vertices;      <span class="comment">// 顶点位置</span></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">int</span>[] triangles;         <span class="comment">// 三角形索引（每3个一组）</span></span><br><span class="line">    <span class="keyword">public</span> Vector2[] uv;            <span class="comment">// 纹理坐标（可选）</span></span><br><span class="line">    <span class="keyword">public</span> Vector3[] normals;       <span class="comment">// 法线（可选，可自动计算）</span></span><br><span class="line">    <span class="keyword">public</span> Color[] colors;          <span class="comment">// 顶点颜色（可选）</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1><span id="把struct改成classbug消失了你怎么看">把struct改成class，bug消失了你怎么看？</span></h1>
+<p>struct在作为参数传递或赋值时是拷贝，对副本的修改不影响原始数据。改为class后，传递的是引用，修改会生效。</p>
+<h1><span id="unity-有几种坐标系">Unity 有几种坐标系</span></h1>
+<p>世界坐标系（World Space）：场景全局坐标系，物体的绝对位置；<br>
+局部坐标系（Local Space）：物体自身坐标系，子物体相对于父物体的位置；<br>
+屏幕坐标系（Screen Space）：以像素为单位，原点在左下角（UI 系统常用）；<br>
+视口坐标系（Viewport Space）：归一化坐标系（0-1 范围），适配不同分辨率。</p>
+<h1><span id="你怎么管理游戏内存的">你怎么管理游戏内存的</span></h1>
+<p>资源管理：AB 包（AssetBundle）分包策略（按场景 / 资源类型分包）、异步加载（避免卡顿）、无用资源及时 Unload；<br>
+对象管理：对象池（Object Pool）复用频繁创建的物体（如子弹、敌人），减少 GC；<br>
+代码层面：减少装箱拆箱、避免频繁创建临时对象、合理使用值类型。</p>
+<h1><span id="unity渲染管线">Unity渲染管线</span></h1>
+<ol>
+<li>内置渲染管线（Built-in Render Pipeline）<br>
+Unity 传统的默认渲染管线，属于固定功能管线（早期）+ 有限可编程管线<br>
+优点：上手快、配置简单，无需额外安装包，适合新手和快速原型开发；对旧项目兼容性好。<br>
+缺点：可定制化程度低，无法灵活调整渲染流程；优化空间有限，不支持光线追踪、体积雾等现代渲染特性；多平台适配时性能难以精细化控制。<br>
+适用场景：小型独立游戏、快速 Demo 验证、老项目维护。</li>
+<li>通用渲染管线（Universal Render Pipeline，URP）<br>
+定位：Unity 主推的 轻量化、跨平台可编程渲染管线（SRP），前身是 LWRP（轻量级渲染管线）。<br>
+核心特点<br>
+优点：可高度定制渲染路径（支持前向渲染、延迟渲染），能根据项目需求开关特性；性能可控，针对移动端、低配 PC 做了深度优化；支持 SRP 合批、光照探针、阴影分级等实用功能；体积小，接入成本低。<br>
+缺点：不支持光线追踪等高端特效，渲染上限低于 HDRP。<br>
+适用场景：移动端手游、2D 游戏、中小型 3D 游戏（面试高频，必须结合项目）</li>
+<li>高清渲染管线（High Definition Render Pipeline，HDRP）<br>
+面向 主机、高性能 PC 的高端可编程渲染管线，主打次世代视觉效果。<br>
+核心特点<br>
+优点：支持光线追踪、体积雾、屏幕空间反射（SSR）、高动态范围（HDR）光照、次表面散射等 3A 级特效；渲染质量极致，光影表现逼真；可定制化程度最高，能满足顶级视觉需求。<br>
+缺点：性能消耗大，对硬件要求高；不适合移动端；接入和调试成本高。<br>
+适用场景：3A 级别主机 / PC 游戏、影视级演示项目、视觉特效（VFX）项目。</li>
+</ol>
+<h1><span id></span></h1>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2026/01/02/OutlineExample/" rel="prev" title="大纲示例">
+      <i class="fa fa-chevron-left"></i> 大纲示例
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2026/01/04/DataPersistence/" rel="next" title="数据持久化-PlayerPrefs">
+      数据持久化-PlayerPrefs <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">MIT许可证的主要要求是：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">什么是“对象池”？在Unity中实现一个简单的对象池需要包含哪些核心功能？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">Shadow Pass在视野外会被渲染吗？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">动态链接库（DLL）在程序运行时被加载到内存中，可以被多个程序共享使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">[InitializeOnLoad] 是编辑器特性，仅在Unity编辑器启动或重新编译脚本后执行，打包后不会执行</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">Physics.Raycast 的结果与 Time.timeScale 的关系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">Development Build 和 Release Build 的代码裁剪行为是完全一致的吗？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">Root Motion 在 FixedUpdate 下会更精确？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">简述 Unity 中 MonoBehaviour 脚本的生命周期（主要方法执行顺序）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">OnRenderObject()方法的作用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">请尽可能多地列举在 Unity 中索引或引用 GameObject 的不同方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">请写出一种可以完整构造 Mesh 的数据结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">把struct改成class，bug消失了你怎么看？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">Unity 有几种坐标系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">你怎么管理游戏内存的</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">Unity渲染管线</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text"></span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ITTT"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">ITTT</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/originone494" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;originone494" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:2531293780@qq.com" title="E-Mail → mailto:2531293780@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ITTT</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">85k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:34</span>
+</div>
+
+<!-- 网站运行时间的设置 -->
+<span id="timeDate">载入天数...</span>
+<span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("12/29/2025 17:04:14"); //此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒.";
+    }
+setInterval("createtime()",250);
+</script>
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
