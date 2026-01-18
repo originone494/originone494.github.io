@@ -179,6 +179,200 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://originone494.github.io/2025/12/30/UISystem/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ITTT">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="OneBlog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/12/30/UISystem/" class="post-title-link" itemprop="url">UI系统</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2025-12-30 13:51:17" itemprop="dateCreated datePublished" datetime="2025-12-30T13:51:17+08:00">2025-12-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-12-31 14:59:06" itemprop="dateModified" datetime="2025-12-31T14:59:06+08:00">2025-12-31</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Unity/" itemprop="url" rel="index"><span itemprop="name">Unity</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1><span id="完整代码">完整代码</span></h1>
+<ol>
+<li>BasePanel.cs</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">BasePanel</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">protected</span> <span class="built_in">bool</span> isRemove = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">new</span> <span class="built_in">string</span> name;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">OpenPanel</span>(<span class="params"><span class="built_in">string</span> name</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        gameObject.SetActive(<span class="literal">true</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">ClosePanel</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        isRemove = <span class="literal">true</span>;</span><br><span class="line">        gameObject.SetActive(<span class="literal">false</span>);</span><br><span class="line">        Destroy(gameObject);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (UIManager.Instance.panelDict.ContainsKey(name))</span><br><span class="line">        &#123;</span><br><span class="line">            UIManager.Instance.panelDict.Remove(name);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>UIManager.cs</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">UIConst</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">const</span> <span class="built_in">string</span> MainMenuPanel = <span class="string">&quot;MainMenuPanel&quot;</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">const</span> <span class="built_in">string</span> SettingPanel = <span class="string">&quot;SettingPanel&quot;</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">const</span> <span class="built_in">string</span> PlayerStatePanel = <span class="string">&quot;PlayerStateBar&quot;</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">const</span> <span class="built_in">string</span> EnemyStatePanel = <span class="string">&quot;EnemyStateBar&quot;</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">const</span> <span class="built_in">string</span> DialoguePanel = <span class="string">&quot;DialoguePanel&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">UIManager</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> UIManager _instance;</span><br><span class="line">    <span class="keyword">private</span> Transform _uiRoot;</span><br><span class="line">    <span class="keyword">private</span> Dictionary&lt;<span class="built_in">string</span>, <span class="built_in">string</span>&gt; pathDict;</span><br><span class="line">    <span class="keyword">private</span> Dictionary&lt;<span class="built_in">string</span>, GameObject&gt; prefabsDict;</span><br><span class="line">    <span class="keyword">public</span> Dictionary&lt;<span class="built_in">string</span>, BasePanel&gt; panelDict;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> UIManager Instance</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">get</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (_instance == <span class="literal">null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                _instance = <span class="keyword">new</span> UIManager();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> _instance;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Transform UIRoot</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">get</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (_uiRoot == <span class="literal">null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (GameObject.Find(<span class="string">&quot;Canvas&quot;</span>))</span><br><span class="line">                &#123;</span><br><span class="line">                    _uiRoot = GameObject.Find(<span class="string">&quot;Canvas&quot;</span>).transform;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    _uiRoot = <span class="keyword">new</span> GameObject(<span class="string">&quot;Canvas&quot;</span>).transform;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> _uiRoot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">UIManager</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        InitDicts();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">InitDicts</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        prefabsDict = <span class="keyword">new</span> Dictionary&lt;<span class="built_in">string</span>, GameObject&gt;();</span><br><span class="line">        panelDict = <span class="keyword">new</span> Dictionary&lt;<span class="built_in">string</span>, BasePanel&gt;();</span><br><span class="line">        pathDict = <span class="keyword">new</span> Dictionary&lt;<span class="built_in">string</span>, <span class="built_in">string</span>&gt;()</span><br><span class="line">        &#123;</span><br><span class="line">            &#123; UIConst.MainMenuPanel ,UIConst.MainMenuPanel&#125;,</span><br><span class="line">            &#123; UIConst.SettingPanel ,UIConst.SettingPanel&#125;,</span><br><span class="line">            &#123; UIConst.PlayerStatePanel ,UIConst.PlayerStatePanel&#125;,</span><br><span class="line">            &#123; UIConst.EnemyStatePanel ,UIConst.EnemyStatePanel&#125;,</span><br><span class="line">            &#123; UIConst.DialoguePanel ,UIConst.DialoguePanel&#125;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> BasePanel <span class="title">OpenPanel</span>(<span class="params"><span class="built_in">string</span> name</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        BasePanel panel = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (panelDict.TryGetValue(name, <span class="keyword">out</span> panel))</span><br><span class="line">        &#123;</span><br><span class="line">            Debug.Log(<span class="string">&quot;界面已打开&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">string</span> path = <span class="string">&quot;&quot;</span>;</span><br><span class="line">        <span class="keyword">if</span> (!pathDict.TryGetValue(name, <span class="keyword">out</span> path))</span><br><span class="line">        &#123;</span><br><span class="line">            Debug.Log(<span class="string">&quot;界面名称错误，或未配置路径 &quot;</span> + name);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        GameObject panelPrefab = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (!prefabsDict.TryGetValue(name, <span class="keyword">out</span> panelPrefab))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">string</span> realPath = <span class="string">&quot;Prefabs/UI/&quot;</span> + path;<span class="comment">//需在Resources/Prefabs/UI文件夹下放置UI的预制体</span></span><br><span class="line">            panelPrefab = Resources.Load&lt;GameObject&gt;(realPath) <span class="keyword">as</span> GameObject;</span><br><span class="line">            prefabsDict.Add(name, panelPrefab);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        GameObject panelObject = GameObject.Instantiate(panelPrefab, UIRoot, <span class="literal">false</span>);</span><br><span class="line">        panelObject.transform.position = UIRoot.position;</span><br><span class="line">        panel = panelObject.GetComponent&lt;BasePanel&gt;();</span><br><span class="line">        panelDict.Add(name, panel);</span><br><span class="line">        panel.OpenPanel(name);</span><br><span class="line">        <span class="keyword">return</span> panel;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">bool</span> <span class="title">ClosePanel</span>(<span class="params"><span class="built_in">string</span> name</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        BasePanel panel = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (!panelDict.TryGetValue(name, <span class="keyword">out</span> panel))</span><br><span class="line">        &#123;</span><br><span class="line">            Debug.Log(<span class="string">&quot;界面未打开&quot;</span> + name);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        panel.ClosePanel();</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://originone494.github.io/2025/12/30/SingletonMode/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ITTT">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="OneBlog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/12/30/SingletonMode/" class="post-title-link" itemprop="url">单例模式的实现</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2025-12-30 13:40:12" itemprop="dateCreated datePublished" datetime="2025-12-30T13:40:12+08:00">2025-12-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2026-01-01 12:54:23" itemprop="dateModified" datetime="2026-01-01T12:54:23+08:00">2026-01-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Unity/" itemprop="url" rel="index"><span itemprop="name">Unity</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>976</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1><span id="完整代码">完整代码</span></h1>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ClassName</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> ClassName instance;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> ClassName Instance</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">get</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (instance == <span class="literal">null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                GameObject obj = <span class="keyword">new</span> GameObject(<span class="string">&quot;ClassName&quot;</span>);</span><br><span class="line">                instance = obj.AddComponent&lt;ClassName&gt;();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> instance;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnDestroy</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        instance = <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果需要普通类的单例模式，只需要将简单修改即可</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ClassName</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> ClassName instance;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> ClassName Instance</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">get</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (instance == <span class="literal">null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                instance =  <span class="keyword">new</span> ClassName();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> instance;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在以上代码的基础上，可以进行一些进阶处理</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/12/30/SingletonMode/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://originone494.github.io/2025/12/30/CameraController/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -640,14 +834,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
   </nav>
@@ -691,12 +885,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">86k</span>
+    <span title="站点总字数">90k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:36</span>
+    <span title="站点阅读时长">2:43</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

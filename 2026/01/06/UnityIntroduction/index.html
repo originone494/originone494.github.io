@@ -27,10 +27,18 @@
 <meta property="og:site_name" content="OneBlog">
 <meta property="og:description" content="一、工程文件夹  Assets：工程资源文件夹（美术资源、脚本等） Library：库文件夹（Unity自动生成管理） Logs：日志文件夹，记录特殊信息（Unity自动生成管理） obj：编译产生的中间文件（Unity自动生成管理） Packages：包配置信息（Unity自动生成管理） ProjectSettings：工程设置信息（Unity自动生成管理）  二、Unity的工作机制 本质上就">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://originone494.github.io/2026/01/06/UnityIntroduction/1.png">
+<meta property="og:image" content="https://originone494.github.io/2026/01/06/UnityIntroduction/2.png">
+<meta property="og:image" content="https://originone494.github.io/2026/01/06/UnityIntroduction/3.png">
+<meta property="og:image" content="https://originone494.github.io/2026/01/06/UnityIntroduction/4.png">
+<meta property="og:image" content="https://originone494.github.io/2026/01/06/UnityIntroduction/5.png">
+<meta property="og:image" content="https://originone494.github.io/2026/01/06/UnityIntroduction/6.png">
+<meta property="og:image" content="https://originone494.github.io/2026/01/06/UnityIntroduction/7.png">
 <meta property="article:published_time" content="2026-01-06T02:44:34.000Z">
-<meta property="article:modified_time" content="2026-01-06T05:34:57.759Z">
+<meta property="article:modified_time" content="2026-01-18T07:25:08.265Z">
 <meta property="article:author" content="ITTT">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://originone494.github.io/2026/01/06/UnityIntroduction/1.png">
 
 <link rel="canonical" href="https://originone494.github.io/2026/01/06/UnityIntroduction/">
 
@@ -206,10 +214,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2026-01-06 10:44:34 / 修改时间：13:34:57" itemprop="dateCreated datePublished" datetime="2026-01-06T10:44:34+08:00">2026-01-06</time>
+              <time title="创建时间：2026-01-06 10:44:34" itemprop="dateCreated datePublished" datetime="2026-01-06T10:44:34+08:00">2026-01-06</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2026-01-18 15:25:08" itemprop="dateModified" datetime="2026-01-18T15:25:08+08:00">2026-01-18</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -226,14 +240,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>742</span>
+              <span>2.4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>4 分钟</span>
             </span>
 
         </div>
@@ -276,7 +290,73 @@
 <li>OnDisable():依附的GameObject对象每次被关闭时调用</li>
 <li>OnDestroy():对象销毁时调用，或者依附的GameObject对象被删除时</li>
 </ol>
-
+<h1><span id="五-inspector窗口可编辑的变量">五、Inspector窗口可编辑的变量</span></h1>
+<ol>
+<li>私有和保护无法显示编辑</li>
+<li>[SerializerField]为强制序列化字段，可以让私有的和保护的也可以被显示</li>
+<li>公共的可以显示编辑</li>
+<li>[HideInInspector]字段可以让公共的不可以显示编辑</li>
+<li>大部分类型都可以显示编辑，但一般情况下，字典、自定义结构体、自定义类即使是公共的，也不会在Inspector窗口显示</li>
+<li>使用[System.Serializable]字段可以让自定义结构体和自定义类在Inspector窗口显示，但字典不行</li>
+<li>[Header(“”)]为成员分组</li>
+</ol>
+<img src="/2026/01/06/UnityIntroduction/1.png" class title="图片">
+<img src="/2026/01/06/UnityIntroduction/2.png" class title="图片">
+<ol start="8">
+<li>[Tooltip(“”)]可以为变量添加说明</li>
+</ol>
+<img src="/2026/01/06/UnityIntroduction/3.png" class title="图片">
+<img src="/2026/01/06/UnityIntroduction/4.png" class title="图片">
+<ol start="9">
+<li>[Space()]可以让两个字段间出现间隔</li>
+</ol>
+<img src="/2026/01/06/UnityIntroduction/5.png" class title="图片">
+<img src="/2026/01/06/UnityIntroduction/6.png" class title="图片">
+<ol start="10">
+<li>[Range(0,10)]修饰数值的滑条范围</li>
+<li>[Multiline(5)]可以多行显示字符串</li>
+<li>[TextArea(3,4)]可以滚动条显示字符串，最少显示3行，最多4行，超过4行就显示滚动条</li>
+<li>[ContextMenuItem(“按钮名”,“方法名”)]可以为变量添加快捷方法，方法不能有参数</li>
+<li>[ContextMenu(“按钮名”)]可以为脚本添加方法名</li>
+</ol>
+<img src="/2026/01/06/UnityIntroduction/7.png" class title="图片">
+<h1><span id="六-monobehavior中的重要内容">六、MonoBehavior中的重要内容</span></h1>
+<h2><span id="重要成员">重要成员</span></h2>
+<ol>
+<li>获取依附的GameObject<br>
+<code>this.GameObject</code></li>
+<li>获取依附的GameObject的信息<br>
+名字：<code>this.GameObject.name</code><br>
+位置：<code>this.GameObject.transform.position</code><br>
+角度：<code>this.GameObject.transform.eulerAngles</code><br>
+缩放大小：<code>this.GameObject.transform.lossyScale</code></li>
+<li>获取脚本是否激活<br>
+<code>this.enabled</code></li>
+</ol>
+<h2><span id="重要方法">重要方法</span></h2>
+<ol>
+<li>获取自身挂载的单个脚本</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Test为脚本类</span></span><br><span class="line">Test t = <span class="keyword">this</span>.GetComponent(<span class="string">&quot;Name&quot;</span>) <span class="keyword">as</span> Test;<span class="comment">//根据脚本名获取</span></span><br><span class="line">t = <span class="keyword">this</span>.GetComponent(<span class="keyword">typeof</span>(Test)) <span class="keyword">as</span> Test;<span class="comment">//根据类型获取</span></span><br><span class="line">t = <span class="keyword">this</span>.GetComponent&lt;Test&gt;();<span class="comment">//根据泛型获取，推荐使用</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>获取自身挂载的多个脚本</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Test[] array = <span class="keyword">this</span>.GetComponent&lt;Test&gt;();</span><br><span class="line"></span><br><span class="line">List&lt;Test&gt; list = <span class="keyword">new</span> List&lt;Test&gt;();</span><br><span class="line"><span class="keyword">this</span>.GetComponents&lt;Test&gt;(list);</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>获取子对象挂载的脚本</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//单个</span></span><br><span class="line">Test t = <span class="keyword">this</span>.GetComponentInChildren&lt;Test&gt;(<span class="literal">true</span>);<span class="comment">//参数若为false，则如果子对象失活，则不会去找这个子对象身上是否有某脚本</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//多个</span></span><br><span class="line">Test[] array = <span class="keyword">this</span>.GetComponentsInChildren&lt;Test&gt;(<span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">List&lt;Test&gt; list = <span class="keyword">new</span> List&lt;Test&gt;();</span><br><span class="line"><span class="keyword">this</span>.GetComponentsInChildren&lt;Test&gt;(<span class="literal">true</span>,list);</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>获取父对象挂载的脚本<br>
+父对象和自己挂同名脚本，则获取单个脚本时会获取到自己的，子对象同理。<br>
+父对象失活，则子对象一定失活。<br>
+搜索范围包括自己、父物体、父物体的父物体…，子对象同理。</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//单个</span></span><br><span class="line">Test t = <span class="keyword">this</span>.GetComponentsInParent&lt;Test&gt;();</span><br><span class="line"></span><br><span class="line"><span class="comment">//多个</span></span><br><span class="line">Test[] array = <span class="keyword">this</span>.GetComponentsInParent&lt;Test&gt;(<span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">List&lt;Test&gt; list = <span class="keyword">new</span> List&lt;Test&gt;();</span><br><span class="line"><span class="keyword">this</span>.GetComponentsInParent&lt;Test&gt;(<span class="literal">true</span>,list);</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>尝试获取脚本</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//一个更安全获取单个脚本的方法，如果得到了，则返回true</span></span><br><span class="line">Test t;</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">this</span>.TryGetComponent&lt;Test&gt;(<span class="keyword">out</span> t))&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -294,7 +374,10 @@
     <a href="/2026/01/04/ObjectPool/" rel="prev" title="对象池">
       <i class="fa fa-chevron-left"></i> 对象池
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2026/01/16/LCode1/" rel="next" title="力扣-88、27、26">
+      力扣-88、27、26 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -353,7 +436,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">一、工程文件夹</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">二、Unity的工作机制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">三、预制体</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">三、MonoBehavior基类</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">四、生命周期</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">一、工程文件夹</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">二、Unity的工作机制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">三、预制体</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">三、MonoBehavior基类</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">四、生命周期</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">五、Inspector窗口可编辑的变量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">六、MonoBehavior中的重要内容</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text">重要成员</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text">重要方法</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -369,14 +452,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
   </nav>
@@ -420,12 +503,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">86k</span>
+    <span title="站点总字数">90k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:36</span>
+    <span title="站点阅读时长">2:43</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
