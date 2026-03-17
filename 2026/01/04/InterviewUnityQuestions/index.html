@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"originone494.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="MIT许可证的主要要求是： 在软件的分发副本中必须包含原始版权声明和许可声明。它允许自由使用、修改、分发，包括用于商业用途，且不要求开源修改后的代码。 什么是“对象池”？在Unity中实现一个简单的对象池需要包含哪些核心功能？ 对象池是一种性能优化设计模式，通过预先创建并复用对象实例，避免运行时频繁的Instantiate和Destroy带来的内存分配与GC开销。 核心功能包括： 初始化：预生成一">
+  <meta name="description" content="MIT&#x8BB8;&#x53EF;&#x8BC1;&#x7684;&#x4E3B;&#x8981;&#x8981;&#x6C42;&#x662F;&#xFF1A;# &#x5728;&#x8F6F;&#x4EF6;&#x7684;&#x5206;&#x53D1;&#x526F;&#x672C;&#x4E2D;&#x5FC5;&#x987B;&#x5305;&#x542B;&#x539F;&amp;#x">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Unity面试可能遇到的问题">
 <meta property="og:url" content="https://originone494.github.io/2026/01/04/InterviewUnityQuestions/index.html">
 <meta property="og:site_name" content="OneBlog">
-<meta property="og:description" content="MIT许可证的主要要求是： 在软件的分发副本中必须包含原始版权声明和许可声明。它允许自由使用、修改、分发，包括用于商业用途，且不要求开源修改后的代码。 什么是“对象池”？在Unity中实现一个简单的对象池需要包含哪些核心功能？ 对象池是一种性能优化设计模式，通过预先创建并复用对象实例，避免运行时频繁的Instantiate和Destroy带来的内存分配与GC开销。 核心功能包括： 初始化：预生成一">
+<meta property="og:description" content="MIT&#x8BB8;&#x53EF;&#x8BC1;&#x7684;&#x4E3B;&#x8981;&#x8981;&#x6C42;&#x662F;&#xFF1A;# &#x5728;&#x8F6F;&#x4EF6;&#x7684;&#x5206;&#x53D1;&#x526F;&#x672C;&#x4E2D;&#x5FC5;&#x987B;&#x5305;&#x542B;&#x539F;&amp;#x">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-01-04T04:59:01.000Z">
 <meta property="article:modified_time" content="2026-01-04T11:47:47.467Z">
@@ -245,88 +245,88 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1><span id="mit许可证的主要要求是">MIT许可证的主要要求是：</span></h1>
-<p>在软件的分发副本中必须包含<strong>原始版权声明和许可声明</strong>。它允许自由使用、修改、分发，包括用于商业用途，且不要求开源修改后的代码。</p>
-<h1><span id="什么是对象池在unity中实现一个简单的对象池需要包含哪些核心功能">什么是“对象池”？在Unity中实现一个简单的对象池需要包含哪些核心功能？</span></h1>
-<p>对象池是一种性能优化设计模式，通过预先创建并复用对象实例，避免运行时频繁的Instantiate和Destroy带来的内存分配与GC开销。<br>
-核心功能包括：<br>
-初始化：预生成一定数量的对象，设为非激活状态。<br>
-获取对象：从池中返回一个可用（非激活）对象，并激活它；若无可用对象，则动态扩容（新建）。<br>
-回收对象：将使用完毕的对象设为非激活，返回到池中备用。<br>
-可选的清理功能：在场景切换或结束时，销毁池中所有对象。</p>
-<h1><span id="shadow-pass在视野外会被渲染吗">Shadow Pass在视野外会被渲染吗？</span></h1>
-<p>不会，阴影渲染（Shadow Pass）通常基于光源的视锥体和阴影距离设置。若物体不在光源的“可见”范围内或超出阴影距离，则不会渲染其阴影，以节省性能。</p>
-<h1><span id="动态链接库dll在程序运行时被加载到内存中可以被多个程序共享使用">动态链接库（DLL）在程序运行时被加载到内存中，可以被多个程序共享使用</span></h1>
-<h1><span id="initializeonload-是编辑器特性仅在unity编辑器启动或重新编译脚本后执行打包后不会执行">[InitializeOnLoad] 是编辑器特性，仅在Unity编辑器启动或重新编译脚本后执行，打包后不会执行</span></h1>
-<h1><span id="physicsraycast-的结果与-timetimescale-的关系">Physics.Raycast 的结果与 Time.timeScale 的关系</span></h1>
-<p>Physics.Raycast 属于物理系统，其查询基于物理状态，不受 Time.timeScale 影响</p>
-<h1><span id="development-build-和-release-build-的代码裁剪行为是完全一致的吗">Development Build 和 Release Build 的代码裁剪行为是完全一致的吗？</span></h1>
-<p>不是，Development Build 默认禁用或减少代码裁剪以便调试，而 Release Build 会进行激进的代码裁剪以减小包体</p>
-<h1><span id="root-motion-在-fixedupdate-下会更精确">Root Motion 在 FixedUpdate 下会更精确？</span></h1>
-<p>是的，root Motion（根运动）通常与动画和物理交互，在 FixedUpdate 中执行能与物理引擎的固定时间步长更好同步，避免因帧率波动导致位移不精确或“抖动”。</p>
-<h1><span id="简述-unity-中-monobehaviour-脚本的生命周期主要方法执行顺序">简述 Unity 中 MonoBehaviour 脚本的生命周期（主要方法执行顺序）</span></h1>
+        <h1><span id="mit&#x8BB8;&#x53EF;&#x8BC1;&#x7684;&#x4E3B;&#x8981;&#x8981;&#x6C42;&#x662F;">MIT&#x8BB8;&#x53EF;&#x8BC1;&#x7684;&#x4E3B;&#x8981;&#x8981;&#x6C42;&#x662F;&#xFF1A;</span><a href="#mit&#x8BB8;&#x53EF;&#x8BC1;&#x7684;&#x4E3B;&#x8981;&#x8981;&#x6C42;&#x662F;" class="header-anchor">#</a></h1>
+<p>&#x5728;&#x8F6F;&#x4EF6;&#x7684;&#x5206;&#x53D1;&#x526F;&#x672C;&#x4E2D;&#x5FC5;&#x987B;&#x5305;&#x542B;<strong>&#x539F;&#x59CB;&#x7248;&#x6743;&#x58F0;&#x660E;&#x548C;&#x8BB8;&#x53EF;&#x58F0;&#x660E;</strong>&#x3002;&#x5B83;&#x5141;&#x8BB8;&#x81EA;&#x7531;&#x4F7F;&#x7528;&#x3001;&#x4FEE;&#x6539;&#x3001;&#x5206;&#x53D1;&#xFF0C;&#x5305;&#x62EC;&#x7528;&#x4E8E;&#x5546;&#x4E1A;&#x7528;&#x9014;&#xFF0C;&#x4E14;&#x4E0D;&#x8981;&#x6C42;&#x5F00;&#x6E90;&#x4FEE;&#x6539;&#x540E;&#x7684;&#x4EE3;&#x7801;&#x3002;</p>
+<h1><span id="&#x4EC0;&#x4E48;&#x662F;&#x5BF9;&#x8C61;&#x6C60;&#x5728;unity&#x4E2D;&#x5B9E;&#x73B0;&#x4E00;&#x4E2A;&#x7B80;&#x5355;&#x7684;&#x5BF9;&#x8C61;&#x6C60;&#x9700;&#x8981;&#x5305;&#x542B;&#x54EA;&#x4E9B;&#x6838;&#x5FC3;&#x529F;&#x80FD;">&#x4EC0;&#x4E48;&#x662F;&#x201C;&#x5BF9;&#x8C61;&#x6C60;&#x201D;&#xFF1F;&#x5728;Unity&#x4E2D;&#x5B9E;&#x73B0;&#x4E00;&#x4E2A;&#x7B80;&#x5355;&#x7684;&#x5BF9;&#x8C61;&#x6C60;&#x9700;&#x8981;&#x5305;&#x542B;&#x54EA;&#x4E9B;&#x6838;&#x5FC3;&#x529F;&#x80FD;&#xFF1F;</span><a href="#&#x4EC0;&#x4E48;&#x662F;&#x5BF9;&#x8C61;&#x6C60;&#x5728;unity&#x4E2D;&#x5B9E;&#x73B0;&#x4E00;&#x4E2A;&#x7B80;&#x5355;&#x7684;&#x5BF9;&#x8C61;&#x6C60;&#x9700;&#x8981;&#x5305;&#x542B;&#x54EA;&#x4E9B;&#x6838;&#x5FC3;&#x529F;&#x80FD;" class="header-anchor">#</a></h1>
+<p>&#x5BF9;&#x8C61;&#x6C60;&#x662F;&#x4E00;&#x79CD;&#x6027;&#x80FD;&#x4F18;&#x5316;&#x8BBE;&#x8BA1;&#x6A21;&#x5F0F;&#xFF0C;&#x901A;&#x8FC7;&#x9884;&#x5148;&#x521B;&#x5EFA;&#x5E76;&#x590D;&#x7528;&#x5BF9;&#x8C61;&#x5B9E;&#x4F8B;&#xFF0C;&#x907F;&#x514D;&#x8FD0;&#x884C;&#x65F6;&#x9891;&#x7E41;&#x7684;Instantiate&#x548C;Destroy&#x5E26;&#x6765;&#x7684;&#x5185;&#x5B58;&#x5206;&#x914D;&#x4E0E;GC&#x5F00;&#x9500;&#x3002;<br>
+&#x6838;&#x5FC3;&#x529F;&#x80FD;&#x5305;&#x62EC;&#xFF1A;<br>
+&#x521D;&#x59CB;&#x5316;&#xFF1A;&#x9884;&#x751F;&#x6210;&#x4E00;&#x5B9A;&#x6570;&#x91CF;&#x7684;&#x5BF9;&#x8C61;&#xFF0C;&#x8BBE;&#x4E3A;&#x975E;&#x6FC0;&#x6D3B;&#x72B6;&#x6001;&#x3002;<br>
+&#x83B7;&#x53D6;&#x5BF9;&#x8C61;&#xFF1A;&#x4ECE;&#x6C60;&#x4E2D;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x53EF;&#x7528;&#xFF08;&#x975E;&#x6FC0;&#x6D3B;&#xFF09;&#x5BF9;&#x8C61;&#xFF0C;&#x5E76;&#x6FC0;&#x6D3B;&#x5B83;&#xFF1B;&#x82E5;&#x65E0;&#x53EF;&#x7528;&#x5BF9;&#x8C61;&#xFF0C;&#x5219;&#x52A8;&#x6001;&#x6269;&#x5BB9;&#xFF08;&#x65B0;&#x5EFA;&#xFF09;&#x3002;<br>
+&#x56DE;&#x6536;&#x5BF9;&#x8C61;&#xFF1A;&#x5C06;&#x4F7F;&#x7528;&#x5B8C;&#x6BD5;&#x7684;&#x5BF9;&#x8C61;&#x8BBE;&#x4E3A;&#x975E;&#x6FC0;&#x6D3B;&#xFF0C;&#x8FD4;&#x56DE;&#x5230;&#x6C60;&#x4E2D;&#x5907;&#x7528;&#x3002;<br>
+&#x53EF;&#x9009;&#x7684;&#x6E05;&#x7406;&#x529F;&#x80FD;&#xFF1A;&#x5728;&#x573A;&#x666F;&#x5207;&#x6362;&#x6216;&#x7ED3;&#x675F;&#x65F6;&#xFF0C;&#x9500;&#x6BC1;&#x6C60;&#x4E2D;&#x6240;&#x6709;&#x5BF9;&#x8C61;&#x3002;</p>
+<h1><span id="shadow-pass&#x5728;&#x89C6;&#x91CE;&#x5916;&#x4F1A;&#x88AB;&#x6E32;&#x67D3;&#x5417;">Shadow Pass&#x5728;&#x89C6;&#x91CE;&#x5916;&#x4F1A;&#x88AB;&#x6E32;&#x67D3;&#x5417;&#xFF1F;</span><a href="#shadow-pass&#x5728;&#x89C6;&#x91CE;&#x5916;&#x4F1A;&#x88AB;&#x6E32;&#x67D3;&#x5417;" class="header-anchor">#</a></h1>
+<p>&#x4E0D;&#x4F1A;&#xFF0C;&#x9634;&#x5F71;&#x6E32;&#x67D3;&#xFF08;Shadow Pass&#xFF09;&#x901A;&#x5E38;&#x57FA;&#x4E8E;&#x5149;&#x6E90;&#x7684;&#x89C6;&#x9525;&#x4F53;&#x548C;&#x9634;&#x5F71;&#x8DDD;&#x79BB;&#x8BBE;&#x7F6E;&#x3002;&#x82E5;&#x7269;&#x4F53;&#x4E0D;&#x5728;&#x5149;&#x6E90;&#x7684;&#x201C;&#x53EF;&#x89C1;&#x201D;&#x8303;&#x56F4;&#x5185;&#x6216;&#x8D85;&#x51FA;&#x9634;&#x5F71;&#x8DDD;&#x79BB;&#xFF0C;&#x5219;&#x4E0D;&#x4F1A;&#x6E32;&#x67D3;&#x5176;&#x9634;&#x5F71;&#xFF0C;&#x4EE5;&#x8282;&#x7701;&#x6027;&#x80FD;&#x3002;</p>
+<h1><span id="&#x52A8;&#x6001;&#x94FE;&#x63A5;&#x5E93;dll&#x5728;&#x7A0B;&#x5E8F;&#x8FD0;&#x884C;&#x65F6;&#x88AB;&#x52A0;&#x8F7D;&#x5230;&#x5185;&#x5B58;&#x4E2D;&#x53EF;&#x4EE5;&#x88AB;&#x591A;&#x4E2A;&#x7A0B;&#x5E8F;&#x5171;&#x4EAB;&#x4F7F;&#x7528;">&#x52A8;&#x6001;&#x94FE;&#x63A5;&#x5E93;&#xFF08;DLL&#xFF09;&#x5728;&#x7A0B;&#x5E8F;&#x8FD0;&#x884C;&#x65F6;&#x88AB;&#x52A0;&#x8F7D;&#x5230;&#x5185;&#x5B58;&#x4E2D;&#xFF0C;&#x53EF;&#x4EE5;&#x88AB;&#x591A;&#x4E2A;&#x7A0B;&#x5E8F;&#x5171;&#x4EAB;&#x4F7F;&#x7528;</span><a href="#&#x52A8;&#x6001;&#x94FE;&#x63A5;&#x5E93;dll&#x5728;&#x7A0B;&#x5E8F;&#x8FD0;&#x884C;&#x65F6;&#x88AB;&#x52A0;&#x8F7D;&#x5230;&#x5185;&#x5B58;&#x4E2D;&#x53EF;&#x4EE5;&#x88AB;&#x591A;&#x4E2A;&#x7A0B;&#x5E8F;&#x5171;&#x4EAB;&#x4F7F;&#x7528;" class="header-anchor">#</a></h1>
+<h1><span id="initializeonload-&#x662F;&#x7F16;&#x8F91;&#x5668;&#x7279;&#x6027;&#x4EC5;&#x5728;unity&#x7F16;&#x8F91;&#x5668;&#x542F;&#x52A8;&#x6216;&#x91CD;&#x65B0;&#x7F16;&#x8BD1;&#x811A;&#x672C;&#x540E;&#x6267;&#x884C;&#x6253;&#x5305;&#x540E;&#x4E0D;&#x4F1A;&#x6267;&#x884C;">[InitializeOnLoad] &#x662F;&#x7F16;&#x8F91;&#x5668;&#x7279;&#x6027;&#xFF0C;&#x4EC5;&#x5728;Unity&#x7F16;&#x8F91;&#x5668;&#x542F;&#x52A8;&#x6216;&#x91CD;&#x65B0;&#x7F16;&#x8BD1;&#x811A;&#x672C;&#x540E;&#x6267;&#x884C;&#xFF0C;&#x6253;&#x5305;&#x540E;&#x4E0D;&#x4F1A;&#x6267;&#x884C;</span><a href="#initializeonload-&#x662F;&#x7F16;&#x8F91;&#x5668;&#x7279;&#x6027;&#x4EC5;&#x5728;unity&#x7F16;&#x8F91;&#x5668;&#x542F;&#x52A8;&#x6216;&#x91CD;&#x65B0;&#x7F16;&#x8BD1;&#x811A;&#x672C;&#x540E;&#x6267;&#x884C;&#x6253;&#x5305;&#x540E;&#x4E0D;&#x4F1A;&#x6267;&#x884C;" class="header-anchor">#</a></h1>
+<h1><span id="physicsraycast-&#x7684;&#x7ED3;&#x679C;&#x4E0E;-timetimescale-&#x7684;&#x5173;&#x7CFB;">Physics.Raycast &#x7684;&#x7ED3;&#x679C;&#x4E0E; Time.timeScale &#x7684;&#x5173;&#x7CFB;</span><a href="#physicsraycast-&#x7684;&#x7ED3;&#x679C;&#x4E0E;-timetimescale-&#x7684;&#x5173;&#x7CFB;" class="header-anchor">#</a></h1>
+<p>Physics.Raycast &#x5C5E;&#x4E8E;&#x7269;&#x7406;&#x7CFB;&#x7EDF;&#xFF0C;&#x5176;&#x67E5;&#x8BE2;&#x57FA;&#x4E8E;&#x7269;&#x7406;&#x72B6;&#x6001;&#xFF0C;&#x4E0D;&#x53D7; Time.timeScale &#x5F71;&#x54CD;</p>
+<h1><span id="development-build-&#x548C;-release-build-&#x7684;&#x4EE3;&#x7801;&#x88C1;&#x526A;&#x884C;&#x4E3A;&#x662F;&#x5B8C;&#x5168;&#x4E00;&#x81F4;&#x7684;&#x5417;">Development Build &#x548C; Release Build &#x7684;&#x4EE3;&#x7801;&#x88C1;&#x526A;&#x884C;&#x4E3A;&#x662F;&#x5B8C;&#x5168;&#x4E00;&#x81F4;&#x7684;&#x5417;&#xFF1F;</span><a href="#development-build-&#x548C;-release-build-&#x7684;&#x4EE3;&#x7801;&#x88C1;&#x526A;&#x884C;&#x4E3A;&#x662F;&#x5B8C;&#x5168;&#x4E00;&#x81F4;&#x7684;&#x5417;" class="header-anchor">#</a></h1>
+<p>&#x4E0D;&#x662F;&#xFF0C;Development Build &#x9ED8;&#x8BA4;&#x7981;&#x7528;&#x6216;&#x51CF;&#x5C11;&#x4EE3;&#x7801;&#x88C1;&#x526A;&#x4EE5;&#x4FBF;&#x8C03;&#x8BD5;&#xFF0C;&#x800C; Release Build &#x4F1A;&#x8FDB;&#x884C;&#x6FC0;&#x8FDB;&#x7684;&#x4EE3;&#x7801;&#x88C1;&#x526A;&#x4EE5;&#x51CF;&#x5C0F;&#x5305;&#x4F53;</p>
+<h1><span id="root-motion-&#x5728;-fixedupdate-&#x4E0B;&#x4F1A;&#x66F4;&#x7CBE;&#x786E;">Root Motion &#x5728; FixedUpdate &#x4E0B;&#x4F1A;&#x66F4;&#x7CBE;&#x786E;&#xFF1F;</span><a href="#root-motion-&#x5728;-fixedupdate-&#x4E0B;&#x4F1A;&#x66F4;&#x7CBE;&#x786E;" class="header-anchor">#</a></h1>
+<p>&#x662F;&#x7684;&#xFF0C;root Motion&#xFF08;&#x6839;&#x8FD0;&#x52A8;&#xFF09;&#x901A;&#x5E38;&#x4E0E;&#x52A8;&#x753B;&#x548C;&#x7269;&#x7406;&#x4EA4;&#x4E92;&#xFF0C;&#x5728; FixedUpdate &#x4E2D;&#x6267;&#x884C;&#x80FD;&#x4E0E;&#x7269;&#x7406;&#x5F15;&#x64CE;&#x7684;&#x56FA;&#x5B9A;&#x65F6;&#x95F4;&#x6B65;&#x957F;&#x66F4;&#x597D;&#x540C;&#x6B65;&#xFF0C;&#x907F;&#x514D;&#x56E0;&#x5E27;&#x7387;&#x6CE2;&#x52A8;&#x5BFC;&#x81F4;&#x4F4D;&#x79FB;&#x4E0D;&#x7CBE;&#x786E;&#x6216;&#x201C;&#x6296;&#x52A8;&#x201D;&#x3002;</p>
+<h1><span id="&#x7B80;&#x8FF0;-unity-&#x4E2D;-monobehaviour-&#x811A;&#x672C;&#x7684;&#x751F;&#x547D;&#x5468;&#x671F;&#x4E3B;&#x8981;&#x65B9;&#x6CD5;&#x6267;&#x884C;&#x987A;&#x5E8F;">&#x7B80;&#x8FF0; Unity &#x4E2D; MonoBehaviour &#x811A;&#x672C;&#x7684;&#x751F;&#x547D;&#x5468;&#x671F;&#xFF08;&#x4E3B;&#x8981;&#x65B9;&#x6CD5;&#x6267;&#x884C;&#x987A;&#x5E8F;&#xFF09;</span><a href="#&#x7B80;&#x8FF0;-unity-&#x4E2D;-monobehaviour-&#x811A;&#x672C;&#x7684;&#x751F;&#x547D;&#x5468;&#x671F;&#x4E3B;&#x8981;&#x65B9;&#x6CD5;&#x6267;&#x884C;&#x987A;&#x5E8F;" class="header-anchor">#</a></h1>
 <ol>
-<li>初始化阶段：Awake() → OnEnable() → Start()<br>
-Awake()：脚本实例被创建时调用一次（即使脚本未启用）。<br>
-OnEnable()：每当对象变为激活/启用状态时调用。<br>
-Start()：在第一次 Update 前，且脚本启用时调用一次。</li>
-<li>更新循环阶段（每帧）：FixedUpdate() → Update() → LateUpdate()<br>
-FixedUpdate()：按固定时间步长调用（默认0.02s），用于物理计算。<br>
-Update()：每帧调用一次，主要的游戏逻辑入口。<br>
-LateUpdate()：在 Update 和所有动画计算之后调用，常用于摄像机跟随。</li>
-<li>渲染与 GUI 阶段：<br>
-OnGUI ()：处理 GUI 绘制和事件（如按钮点击），调用次数不固定；<br>
-OnRenderObject ()：相机渲染完所有物体后调用，适合自定义渲染逻辑。</li>
-<li>结束/销毁阶段：<br>
-OnDisable()：当对象变为非激活/禁用状态时调用。<br>
-OnDestroy()：对象被销毁前调用。</li>
+<li>&#x521D;&#x59CB;&#x5316;&#x9636;&#x6BB5;&#xFF1A;Awake() &#x2192; OnEnable() &#x2192; Start()<br>
+Awake()&#xFF1A;&#x811A;&#x672C;&#x5B9E;&#x4F8B;&#x88AB;&#x521B;&#x5EFA;&#x65F6;&#x8C03;&#x7528;&#x4E00;&#x6B21;&#xFF08;&#x5373;&#x4F7F;&#x811A;&#x672C;&#x672A;&#x542F;&#x7528;&#xFF09;&#x3002;<br>
+OnEnable()&#xFF1A;&#x6BCF;&#x5F53;&#x5BF9;&#x8C61;&#x53D8;&#x4E3A;&#x6FC0;&#x6D3B;/&#x542F;&#x7528;&#x72B6;&#x6001;&#x65F6;&#x8C03;&#x7528;&#x3002;<br>
+Start()&#xFF1A;&#x5728;&#x7B2C;&#x4E00;&#x6B21; Update &#x524D;&#xFF0C;&#x4E14;&#x811A;&#x672C;&#x542F;&#x7528;&#x65F6;&#x8C03;&#x7528;&#x4E00;&#x6B21;&#x3002;</li>
+<li>&#x66F4;&#x65B0;&#x5FAA;&#x73AF;&#x9636;&#x6BB5;&#xFF08;&#x6BCF;&#x5E27;&#xFF09;&#xFF1A;FixedUpdate() &#x2192; Update() &#x2192; LateUpdate()<br>
+FixedUpdate()&#xFF1A;&#x6309;&#x56FA;&#x5B9A;&#x65F6;&#x95F4;&#x6B65;&#x957F;&#x8C03;&#x7528;&#xFF08;&#x9ED8;&#x8BA4;0.02s&#xFF09;&#xFF0C;&#x7528;&#x4E8E;&#x7269;&#x7406;&#x8BA1;&#x7B97;&#x3002;<br>
+Update()&#xFF1A;&#x6BCF;&#x5E27;&#x8C03;&#x7528;&#x4E00;&#x6B21;&#xFF0C;&#x4E3B;&#x8981;&#x7684;&#x6E38;&#x620F;&#x903B;&#x8F91;&#x5165;&#x53E3;&#x3002;<br>
+LateUpdate()&#xFF1A;&#x5728; Update &#x548C;&#x6240;&#x6709;&#x52A8;&#x753B;&#x8BA1;&#x7B97;&#x4E4B;&#x540E;&#x8C03;&#x7528;&#xFF0C;&#x5E38;&#x7528;&#x4E8E;&#x6444;&#x50CF;&#x673A;&#x8DDF;&#x968F;&#x3002;</li>
+<li>&#x6E32;&#x67D3;&#x4E0E; GUI &#x9636;&#x6BB5;&#xFF1A;<br>
+OnGUI ()&#xFF1A;&#x5904;&#x7406; GUI &#x7ED8;&#x5236;&#x548C;&#x4E8B;&#x4EF6;&#xFF08;&#x5982;&#x6309;&#x94AE;&#x70B9;&#x51FB;&#xFF09;&#xFF0C;&#x8C03;&#x7528;&#x6B21;&#x6570;&#x4E0D;&#x56FA;&#x5B9A;&#xFF1B;<br>
+OnRenderObject ()&#xFF1A;&#x76F8;&#x673A;&#x6E32;&#x67D3;&#x5B8C;&#x6240;&#x6709;&#x7269;&#x4F53;&#x540E;&#x8C03;&#x7528;&#xFF0C;&#x9002;&#x5408;&#x81EA;&#x5B9A;&#x4E49;&#x6E32;&#x67D3;&#x903B;&#x8F91;&#x3002;</li>
+<li>&#x7ED3;&#x675F;/&#x9500;&#x6BC1;&#x9636;&#x6BB5;&#xFF1A;<br>
+OnDisable()&#xFF1A;&#x5F53;&#x5BF9;&#x8C61;&#x53D8;&#x4E3A;&#x975E;&#x6FC0;&#x6D3B;/&#x7981;&#x7528;&#x72B6;&#x6001;&#x65F6;&#x8C03;&#x7528;&#x3002;<br>
+OnDestroy()&#xFF1A;&#x5BF9;&#x8C61;&#x88AB;&#x9500;&#x6BC1;&#x524D;&#x8C03;&#x7528;&#x3002;</li>
 </ol>
-<h1><span id="onrenderobject方法的作用">OnRenderObject()方法的作用</span></h1>
-<p>在场景渲染完成后被调用，可以用于自定义渲染</p>
-<h1><span id="请尽可能多地列举在-unity-中索引或引用-gameobject-的不同方式">请尽可能多地列举在 Unity 中索引或引用 GameObject 的不同方式</span></h1>
-<p>GameObject.Find(string name)：通过名称全局查找（性能差）。<br>
-Transform.Find(string path)：在特定父物体下按路径查找子物体。<br>
-GameObject.FindWithTag() / GameObject.FindGameObjectsWithTag()：通过标签查找。<br>
-GameObject.FindObjectOfType<t>() / FindObjectsOfType<t>()：通过组件类型查找。<br>
-GetComponent<t>() / GetComponentInChildren<t>() / GetComponentInParent<t>()：获取组件，间接引用其挂载的GameObject。<br>
-序列化字段：在Inspector面板中拖拽赋值（public GameObject target; 或 [SerializeField] private GameObject target;）。<br>
-资源加载：通过 Resources.Load<gameobject>(path) 或 AssetBundle/Addressables 加载预制体实例化。<br>
-父子层级遍历：通过 transform.GetChild(index) 访问子物体。<br>
-发送消息/Broadcast：使用 SendMessage 或事件系统间接通信。</gameobject></t></t></t></t></t></p>
-<h1><span id="请写出一种可以完整构造-mesh-的数据结构">请写出一种可以完整构造 Mesh 的数据结构</span></h1>
-<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MeshData</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> Vector3[] vertices;      <span class="comment">// 顶点位置</span></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">int</span>[] triangles;         <span class="comment">// 三角形索引（每3个一组）</span></span><br><span class="line">    <span class="keyword">public</span> Vector2[] uv;            <span class="comment">// 纹理坐标（可选）</span></span><br><span class="line">    <span class="keyword">public</span> Vector3[] normals;       <span class="comment">// 法线（可选，可自动计算）</span></span><br><span class="line">    <span class="keyword">public</span> Color[] colors;          <span class="comment">// 顶点颜色（可选）</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1><span id="把struct改成classbug消失了你怎么看">把struct改成class，bug消失了你怎么看？</span></h1>
-<p>struct在作为参数传递或赋值时是拷贝，对副本的修改不影响原始数据。改为class后，传递的是引用，修改会生效。</p>
-<h1><span id="unity-有几种坐标系">Unity 有几种坐标系</span></h1>
-<p>世界坐标系（World Space）：场景全局坐标系，物体的绝对位置；<br>
-局部坐标系（Local Space）：物体自身坐标系，子物体相对于父物体的位置；<br>
-屏幕坐标系（Screen Space）：以像素为单位，原点在左下角（UI 系统常用）；<br>
-视口坐标系（Viewport Space）：归一化坐标系（0-1 范围），适配不同分辨率。</p>
-<h1><span id="你怎么管理游戏内存的">你怎么管理游戏内存的</span></h1>
-<p>资源管理：AB 包（AssetBundle）分包策略（按场景 / 资源类型分包）、异步加载（避免卡顿）、无用资源及时 Unload；<br>
-对象管理：对象池（Object Pool）复用频繁创建的物体（如子弹、敌人），减少 GC；<br>
-代码层面：减少装箱拆箱、避免频繁创建临时对象、合理使用值类型。</p>
-<h1><span id="unity渲染管线">Unity渲染管线</span></h1>
+<h1><span id="onrenderobject&#x65B9;&#x6CD5;&#x7684;&#x4F5C;&#x7528;">OnRenderObject()&#x65B9;&#x6CD5;&#x7684;&#x4F5C;&#x7528;</span><a href="#onrenderobject&#x65B9;&#x6CD5;&#x7684;&#x4F5C;&#x7528;" class="header-anchor">#</a></h1>
+<p>&#x5728;&#x573A;&#x666F;&#x6E32;&#x67D3;&#x5B8C;&#x6210;&#x540E;&#x88AB;&#x8C03;&#x7528;&#xFF0C;&#x53EF;&#x4EE5;&#x7528;&#x4E8E;&#x81EA;&#x5B9A;&#x4E49;&#x6E32;&#x67D3;</p>
+<h1><span id="&#x8BF7;&#x5C3D;&#x53EF;&#x80FD;&#x591A;&#x5730;&#x5217;&#x4E3E;&#x5728;-unity-&#x4E2D;&#x7D22;&#x5F15;&#x6216;&#x5F15;&#x7528;-gameobject-&#x7684;&#x4E0D;&#x540C;&#x65B9;&#x5F0F;">&#x8BF7;&#x5C3D;&#x53EF;&#x80FD;&#x591A;&#x5730;&#x5217;&#x4E3E;&#x5728; Unity &#x4E2D;&#x7D22;&#x5F15;&#x6216;&#x5F15;&#x7528; GameObject &#x7684;&#x4E0D;&#x540C;&#x65B9;&#x5F0F;</span><a href="#&#x8BF7;&#x5C3D;&#x53EF;&#x80FD;&#x591A;&#x5730;&#x5217;&#x4E3E;&#x5728;-unity-&#x4E2D;&#x7D22;&#x5F15;&#x6216;&#x5F15;&#x7528;-gameobject-&#x7684;&#x4E0D;&#x540C;&#x65B9;&#x5F0F;" class="header-anchor">#</a></h1>
+<p>GameObject.Find(string name)&#xFF1A;&#x901A;&#x8FC7;&#x540D;&#x79F0;&#x5168;&#x5C40;&#x67E5;&#x627E;&#xFF08;&#x6027;&#x80FD;&#x5DEE;&#xFF09;&#x3002;<br>
+Transform.Find(string path)&#xFF1A;&#x5728;&#x7279;&#x5B9A;&#x7236;&#x7269;&#x4F53;&#x4E0B;&#x6309;&#x8DEF;&#x5F84;&#x67E5;&#x627E;&#x5B50;&#x7269;&#x4F53;&#x3002;<br>
+GameObject.FindWithTag() / GameObject.FindGameObjectsWithTag()&#xFF1A;&#x901A;&#x8FC7;&#x6807;&#x7B7E;&#x67E5;&#x627E;&#x3002;<br>
+GameObject.FindObjectOfType<t>() / FindObjectsOfType<t>()&#xFF1A;&#x901A;&#x8FC7;&#x7EC4;&#x4EF6;&#x7C7B;&#x578B;&#x67E5;&#x627E;&#x3002;<br>
+GetComponent<t>() / GetComponentInChildren<t>() / GetComponentInParent<t>()&#xFF1A;&#x83B7;&#x53D6;&#x7EC4;&#x4EF6;&#xFF0C;&#x95F4;&#x63A5;&#x5F15;&#x7528;&#x5176;&#x6302;&#x8F7D;&#x7684;GameObject&#x3002;<br>
+&#x5E8F;&#x5217;&#x5316;&#x5B57;&#x6BB5;&#xFF1A;&#x5728;Inspector&#x9762;&#x677F;&#x4E2D;&#x62D6;&#x62FD;&#x8D4B;&#x503C;&#xFF08;public GameObject target; &#x6216; [SerializeField] private GameObject target;&#xFF09;&#x3002;<br>
+&#x8D44;&#x6E90;&#x52A0;&#x8F7D;&#xFF1A;&#x901A;&#x8FC7; Resources.Load<gameobject>(path) &#x6216; AssetBundle/Addressables &#x52A0;&#x8F7D;&#x9884;&#x5236;&#x4F53;&#x5B9E;&#x4F8B;&#x5316;&#x3002;<br>
+&#x7236;&#x5B50;&#x5C42;&#x7EA7;&#x904D;&#x5386;&#xFF1A;&#x901A;&#x8FC7; transform.GetChild(index) &#x8BBF;&#x95EE;&#x5B50;&#x7269;&#x4F53;&#x3002;<br>
+&#x53D1;&#x9001;&#x6D88;&#x606F;/Broadcast&#xFF1A;&#x4F7F;&#x7528; SendMessage &#x6216;&#x4E8B;&#x4EF6;&#x7CFB;&#x7EDF;&#x95F4;&#x63A5;&#x901A;&#x4FE1;&#x3002;</gameobject></t></t></t></t></t></p>
+<h1><span id="&#x8BF7;&#x5199;&#x51FA;&#x4E00;&#x79CD;&#x53EF;&#x4EE5;&#x5B8C;&#x6574;&#x6784;&#x9020;-mesh-&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;">&#x8BF7;&#x5199;&#x51FA;&#x4E00;&#x79CD;&#x53EF;&#x4EE5;&#x5B8C;&#x6574;&#x6784;&#x9020; Mesh &#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;</span><a href="#&#x8BF7;&#x5199;&#x51FA;&#x4E00;&#x79CD;&#x53EF;&#x4EE5;&#x5B8C;&#x6574;&#x6784;&#x9020;-mesh-&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;" class="header-anchor">#</a></h1>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MeshData</span> {</span><br><span class="line">    <span class="keyword">public</span> Vector3[] vertices;      <span class="comment">// &#x9876;&#x70B9;&#x4F4D;&#x7F6E;</span></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">int</span>[] triangles;         <span class="comment">// &#x4E09;&#x89D2;&#x5F62;&#x7D22;&#x5F15;&#xFF08;&#x6BCF;3&#x4E2A;&#x4E00;&#x7EC4;&#xFF09;</span></span><br><span class="line">    <span class="keyword">public</span> Vector2[] uv;            <span class="comment">// &#x7EB9;&#x7406;&#x5750;&#x6807;&#xFF08;&#x53EF;&#x9009;&#xFF09;</span></span><br><span class="line">    <span class="keyword">public</span> Vector3[] normals;       <span class="comment">// &#x6CD5;&#x7EBF;&#xFF08;&#x53EF;&#x9009;&#xFF0C;&#x53EF;&#x81EA;&#x52A8;&#x8BA1;&#x7B97;&#xFF09;</span></span><br><span class="line">    <span class="keyword">public</span> Color[] colors;          <span class="comment">// &#x9876;&#x70B9;&#x989C;&#x8272;&#xFF08;&#x53EF;&#x9009;&#xFF09;</span></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<h1><span id="&#x628A;struct&#x6539;&#x6210;classbug&#x6D88;&#x5931;&#x4E86;&#x4F60;&#x600E;&#x4E48;&#x770B;">&#x628A;struct&#x6539;&#x6210;class&#xFF0C;bug&#x6D88;&#x5931;&#x4E86;&#x4F60;&#x600E;&#x4E48;&#x770B;&#xFF1F;</span><a href="#&#x628A;struct&#x6539;&#x6210;classbug&#x6D88;&#x5931;&#x4E86;&#x4F60;&#x600E;&#x4E48;&#x770B;" class="header-anchor">#</a></h1>
+<p>struct&#x5728;&#x4F5C;&#x4E3A;&#x53C2;&#x6570;&#x4F20;&#x9012;&#x6216;&#x8D4B;&#x503C;&#x65F6;&#x662F;&#x62F7;&#x8D1D;&#xFF0C;&#x5BF9;&#x526F;&#x672C;&#x7684;&#x4FEE;&#x6539;&#x4E0D;&#x5F71;&#x54CD;&#x539F;&#x59CB;&#x6570;&#x636E;&#x3002;&#x6539;&#x4E3A;class&#x540E;&#xFF0C;&#x4F20;&#x9012;&#x7684;&#x662F;&#x5F15;&#x7528;&#xFF0C;&#x4FEE;&#x6539;&#x4F1A;&#x751F;&#x6548;&#x3002;</p>
+<h1><span id="unity-&#x6709;&#x51E0;&#x79CD;&#x5750;&#x6807;&#x7CFB;">Unity &#x6709;&#x51E0;&#x79CD;&#x5750;&#x6807;&#x7CFB;</span><a href="#unity-&#x6709;&#x51E0;&#x79CD;&#x5750;&#x6807;&#x7CFB;" class="header-anchor">#</a></h1>
+<p>&#x4E16;&#x754C;&#x5750;&#x6807;&#x7CFB;&#xFF08;World Space&#xFF09;&#xFF1A;&#x573A;&#x666F;&#x5168;&#x5C40;&#x5750;&#x6807;&#x7CFB;&#xFF0C;&#x7269;&#x4F53;&#x7684;&#x7EDD;&#x5BF9;&#x4F4D;&#x7F6E;&#xFF1B;<br>
+&#x5C40;&#x90E8;&#x5750;&#x6807;&#x7CFB;&#xFF08;Local Space&#xFF09;&#xFF1A;&#x7269;&#x4F53;&#x81EA;&#x8EAB;&#x5750;&#x6807;&#x7CFB;&#xFF0C;&#x5B50;&#x7269;&#x4F53;&#x76F8;&#x5BF9;&#x4E8E;&#x7236;&#x7269;&#x4F53;&#x7684;&#x4F4D;&#x7F6E;&#xFF1B;<br>
+&#x5C4F;&#x5E55;&#x5750;&#x6807;&#x7CFB;&#xFF08;Screen Space&#xFF09;&#xFF1A;&#x4EE5;&#x50CF;&#x7D20;&#x4E3A;&#x5355;&#x4F4D;&#xFF0C;&#x539F;&#x70B9;&#x5728;&#x5DE6;&#x4E0B;&#x89D2;&#xFF08;UI &#x7CFB;&#x7EDF;&#x5E38;&#x7528;&#xFF09;&#xFF1B;<br>
+&#x89C6;&#x53E3;&#x5750;&#x6807;&#x7CFB;&#xFF08;Viewport Space&#xFF09;&#xFF1A;&#x5F52;&#x4E00;&#x5316;&#x5750;&#x6807;&#x7CFB;&#xFF08;0-1 &#x8303;&#x56F4;&#xFF09;&#xFF0C;&#x9002;&#x914D;&#x4E0D;&#x540C;&#x5206;&#x8FA8;&#x7387;&#x3002;</p>
+<h1><span id="&#x4F60;&#x600E;&#x4E48;&#x7BA1;&#x7406;&#x6E38;&#x620F;&#x5185;&#x5B58;&#x7684;">&#x4F60;&#x600E;&#x4E48;&#x7BA1;&#x7406;&#x6E38;&#x620F;&#x5185;&#x5B58;&#x7684;</span><a href="#&#x4F60;&#x600E;&#x4E48;&#x7BA1;&#x7406;&#x6E38;&#x620F;&#x5185;&#x5B58;&#x7684;" class="header-anchor">#</a></h1>
+<p>&#x8D44;&#x6E90;&#x7BA1;&#x7406;&#xFF1A;AB &#x5305;&#xFF08;AssetBundle&#xFF09;&#x5206;&#x5305;&#x7B56;&#x7565;&#xFF08;&#x6309;&#x573A;&#x666F; / &#x8D44;&#x6E90;&#x7C7B;&#x578B;&#x5206;&#x5305;&#xFF09;&#x3001;&#x5F02;&#x6B65;&#x52A0;&#x8F7D;&#xFF08;&#x907F;&#x514D;&#x5361;&#x987F;&#xFF09;&#x3001;&#x65E0;&#x7528;&#x8D44;&#x6E90;&#x53CA;&#x65F6; Unload&#xFF1B;<br>
+&#x5BF9;&#x8C61;&#x7BA1;&#x7406;&#xFF1A;&#x5BF9;&#x8C61;&#x6C60;&#xFF08;Object Pool&#xFF09;&#x590D;&#x7528;&#x9891;&#x7E41;&#x521B;&#x5EFA;&#x7684;&#x7269;&#x4F53;&#xFF08;&#x5982;&#x5B50;&#x5F39;&#x3001;&#x654C;&#x4EBA;&#xFF09;&#xFF0C;&#x51CF;&#x5C11; GC&#xFF1B;<br>
+&#x4EE3;&#x7801;&#x5C42;&#x9762;&#xFF1A;&#x51CF;&#x5C11;&#x88C5;&#x7BB1;&#x62C6;&#x7BB1;&#x3001;&#x907F;&#x514D;&#x9891;&#x7E41;&#x521B;&#x5EFA;&#x4E34;&#x65F6;&#x5BF9;&#x8C61;&#x3001;&#x5408;&#x7406;&#x4F7F;&#x7528;&#x503C;&#x7C7B;&#x578B;&#x3002;</p>
+<h1><span id="unity&#x6E32;&#x67D3;&#x7BA1;&#x7EBF;">Unity&#x6E32;&#x67D3;&#x7BA1;&#x7EBF;</span><a href="#unity&#x6E32;&#x67D3;&#x7BA1;&#x7EBF;" class="header-anchor">#</a></h1>
 <ol>
-<li>内置渲染管线（Built-in Render Pipeline）<br>
-Unity 传统的默认渲染管线，属于固定功能管线（早期）+ 有限可编程管线<br>
-优点：上手快、配置简单，无需额外安装包，适合新手和快速原型开发；对旧项目兼容性好。<br>
-缺点：可定制化程度低，无法灵活调整渲染流程；优化空间有限，不支持光线追踪、体积雾等现代渲染特性；多平台适配时性能难以精细化控制。<br>
-适用场景：小型独立游戏、快速 Demo 验证、老项目维护。</li>
-<li>通用渲染管线（Universal Render Pipeline，URP）<br>
-定位：Unity 主推的 轻量化、跨平台可编程渲染管线（SRP），前身是 LWRP（轻量级渲染管线）。<br>
-核心特点<br>
-优点：可高度定制渲染路径（支持前向渲染、延迟渲染），能根据项目需求开关特性；性能可控，针对移动端、低配 PC 做了深度优化；支持 SRP 合批、光照探针、阴影分级等实用功能；体积小，接入成本低。<br>
-缺点：不支持光线追踪等高端特效，渲染上限低于 HDRP。<br>
-适用场景：移动端手游、2D 游戏、中小型 3D 游戏（面试高频，必须结合项目）</li>
-<li>高清渲染管线（High Definition Render Pipeline，HDRP）<br>
-面向 主机、高性能 PC 的高端可编程渲染管线，主打次世代视觉效果。<br>
-核心特点<br>
-优点：支持光线追踪、体积雾、屏幕空间反射（SSR）、高动态范围（HDR）光照、次表面散射等 3A 级特效；渲染质量极致，光影表现逼真；可定制化程度最高，能满足顶级视觉需求。<br>
-缺点：性能消耗大，对硬件要求高；不适合移动端；接入和调试成本高。<br>
-适用场景：3A 级别主机 / PC 游戏、影视级演示项目、视觉特效（VFX）项目。</li>
+<li>&#x5185;&#x7F6E;&#x6E32;&#x67D3;&#x7BA1;&#x7EBF;&#xFF08;Built-in Render Pipeline&#xFF09;<br>
+Unity &#x4F20;&#x7EDF;&#x7684;&#x9ED8;&#x8BA4;&#x6E32;&#x67D3;&#x7BA1;&#x7EBF;&#xFF0C;&#x5C5E;&#x4E8E;&#x56FA;&#x5B9A;&#x529F;&#x80FD;&#x7BA1;&#x7EBF;&#xFF08;&#x65E9;&#x671F;&#xFF09;+ &#x6709;&#x9650;&#x53EF;&#x7F16;&#x7A0B;&#x7BA1;&#x7EBF;<br>
+&#x4F18;&#x70B9;&#xFF1A;&#x4E0A;&#x624B;&#x5FEB;&#x3001;&#x914D;&#x7F6E;&#x7B80;&#x5355;&#xFF0C;&#x65E0;&#x9700;&#x989D;&#x5916;&#x5B89;&#x88C5;&#x5305;&#xFF0C;&#x9002;&#x5408;&#x65B0;&#x624B;&#x548C;&#x5FEB;&#x901F;&#x539F;&#x578B;&#x5F00;&#x53D1;&#xFF1B;&#x5BF9;&#x65E7;&#x9879;&#x76EE;&#x517C;&#x5BB9;&#x6027;&#x597D;&#x3002;<br>
+&#x7F3A;&#x70B9;&#xFF1A;&#x53EF;&#x5B9A;&#x5236;&#x5316;&#x7A0B;&#x5EA6;&#x4F4E;&#xFF0C;&#x65E0;&#x6CD5;&#x7075;&#x6D3B;&#x8C03;&#x6574;&#x6E32;&#x67D3;&#x6D41;&#x7A0B;&#xFF1B;&#x4F18;&#x5316;&#x7A7A;&#x95F4;&#x6709;&#x9650;&#xFF0C;&#x4E0D;&#x652F;&#x6301;&#x5149;&#x7EBF;&#x8FFD;&#x8E2A;&#x3001;&#x4F53;&#x79EF;&#x96FE;&#x7B49;&#x73B0;&#x4EE3;&#x6E32;&#x67D3;&#x7279;&#x6027;&#xFF1B;&#x591A;&#x5E73;&#x53F0;&#x9002;&#x914D;&#x65F6;&#x6027;&#x80FD;&#x96BE;&#x4EE5;&#x7CBE;&#x7EC6;&#x5316;&#x63A7;&#x5236;&#x3002;<br>
+&#x9002;&#x7528;&#x573A;&#x666F;&#xFF1A;&#x5C0F;&#x578B;&#x72EC;&#x7ACB;&#x6E38;&#x620F;&#x3001;&#x5FEB;&#x901F; Demo &#x9A8C;&#x8BC1;&#x3001;&#x8001;&#x9879;&#x76EE;&#x7EF4;&#x62A4;&#x3002;</li>
+<li>&#x901A;&#x7528;&#x6E32;&#x67D3;&#x7BA1;&#x7EBF;&#xFF08;Universal Render Pipeline&#xFF0C;URP&#xFF09;<br>
+&#x5B9A;&#x4F4D;&#xFF1A;Unity &#x4E3B;&#x63A8;&#x7684; &#x8F7B;&#x91CF;&#x5316;&#x3001;&#x8DE8;&#x5E73;&#x53F0;&#x53EF;&#x7F16;&#x7A0B;&#x6E32;&#x67D3;&#x7BA1;&#x7EBF;&#xFF08;SRP&#xFF09;&#xFF0C;&#x524D;&#x8EAB;&#x662F; LWRP&#xFF08;&#x8F7B;&#x91CF;&#x7EA7;&#x6E32;&#x67D3;&#x7BA1;&#x7EBF;&#xFF09;&#x3002;<br>
+&#x6838;&#x5FC3;&#x7279;&#x70B9;<br>
+&#x4F18;&#x70B9;&#xFF1A;&#x53EF;&#x9AD8;&#x5EA6;&#x5B9A;&#x5236;&#x6E32;&#x67D3;&#x8DEF;&#x5F84;&#xFF08;&#x652F;&#x6301;&#x524D;&#x5411;&#x6E32;&#x67D3;&#x3001;&#x5EF6;&#x8FDF;&#x6E32;&#x67D3;&#xFF09;&#xFF0C;&#x80FD;&#x6839;&#x636E;&#x9879;&#x76EE;&#x9700;&#x6C42;&#x5F00;&#x5173;&#x7279;&#x6027;&#xFF1B;&#x6027;&#x80FD;&#x53EF;&#x63A7;&#xFF0C;&#x9488;&#x5BF9;&#x79FB;&#x52A8;&#x7AEF;&#x3001;&#x4F4E;&#x914D; PC &#x505A;&#x4E86;&#x6DF1;&#x5EA6;&#x4F18;&#x5316;&#xFF1B;&#x652F;&#x6301; SRP &#x5408;&#x6279;&#x3001;&#x5149;&#x7167;&#x63A2;&#x9488;&#x3001;&#x9634;&#x5F71;&#x5206;&#x7EA7;&#x7B49;&#x5B9E;&#x7528;&#x529F;&#x80FD;&#xFF1B;&#x4F53;&#x79EF;&#x5C0F;&#xFF0C;&#x63A5;&#x5165;&#x6210;&#x672C;&#x4F4E;&#x3002;<br>
+&#x7F3A;&#x70B9;&#xFF1A;&#x4E0D;&#x652F;&#x6301;&#x5149;&#x7EBF;&#x8FFD;&#x8E2A;&#x7B49;&#x9AD8;&#x7AEF;&#x7279;&#x6548;&#xFF0C;&#x6E32;&#x67D3;&#x4E0A;&#x9650;&#x4F4E;&#x4E8E; HDRP&#x3002;<br>
+&#x9002;&#x7528;&#x573A;&#x666F;&#xFF1A;&#x79FB;&#x52A8;&#x7AEF;&#x624B;&#x6E38;&#x3001;2D &#x6E38;&#x620F;&#x3001;&#x4E2D;&#x5C0F;&#x578B; 3D &#x6E38;&#x620F;&#xFF08;&#x9762;&#x8BD5;&#x9AD8;&#x9891;&#xFF0C;&#x5FC5;&#x987B;&#x7ED3;&#x5408;&#x9879;&#x76EE;&#xFF09;</li>
+<li>&#x9AD8;&#x6E05;&#x6E32;&#x67D3;&#x7BA1;&#x7EBF;&#xFF08;High Definition Render Pipeline&#xFF0C;HDRP&#xFF09;<br>
+&#x9762;&#x5411; &#x4E3B;&#x673A;&#x3001;&#x9AD8;&#x6027;&#x80FD; PC &#x7684;&#x9AD8;&#x7AEF;&#x53EF;&#x7F16;&#x7A0B;&#x6E32;&#x67D3;&#x7BA1;&#x7EBF;&#xFF0C;&#x4E3B;&#x6253;&#x6B21;&#x4E16;&#x4EE3;&#x89C6;&#x89C9;&#x6548;&#x679C;&#x3002;<br>
+&#x6838;&#x5FC3;&#x7279;&#x70B9;<br>
+&#x4F18;&#x70B9;&#xFF1A;&#x652F;&#x6301;&#x5149;&#x7EBF;&#x8FFD;&#x8E2A;&#x3001;&#x4F53;&#x79EF;&#x96FE;&#x3001;&#x5C4F;&#x5E55;&#x7A7A;&#x95F4;&#x53CD;&#x5C04;&#xFF08;SSR&#xFF09;&#x3001;&#x9AD8;&#x52A8;&#x6001;&#x8303;&#x56F4;&#xFF08;HDR&#xFF09;&#x5149;&#x7167;&#x3001;&#x6B21;&#x8868;&#x9762;&#x6563;&#x5C04;&#x7B49; 3A &#x7EA7;&#x7279;&#x6548;&#xFF1B;&#x6E32;&#x67D3;&#x8D28;&#x91CF;&#x6781;&#x81F4;&#xFF0C;&#x5149;&#x5F71;&#x8868;&#x73B0;&#x903C;&#x771F;&#xFF1B;&#x53EF;&#x5B9A;&#x5236;&#x5316;&#x7A0B;&#x5EA6;&#x6700;&#x9AD8;&#xFF0C;&#x80FD;&#x6EE1;&#x8DB3;&#x9876;&#x7EA7;&#x89C6;&#x89C9;&#x9700;&#x6C42;&#x3002;<br>
+&#x7F3A;&#x70B9;&#xFF1A;&#x6027;&#x80FD;&#x6D88;&#x8017;&#x5927;&#xFF0C;&#x5BF9;&#x786C;&#x4EF6;&#x8981;&#x6C42;&#x9AD8;&#xFF1B;&#x4E0D;&#x9002;&#x5408;&#x79FB;&#x52A8;&#x7AEF;&#xFF1B;&#x63A5;&#x5165;&#x548C;&#x8C03;&#x8BD5;&#x6210;&#x672C;&#x9AD8;&#x3002;<br>
+&#x9002;&#x7528;&#x573A;&#x666F;&#xFF1A;3A &#x7EA7;&#x522B;&#x4E3B;&#x673A; / PC &#x6E38;&#x620F;&#x3001;&#x5F71;&#x89C6;&#x7EA7;&#x6F14;&#x793A;&#x9879;&#x76EE;&#x3001;&#x89C6;&#x89C9;&#x7279;&#x6548;&#xFF08;VFX&#xFF09;&#x9879;&#x76EE;&#x3002;</li>
 </ol>
-<h1><span id></span></h1>
+<h1><span id></span><a href="#" class="header-anchor">#</a></h1>
 
     </div>
 
@@ -407,7 +407,7 @@ Unity 传统的默认渲染管线，属于固定功能管线（早期）+ 有限
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">MIT许可证的主要要求是：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">什么是“对象池”？在Unity中实现一个简单的对象池需要包含哪些核心功能？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">Shadow Pass在视野外会被渲染吗？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">动态链接库（DLL）在程序运行时被加载到内存中，可以被多个程序共享使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">[InitializeOnLoad] 是编辑器特性，仅在Unity编辑器启动或重新编译脚本后执行，打包后不会执行</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">Physics.Raycast 的结果与 Time.timeScale 的关系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">Development Build 和 Release Build 的代码裁剪行为是完全一致的吗？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">Root Motion 在 FixedUpdate 下会更精确？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">简述 Unity 中 MonoBehaviour 脚本的生命周期（主要方法执行顺序）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">OnRenderObject()方法的作用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">请尽可能多地列举在 Unity 中索引或引用 GameObject 的不同方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">请写出一种可以完整构造 Mesh 的数据结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">把struct改成class，bug消失了你怎么看？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">Unity 有几种坐标系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">你怎么管理游戏内存的</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">Unity渲染管线</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text"></span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">MIT许可证的主要要求是：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">什么是“对象池”？在Unity中实现一个简单的对象池需要包含哪些核心功能？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">Shadow Pass在视野外会被渲染吗？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">动态链接库（DLL）在程序运行时被加载到内存中，可以被多个程序共享使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">[InitializeOnLoad] 是编辑器特性，仅在Unity编辑器启动或重新编译脚本后执行，打包后不会执行</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">Physics.Raycast 的结果与 Time.timeScale 的关系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">Development Build 和 Release Build 的代码裁剪行为是完全一致的吗？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">Root Motion 在 FixedUpdate 下会更精确？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">简述 Unity 中 MonoBehaviour 脚本的生命周期（主要方法执行顺序）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">OnRenderObject()方法的作用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">请尽可能多地列举在 Unity 中索引或引用 GameObject 的不同方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">请写出一种可以完整构造 Mesh 的数据结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">把struct改成class，bug消失了你怎么看？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">Unity 有几种坐标系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">你怎么管理游戏内存的</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">Unity渲染管线</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">#</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -556,5 +556,6 @@ setInterval("createtime()",250);
 
   
 
+<script src="/js/fix-toc.js"></script>
 </body>
 </html>

@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"originone494.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="一、工程文件夹  Assets：工程资源文件夹（美术资源、脚本等） Library：库文件夹（Unity自动生成管理） Logs：日志文件夹，记录特殊信息（Unity自动生成管理） obj：编译产生的中间文件（Unity自动生成管理） Packages：包配置信息（Unity自动生成管理） ProjectSettings：工程设置信息（Unity自动生成管理）  二、Unity的工作机制 本质上就">
+  <meta name="description" content="&#x4E00;&#x3001;&#x5DE5;&#x7A0B;&#x6587;&#x4EF6;&#x5939;#  Assets&#xFF1A;&#x5DE5;&#x7A0B;&#x8D44;&#x6E90;&#x6587;&#x4EF6;&#x5939;&#xFF08;&#x7F8E;&#x672F;&#x8D44;&#x6E90;&#x3001;&#x811A;&#x672C;&amp;#x7B49">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Unity入门知识总结">
 <meta property="og:url" content="https://originone494.github.io/2026/01/06/UnityIntroduction/index.html">
 <meta property="og:site_name" content="OneBlog">
-<meta property="og:description" content="一、工程文件夹  Assets：工程资源文件夹（美术资源、脚本等） Library：库文件夹（Unity自动生成管理） Logs：日志文件夹，记录特殊信息（Unity自动生成管理） obj：编译产生的中间文件（Unity自动生成管理） Packages：包配置信息（Unity自动生成管理） ProjectSettings：工程设置信息（Unity自动生成管理）  二、Unity的工作机制 本质上就">
+<meta property="og:description" content="&#x4E00;&#x3001;&#x5DE5;&#x7A0B;&#x6587;&#x4EF6;&#x5939;#  Assets&#xFF1A;&#x5DE5;&#x7A0B;&#x8D44;&#x6E90;&#x6587;&#x4EF6;&#x5939;&#xFF08;&#x7F8E;&#x672F;&#x8D44;&#x6E90;&#x3001;&#x811A;&#x672C;&amp;#x7B49">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://originone494.github.io/2026/01/06/UnityIntroduction/1.png">
 <meta property="og:image" content="https://originone494.github.io/2026/01/06/UnityIntroduction/2.png">
@@ -259,104 +259,104 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1><span id="一-工程文件夹">一、工程文件夹</span></h1>
+        <h1><span id="&#x4E00;-&#x5DE5;&#x7A0B;&#x6587;&#x4EF6;&#x5939;">&#x4E00;&#x3001;&#x5DE5;&#x7A0B;&#x6587;&#x4EF6;&#x5939;</span><a href="#&#x4E00;-&#x5DE5;&#x7A0B;&#x6587;&#x4EF6;&#x5939;" class="header-anchor">#</a></h1>
 <ol>
-<li>Assets：工程资源文件夹（美术资源、脚本等）</li>
-<li>Library：库文件夹（Unity自动生成管理）</li>
-<li>Logs：日志文件夹，记录特殊信息（Unity自动生成管理）</li>
-<li>obj：编译产生的中间文件（Unity自动生成管理）</li>
-<li>Packages：包配置信息（Unity自动生成管理）</li>
-<li>ProjectSettings：工程设置信息（Unity自动生成管理）</li>
+<li>Assets&#xFF1A;&#x5DE5;&#x7A0B;&#x8D44;&#x6E90;&#x6587;&#x4EF6;&#x5939;&#xFF08;&#x7F8E;&#x672F;&#x8D44;&#x6E90;&#x3001;&#x811A;&#x672C;&#x7B49;&#xFF09;</li>
+<li>Library&#xFF1A;&#x5E93;&#x6587;&#x4EF6;&#x5939;&#xFF08;Unity&#x81EA;&#x52A8;&#x751F;&#x6210;&#x7BA1;&#x7406;&#xFF09;</li>
+<li>Logs&#xFF1A;&#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#x5939;&#xFF0C;&#x8BB0;&#x5F55;&#x7279;&#x6B8A;&#x4FE1;&#x606F;&#xFF08;Unity&#x81EA;&#x52A8;&#x751F;&#x6210;&#x7BA1;&#x7406;&#xFF09;</li>
+<li>obj&#xFF1A;&#x7F16;&#x8BD1;&#x4EA7;&#x751F;&#x7684;&#x4E2D;&#x95F4;&#x6587;&#x4EF6;&#xFF08;Unity&#x81EA;&#x52A8;&#x751F;&#x6210;&#x7BA1;&#x7406;&#xFF09;</li>
+<li>Packages&#xFF1A;&#x5305;&#x914D;&#x7F6E;&#x4FE1;&#x606F;&#xFF08;Unity&#x81EA;&#x52A8;&#x751F;&#x6210;&#x7BA1;&#x7406;&#xFF09;</li>
+<li>ProjectSettings&#xFF1A;&#x5DE5;&#x7A0B;&#x8BBE;&#x7F6E;&#x4FE1;&#x606F;&#xFF08;Unity&#x81EA;&#x52A8;&#x751F;&#x6210;&#x7BA1;&#x7406;&#xFF09;</li>
 </ol>
-<h1><span id="二-unity的工作机制">二、Unity的工作机制</span></h1>
-<p>本质上就是利用反射，动态地创建GameObject对象并且关联各种C#脚本对象在其上，让不同的GameObject对象各司其职。</p>
-<h1><span id="三-预制体">三、预制体</span></h1>
-<p>预制体本质是某个游戏物体的模板，可以通过预制体来创建游戏物体，并且游戏物体的初始属性等于预制体的属性。</p>
-<h1><span id="三-monobehavior基类">三、MonoBehavior基类</span></h1>
+<h1><span id="&#x4E8C;-unity&#x7684;&#x5DE5;&#x4F5C;&#x673A;&#x5236;">&#x4E8C;&#x3001;Unity&#x7684;&#x5DE5;&#x4F5C;&#x673A;&#x5236;</span><a href="#&#x4E8C;-unity&#x7684;&#x5DE5;&#x4F5C;&#x673A;&#x5236;" class="header-anchor">#</a></h1>
+<p>&#x672C;&#x8D28;&#x4E0A;&#x5C31;&#x662F;&#x5229;&#x7528;&#x53CD;&#x5C04;&#xFF0C;&#x52A8;&#x6001;&#x5730;&#x521B;&#x5EFA;GameObject&#x5BF9;&#x8C61;&#x5E76;&#x4E14;&#x5173;&#x8054;&#x5404;&#x79CD;C#&#x811A;&#x672C;&#x5BF9;&#x8C61;&#x5728;&#x5176;&#x4E0A;&#xFF0C;&#x8BA9;&#x4E0D;&#x540C;&#x7684;GameObject&#x5BF9;&#x8C61;&#x5404;&#x53F8;&#x5176;&#x804C;&#x3002;</p>
+<h1><span id="&#x4E09;-&#x9884;&#x5236;&#x4F53;">&#x4E09;&#x3001;&#x9884;&#x5236;&#x4F53;</span><a href="#&#x4E09;-&#x9884;&#x5236;&#x4F53;" class="header-anchor">#</a></h1>
+<p>&#x9884;&#x5236;&#x4F53;&#x672C;&#x8D28;&#x662F;&#x67D0;&#x4E2A;&#x6E38;&#x620F;&#x7269;&#x4F53;&#x7684;&#x6A21;&#x677F;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x9884;&#x5236;&#x4F53;&#x6765;&#x521B;&#x5EFA;&#x6E38;&#x620F;&#x7269;&#x4F53;&#xFF0C;&#x5E76;&#x4E14;&#x6E38;&#x620F;&#x7269;&#x4F53;&#x7684;&#x521D;&#x59CB;&#x5C5E;&#x6027;&#x7B49;&#x4E8E;&#x9884;&#x5236;&#x4F53;&#x7684;&#x5C5E;&#x6027;&#x3002;</p>
+<h1><span id="&#x4E09;-monobehavior&#x57FA;&#x7C7B;">&#x4E09;&#x3001;MonoBehavior&#x57FA;&#x7C7B;</span><a href="#&#x4E09;-monobehavior&#x57FA;&#x7C7B;" class="header-anchor">#</a></h1>
 <ol>
-<li>创建的脚本默认都继承MonoBehavior，继承MonoBehavior才能挂载到GameObject上</li>
-<li>继承了MonoBehavior的脚本不能使用new来创建</li>
-<li>继承了MonoBehavior的脚本不需要写构造函数，因为我们不会去通过new来创建</li>
-<li>继承了MonoBehavior的类可以再次被继承，遵循面向对象继承多态的规则</li>
+<li>&#x521B;&#x5EFA;&#x7684;&#x811A;&#x672C;&#x9ED8;&#x8BA4;&#x90FD;&#x7EE7;&#x627F;MonoBehavior&#xFF0C;&#x7EE7;&#x627F;MonoBehavior&#x624D;&#x80FD;&#x6302;&#x8F7D;&#x5230;GameObject&#x4E0A;</li>
+<li>&#x7EE7;&#x627F;&#x4E86;MonoBehavior&#x7684;&#x811A;&#x672C;&#x4E0D;&#x80FD;&#x4F7F;&#x7528;new&#x6765;&#x521B;&#x5EFA;</li>
+<li>&#x7EE7;&#x627F;&#x4E86;MonoBehavior&#x7684;&#x811A;&#x672C;&#x4E0D;&#x9700;&#x8981;&#x5199;&#x6784;&#x9020;&#x51FD;&#x6570;&#xFF0C;&#x56E0;&#x4E3A;&#x6211;&#x4EEC;&#x4E0D;&#x4F1A;&#x53BB;&#x901A;&#x8FC7;new&#x6765;&#x521B;&#x5EFA;</li>
+<li>&#x7EE7;&#x627F;&#x4E86;MonoBehavior&#x7684;&#x7C7B;&#x53EF;&#x4EE5;&#x518D;&#x6B21;&#x88AB;&#x7EE7;&#x627F;&#xFF0C;&#x9075;&#x5FAA;&#x9762;&#x5411;&#x5BF9;&#x8C61;&#x7EE7;&#x627F;&#x591A;&#x6001;&#x7684;&#x89C4;&#x5219;</li>
 </ol>
-<h1><span id="四-生命周期">四、生命周期</span></h1>
+<h1><span id="&#x56DB;-&#x751F;&#x547D;&#x5468;&#x671F;">&#x56DB;&#x3001;&#x751F;&#x547D;&#x5468;&#x671F;</span><a href="#&#x56DB;-&#x751F;&#x547D;&#x5468;&#x671F;" class="header-anchor">#</a></h1>
 <ol>
-<li>Awake():创建时调用，类似于构造函数，一个对象只会调用一次</li>
-<li>OnEnable():依附的GameObject对象每次激活时调用</li>
-<li>Start():被创建出来后，第一次帧更新之前调用，一个对象只会调用一次</li>
-<li>FixedUpdate():物理帧更新，固定间隔时间执行</li>
-<li>Update():逻辑帧更新，每帧执行</li>
-<li>LateUpdate():每帧执行，于Update之后执行</li>
-<li>OnDisable():依附的GameObject对象每次被关闭时调用</li>
-<li>OnDestroy():对象销毁时调用，或者依附的GameObject对象被删除时</li>
+<li>Awake():&#x521B;&#x5EFA;&#x65F6;&#x8C03;&#x7528;&#xFF0C;&#x7C7B;&#x4F3C;&#x4E8E;&#x6784;&#x9020;&#x51FD;&#x6570;&#xFF0C;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x53EA;&#x4F1A;&#x8C03;&#x7528;&#x4E00;&#x6B21;</li>
+<li>OnEnable():&#x4F9D;&#x9644;&#x7684;GameObject&#x5BF9;&#x8C61;&#x6BCF;&#x6B21;&#x6FC0;&#x6D3B;&#x65F6;&#x8C03;&#x7528;</li>
+<li>Start():&#x88AB;&#x521B;&#x5EFA;&#x51FA;&#x6765;&#x540E;&#xFF0C;&#x7B2C;&#x4E00;&#x6B21;&#x5E27;&#x66F4;&#x65B0;&#x4E4B;&#x524D;&#x8C03;&#x7528;&#xFF0C;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x53EA;&#x4F1A;&#x8C03;&#x7528;&#x4E00;&#x6B21;</li>
+<li>FixedUpdate():&#x7269;&#x7406;&#x5E27;&#x66F4;&#x65B0;&#xFF0C;&#x56FA;&#x5B9A;&#x95F4;&#x9694;&#x65F6;&#x95F4;&#x6267;&#x884C;</li>
+<li>Update():&#x903B;&#x8F91;&#x5E27;&#x66F4;&#x65B0;&#xFF0C;&#x6BCF;&#x5E27;&#x6267;&#x884C;</li>
+<li>LateUpdate():&#x6BCF;&#x5E27;&#x6267;&#x884C;&#xFF0C;&#x4E8E;Update&#x4E4B;&#x540E;&#x6267;&#x884C;</li>
+<li>OnDisable():&#x4F9D;&#x9644;&#x7684;GameObject&#x5BF9;&#x8C61;&#x6BCF;&#x6B21;&#x88AB;&#x5173;&#x95ED;&#x65F6;&#x8C03;&#x7528;</li>
+<li>OnDestroy():&#x5BF9;&#x8C61;&#x9500;&#x6BC1;&#x65F6;&#x8C03;&#x7528;&#xFF0C;&#x6216;&#x8005;&#x4F9D;&#x9644;&#x7684;GameObject&#x5BF9;&#x8C61;&#x88AB;&#x5220;&#x9664;&#x65F6;</li>
 </ol>
-<h1><span id="五-inspector窗口可编辑的变量">五、Inspector窗口可编辑的变量</span></h1>
+<h1><span id="&#x4E94;-inspector&#x7A97;&#x53E3;&#x53EF;&#x7F16;&#x8F91;&#x7684;&#x53D8;&#x91CF;">&#x4E94;&#x3001;Inspector&#x7A97;&#x53E3;&#x53EF;&#x7F16;&#x8F91;&#x7684;&#x53D8;&#x91CF;</span><a href="#&#x4E94;-inspector&#x7A97;&#x53E3;&#x53EF;&#x7F16;&#x8F91;&#x7684;&#x53D8;&#x91CF;" class="header-anchor">#</a></h1>
 <ol>
-<li>私有和保护无法显示编辑</li>
-<li>[SerializerField]为强制序列化字段，可以让私有的和保护的也可以被显示</li>
-<li>公共的可以显示编辑</li>
-<li>[HideInInspector]字段可以让公共的不可以显示编辑</li>
-<li>大部分类型都可以显示编辑，但一般情况下，字典、自定义结构体、自定义类即使是公共的，也不会在Inspector窗口显示</li>
-<li>使用[System.Serializable]字段可以让自定义结构体和自定义类在Inspector窗口显示，但字典不行</li>
-<li>[Header(“”)]为成员分组</li>
+<li>&#x79C1;&#x6709;&#x548C;&#x4FDD;&#x62A4;&#x65E0;&#x6CD5;&#x663E;&#x793A;&#x7F16;&#x8F91;</li>
+<li>[SerializerField]&#x4E3A;&#x5F3A;&#x5236;&#x5E8F;&#x5217;&#x5316;&#x5B57;&#x6BB5;&#xFF0C;&#x53EF;&#x4EE5;&#x8BA9;&#x79C1;&#x6709;&#x7684;&#x548C;&#x4FDD;&#x62A4;&#x7684;&#x4E5F;&#x53EF;&#x4EE5;&#x88AB;&#x663E;&#x793A;</li>
+<li>&#x516C;&#x5171;&#x7684;&#x53EF;&#x4EE5;&#x663E;&#x793A;&#x7F16;&#x8F91;</li>
+<li>[HideInInspector]&#x5B57;&#x6BB5;&#x53EF;&#x4EE5;&#x8BA9;&#x516C;&#x5171;&#x7684;&#x4E0D;&#x53EF;&#x4EE5;&#x663E;&#x793A;&#x7F16;&#x8F91;</li>
+<li>&#x5927;&#x90E8;&#x5206;&#x7C7B;&#x578B;&#x90FD;&#x53EF;&#x4EE5;&#x663E;&#x793A;&#x7F16;&#x8F91;&#xFF0C;&#x4F46;&#x4E00;&#x822C;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x5B57;&#x5178;&#x3001;&#x81EA;&#x5B9A;&#x4E49;&#x7ED3;&#x6784;&#x4F53;&#x3001;&#x81EA;&#x5B9A;&#x4E49;&#x7C7B;&#x5373;&#x4F7F;&#x662F;&#x516C;&#x5171;&#x7684;&#xFF0C;&#x4E5F;&#x4E0D;&#x4F1A;&#x5728;Inspector&#x7A97;&#x53E3;&#x663E;&#x793A;</li>
+<li>&#x4F7F;&#x7528;[System.Serializable]&#x5B57;&#x6BB5;&#x53EF;&#x4EE5;&#x8BA9;&#x81EA;&#x5B9A;&#x4E49;&#x7ED3;&#x6784;&#x4F53;&#x548C;&#x81EA;&#x5B9A;&#x4E49;&#x7C7B;&#x5728;Inspector&#x7A97;&#x53E3;&#x663E;&#x793A;&#xFF0C;&#x4F46;&#x5B57;&#x5178;&#x4E0D;&#x884C;</li>
+<li>[Header(&#x201C;&#x201D;)]&#x4E3A;&#x6210;&#x5458;&#x5206;&#x7EC4;</li>
 </ol>
-<img src="/2026/01/06/UnityIntroduction/1.png" class title="图片">
-<img src="/2026/01/06/UnityIntroduction/2.png" class title="图片">
+<img src="/2026/01/06/UnityIntroduction/1.png" class title="&#x56FE;&#x7247;">
+<img src="/2026/01/06/UnityIntroduction/2.png" class title="&#x56FE;&#x7247;">
 <ol start="8">
-<li>[Tooltip(“”)]可以为变量添加说明</li>
+<li>[Tooltip(&#x201C;&#x201D;)]&#x53EF;&#x4EE5;&#x4E3A;&#x53D8;&#x91CF;&#x6DFB;&#x52A0;&#x8BF4;&#x660E;</li>
 </ol>
-<img src="/2026/01/06/UnityIntroduction/3.png" class title="图片">
-<img src="/2026/01/06/UnityIntroduction/4.png" class title="图片">
+<img src="/2026/01/06/UnityIntroduction/3.png" class title="&#x56FE;&#x7247;">
+<img src="/2026/01/06/UnityIntroduction/4.png" class title="&#x56FE;&#x7247;">
 <ol start="9">
-<li>[Space()]可以让两个字段间出现间隔</li>
+<li>[Space()]&#x53EF;&#x4EE5;&#x8BA9;&#x4E24;&#x4E2A;&#x5B57;&#x6BB5;&#x95F4;&#x51FA;&#x73B0;&#x95F4;&#x9694;</li>
 </ol>
-<img src="/2026/01/06/UnityIntroduction/5.png" class title="图片">
-<img src="/2026/01/06/UnityIntroduction/6.png" class title="图片">
+<img src="/2026/01/06/UnityIntroduction/5.png" class title="&#x56FE;&#x7247;">
+<img src="/2026/01/06/UnityIntroduction/6.png" class title="&#x56FE;&#x7247;">
 <ol start="10">
-<li>[Range(0,10)]修饰数值的滑条范围</li>
-<li>[Multiline(5)]可以多行显示字符串</li>
-<li>[TextArea(3,4)]可以滚动条显示字符串，最少显示3行，最多4行，超过4行就显示滚动条</li>
-<li>[ContextMenuItem(“按钮名”,“方法名”)]可以为变量添加快捷方法，方法不能有参数</li>
-<li>[ContextMenu(“按钮名”)]可以为脚本添加方法名</li>
+<li>[Range(0,10)]&#x4FEE;&#x9970;&#x6570;&#x503C;&#x7684;&#x6ED1;&#x6761;&#x8303;&#x56F4;</li>
+<li>[Multiline(5)]&#x53EF;&#x4EE5;&#x591A;&#x884C;&#x663E;&#x793A;&#x5B57;&#x7B26;&#x4E32;</li>
+<li>[TextArea(3,4)]&#x53EF;&#x4EE5;&#x6EDA;&#x52A8;&#x6761;&#x663E;&#x793A;&#x5B57;&#x7B26;&#x4E32;&#xFF0C;&#x6700;&#x5C11;&#x663E;&#x793A;3&#x884C;&#xFF0C;&#x6700;&#x591A;4&#x884C;&#xFF0C;&#x8D85;&#x8FC7;4&#x884C;&#x5C31;&#x663E;&#x793A;&#x6EDA;&#x52A8;&#x6761;</li>
+<li>[ContextMenuItem(&#x201C;&#x6309;&#x94AE;&#x540D;&#x201D;,&#x201C;&#x65B9;&#x6CD5;&#x540D;&#x201D;)]&#x53EF;&#x4EE5;&#x4E3A;&#x53D8;&#x91CF;&#x6DFB;&#x52A0;&#x5FEB;&#x6377;&#x65B9;&#x6CD5;&#xFF0C;&#x65B9;&#x6CD5;&#x4E0D;&#x80FD;&#x6709;&#x53C2;&#x6570;</li>
+<li>[ContextMenu(&#x201C;&#x6309;&#x94AE;&#x540D;&#x201D;)]&#x53EF;&#x4EE5;&#x4E3A;&#x811A;&#x672C;&#x6DFB;&#x52A0;&#x65B9;&#x6CD5;&#x540D;</li>
 </ol>
-<img src="/2026/01/06/UnityIntroduction/7.png" class title="图片">
-<h1><span id="六-monobehavior中的重要内容">六、MonoBehavior中的重要内容</span></h1>
-<h2><span id="重要成员">重要成员</span></h2>
+<img src="/2026/01/06/UnityIntroduction/7.png" class title="&#x56FE;&#x7247;">
+<h1><span id="&#x516D;-monobehavior&#x4E2D;&#x7684;&#x91CD;&#x8981;&#x5185;&#x5BB9;">&#x516D;&#x3001;MonoBehavior&#x4E2D;&#x7684;&#x91CD;&#x8981;&#x5185;&#x5BB9;</span><a href="#&#x516D;-monobehavior&#x4E2D;&#x7684;&#x91CD;&#x8981;&#x5185;&#x5BB9;" class="header-anchor">#</a></h1>
+<h2><span id="&#x91CD;&#x8981;&#x6210;&#x5458;">&#x91CD;&#x8981;&#x6210;&#x5458;</span><a href="#&#x91CD;&#x8981;&#x6210;&#x5458;" class="header-anchor">#</a></h2>
 <ol>
-<li>获取依附的GameObject<br>
+<li>&#x83B7;&#x53D6;&#x4F9D;&#x9644;&#x7684;GameObject<br>
 <code>this.GameObject</code></li>
-<li>获取依附的GameObject的信息<br>
-名字：<code>this.GameObject.name</code><br>
-位置：<code>this.GameObject.transform.position</code><br>
-角度：<code>this.GameObject.transform.eulerAngles</code><br>
-缩放大小：<code>this.GameObject.transform.lossyScale</code></li>
-<li>获取脚本是否激活<br>
+<li>&#x83B7;&#x53D6;&#x4F9D;&#x9644;&#x7684;GameObject&#x7684;&#x4FE1;&#x606F;<br>
+&#x540D;&#x5B57;&#xFF1A;<code>this.GameObject.name</code><br>
+&#x4F4D;&#x7F6E;&#xFF1A;<code>this.GameObject.transform.position</code><br>
+&#x89D2;&#x5EA6;&#xFF1A;<code>this.GameObject.transform.eulerAngles</code><br>
+&#x7F29;&#x653E;&#x5927;&#x5C0F;&#xFF1A;<code>this.GameObject.transform.lossyScale</code></li>
+<li>&#x83B7;&#x53D6;&#x811A;&#x672C;&#x662F;&#x5426;&#x6FC0;&#x6D3B;<br>
 <code>this.enabled</code></li>
 </ol>
-<h2><span id="重要方法">重要方法</span></h2>
+<h2><span id="&#x91CD;&#x8981;&#x65B9;&#x6CD5;">&#x91CD;&#x8981;&#x65B9;&#x6CD5;</span><a href="#&#x91CD;&#x8981;&#x65B9;&#x6CD5;" class="header-anchor">#</a></h2>
 <ol>
-<li>获取自身挂载的单个脚本</li>
+<li>&#x83B7;&#x53D6;&#x81EA;&#x8EAB;&#x6302;&#x8F7D;&#x7684;&#x5355;&#x4E2A;&#x811A;&#x672C;</li>
 </ol>
-<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Test为脚本类</span></span><br><span class="line">Test t = <span class="keyword">this</span>.GetComponent(<span class="string">&quot;Name&quot;</span>) <span class="keyword">as</span> Test;<span class="comment">//根据脚本名获取</span></span><br><span class="line">t = <span class="keyword">this</span>.GetComponent(<span class="keyword">typeof</span>(Test)) <span class="keyword">as</span> Test;<span class="comment">//根据类型获取</span></span><br><span class="line">t = <span class="keyword">this</span>.GetComponent&lt;Test&gt;();<span class="comment">//根据泛型获取，推荐使用</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Test&#x4E3A;&#x811A;&#x672C;&#x7C7B;</span></span><br><span class="line">Test t = <span class="keyword">this</span>.GetComponent(<span class="string">&quot;Name&quot;</span>) <span class="keyword">as</span> Test;<span class="comment">//&#x6839;&#x636E;&#x811A;&#x672C;&#x540D;&#x83B7;&#x53D6;</span></span><br><span class="line">t = <span class="keyword">this</span>.GetComponent(<span class="keyword">typeof</span>(Test)) <span class="keyword">as</span> Test;<span class="comment">//&#x6839;&#x636E;&#x7C7B;&#x578B;&#x83B7;&#x53D6;</span></span><br><span class="line">t = <span class="keyword">this</span>.GetComponent&lt;Test&gt;();<span class="comment">//&#x6839;&#x636E;&#x6CDB;&#x578B;&#x83B7;&#x53D6;&#xFF0C;&#x63A8;&#x8350;&#x4F7F;&#x7528;</span></span><br></pre></td></tr></table></figure>
 <ol start="2">
-<li>获取自身挂载的多个脚本</li>
+<li>&#x83B7;&#x53D6;&#x81EA;&#x8EAB;&#x6302;&#x8F7D;&#x7684;&#x591A;&#x4E2A;&#x811A;&#x672C;</li>
 </ol>
 <figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Test[] array = <span class="keyword">this</span>.GetComponent&lt;Test&gt;();</span><br><span class="line"></span><br><span class="line">List&lt;Test&gt; list = <span class="keyword">new</span> List&lt;Test&gt;();</span><br><span class="line"><span class="keyword">this</span>.GetComponents&lt;Test&gt;(list);</span><br></pre></td></tr></table></figure>
 <ol start="3">
-<li>获取子对象挂载的脚本</li>
+<li>&#x83B7;&#x53D6;&#x5B50;&#x5BF9;&#x8C61;&#x6302;&#x8F7D;&#x7684;&#x811A;&#x672C;</li>
 </ol>
-<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//单个</span></span><br><span class="line">Test t = <span class="keyword">this</span>.GetComponentInChildren&lt;Test&gt;(<span class="literal">true</span>);<span class="comment">//参数若为false，则如果子对象失活，则不会去找这个子对象身上是否有某脚本</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//多个</span></span><br><span class="line">Test[] array = <span class="keyword">this</span>.GetComponentsInChildren&lt;Test&gt;(<span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">List&lt;Test&gt; list = <span class="keyword">new</span> List&lt;Test&gt;();</span><br><span class="line"><span class="keyword">this</span>.GetComponentsInChildren&lt;Test&gt;(<span class="literal">true</span>,list);</span><br></pre></td></tr></table></figure>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//&#x5355;&#x4E2A;</span></span><br><span class="line">Test t = <span class="keyword">this</span>.GetComponentInChildren&lt;Test&gt;(<span class="literal">true</span>);<span class="comment">//&#x53C2;&#x6570;&#x82E5;&#x4E3A;false&#xFF0C;&#x5219;&#x5982;&#x679C;&#x5B50;&#x5BF9;&#x8C61;&#x5931;&#x6D3B;&#xFF0C;&#x5219;&#x4E0D;&#x4F1A;&#x53BB;&#x627E;&#x8FD9;&#x4E2A;&#x5B50;&#x5BF9;&#x8C61;&#x8EAB;&#x4E0A;&#x662F;&#x5426;&#x6709;&#x67D0;&#x811A;&#x672C;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//&#x591A;&#x4E2A;</span></span><br><span class="line">Test[] array = <span class="keyword">this</span>.GetComponentsInChildren&lt;Test&gt;(<span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">List&lt;Test&gt; list = <span class="keyword">new</span> List&lt;Test&gt;();</span><br><span class="line"><span class="keyword">this</span>.GetComponentsInChildren&lt;Test&gt;(<span class="literal">true</span>,list);</span><br></pre></td></tr></table></figure>
 <ol start="4">
-<li>获取父对象挂载的脚本<br>
-父对象和自己挂同名脚本，则获取单个脚本时会获取到自己的，子对象同理。<br>
-父对象失活，则子对象一定失活。<br>
-搜索范围包括自己、父物体、父物体的父物体…，子对象同理。</li>
+<li>&#x83B7;&#x53D6;&#x7236;&#x5BF9;&#x8C61;&#x6302;&#x8F7D;&#x7684;&#x811A;&#x672C;<br>
+&#x7236;&#x5BF9;&#x8C61;&#x548C;&#x81EA;&#x5DF1;&#x6302;&#x540C;&#x540D;&#x811A;&#x672C;&#xFF0C;&#x5219;&#x83B7;&#x53D6;&#x5355;&#x4E2A;&#x811A;&#x672C;&#x65F6;&#x4F1A;&#x83B7;&#x53D6;&#x5230;&#x81EA;&#x5DF1;&#x7684;&#xFF0C;&#x5B50;&#x5BF9;&#x8C61;&#x540C;&#x7406;&#x3002;<br>
+&#x7236;&#x5BF9;&#x8C61;&#x5931;&#x6D3B;&#xFF0C;&#x5219;&#x5B50;&#x5BF9;&#x8C61;&#x4E00;&#x5B9A;&#x5931;&#x6D3B;&#x3002;<br>
+&#x641C;&#x7D22;&#x8303;&#x56F4;&#x5305;&#x62EC;&#x81EA;&#x5DF1;&#x3001;&#x7236;&#x7269;&#x4F53;&#x3001;&#x7236;&#x7269;&#x4F53;&#x7684;&#x7236;&#x7269;&#x4F53;&#x2026;&#xFF0C;&#x5B50;&#x5BF9;&#x8C61;&#x540C;&#x7406;&#x3002;</li>
 </ol>
-<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//单个</span></span><br><span class="line">Test t = <span class="keyword">this</span>.GetComponentsInParent&lt;Test&gt;();</span><br><span class="line"></span><br><span class="line"><span class="comment">//多个</span></span><br><span class="line">Test[] array = <span class="keyword">this</span>.GetComponentsInParent&lt;Test&gt;(<span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">List&lt;Test&gt; list = <span class="keyword">new</span> List&lt;Test&gt;();</span><br><span class="line"><span class="keyword">this</span>.GetComponentsInParent&lt;Test&gt;(<span class="literal">true</span>,list);</span><br></pre></td></tr></table></figure>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//&#x5355;&#x4E2A;</span></span><br><span class="line">Test t = <span class="keyword">this</span>.GetComponentsInParent&lt;Test&gt;();</span><br><span class="line"></span><br><span class="line"><span class="comment">//&#x591A;&#x4E2A;</span></span><br><span class="line">Test[] array = <span class="keyword">this</span>.GetComponentsInParent&lt;Test&gt;(<span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">List&lt;Test&gt; list = <span class="keyword">new</span> List&lt;Test&gt;();</span><br><span class="line"><span class="keyword">this</span>.GetComponentsInParent&lt;Test&gt;(<span class="literal">true</span>,list);</span><br></pre></td></tr></table></figure>
 <ol start="5">
-<li>尝试获取脚本</li>
+<li>&#x5C1D;&#x8BD5;&#x83B7;&#x53D6;&#x811A;&#x672C;</li>
 </ol>
-<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//一个更安全获取单个脚本的方法，如果得到了，则返回true</span></span><br><span class="line">Test t;</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">this</span>.TryGetComponent&lt;Test&gt;(<span class="keyword">out</span> t))&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//&#x4E00;&#x4E2A;&#x66F4;&#x5B89;&#x5168;&#x83B7;&#x53D6;&#x5355;&#x4E2A;&#x811A;&#x672C;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x5982;&#x679C;&#x5F97;&#x5230;&#x4E86;&#xFF0C;&#x5219;&#x8FD4;&#x56DE;true</span></span><br><span class="line">Test t;</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">this</span>.TryGetComponent&lt;Test&gt;(<span class="keyword">out</span> t)){</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -585,5 +585,6 @@ setInterval("createtime()",250);
 
   
 
+<script src="/js/fix-toc.js"></script>
 </body>
 </html>
