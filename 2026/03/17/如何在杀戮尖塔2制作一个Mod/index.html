@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"originone494.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="一、下载godot godot下载链接：https:&#x2F;&#x2F;godotengine.org&#x2F;download&#x2F;archive&#x2F;4.5.1-stable&#x2F; 注意选择.NET版本  下载好后可以得到一个压缩包，压缩后里面有两个exe文件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何在杀戮尖塔2制作一个Mod（一）">
+<meta property="og:url" content="https://originone494.github.io/2026/03/17/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AAMod/index.html">
+<meta property="og:site_name" content="OneBlog">
+<meta property="og:description" content="一、下载godot godot下载链接：https:&#x2F;&#x2F;godotengine.org&#x2F;download&#x2F;archive&#x2F;4.5.1-stable&#x2F; 注意选择.NET版本  下载好后可以得到一个压缩包，压缩后里面有两个exe文件">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://originone494.github.io/2026/03/17/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AAMod/1.png">
+<meta property="og:image" content="https://originone494.github.io/2026/03/17/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AAMod/2.png">
+<meta property="og:image" content="https://originone494.github.io/2026/03/17/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AAMod/5.png">
+<meta property="og:image" content="https://originone494.github.io/2026/03/17/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AAMod/6.png">
+<meta property="og:image" content="https://originone494.github.io/2026/03/17/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AAMod/11.png">
+<meta property="og:image" content="https://originone494.github.io/2026/03/17/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AAMod/10.png">
+<meta property="og:image" content="https://originone494.github.io/2026/03/17/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AAMod/9.png">
+<meta property="og:image" content="https://originone494.github.io/2026/03/17/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AAMod/12.png">
+<meta property="og:image" content="https://originone494.github.io/2026/03/17/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AAMod/3.png">
+<meta property="og:image" content="https://originone494.github.io/2026/03/17/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AAMod/4.png">
+<meta property="og:image" content="https://originone494.github.io/2026/03/17/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AAMod/13.png">
+<meta property="og:image" content="https://originone494.github.io/2026/03/17/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AAMod/14.png">
+<meta property="og:image" content="https://originone494.github.io/2026/03/17/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AAMod/15.png">
+<meta property="article:published_time" content="2026-03-17T12:34:03.000Z">
+<meta property="article:modified_time" content="2026-03-17T14:11:11.818Z">
+<meta property="article:author" content="ITTT">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://originone494.github.io/2026/03/17/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AAMod/1.png">
+
+<link rel="canonical" href="https://originone494.github.io/2026/03/17/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AAMod/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>如何在杀戮尖塔2制作一个Mod（一） | OneBlog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">OneBlog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://originone494.github.io/2026/03/17/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AAMod/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ITTT">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="OneBlog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          如何在杀戮尖塔2制作一个Mod（一）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2026-03-17 20:34:03 / 修改时间：22:11:11" itemprop="dateCreated datePublished" datetime="2026-03-17T20:34:03+08:00">2026-03-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%85%B6%E4%BB%96/" itemprop="url" rel="index"><span itemprop="name">其他</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>8 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1><span id="一-下载godot">一、下载godot</span></h1>
+<p>godot下载链接：<a target="_blank" rel="noopener" href="https://godotengine.org/download/archive/4.5.1-stable/">https://godotengine.org/download/archive/4.5.1-stable/</a></p>
+<p>注意选择.NET版本</p>
+<img src="/2026/03/17/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AAMod/1.png" class>
+<p>下载好后可以得到一个压缩包，压缩后里面有两个exe文件</p>
+<img src="/2026/03/17/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AAMod/2.png" class>
+<p>这是安装程序吗？不是，这就是Godot release的所有内容。解压到任何地方，点击上面那个就可以启动Godot（_console后缀的可以从控制台启动，在控制台中显示各类输出信息，常规开发不需要使用）</p>
+<p>没错，这一个文件就是Godot的全部，你可以到处移动到处用。所有的功能都在里面。没有安装，没有注册登录。</p>
+<h1><span id="二-将vscode作为godot的外部编辑器">二、将Vscode作为godot的外部编辑器</span></h1>
+<ol>
+<li>Vscode安装 godot-tools插件</li>
+</ol>
+<img src="/2026/03/17/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AAMod/5.png" class>
+<ol start="2">
+<li>点击插件扩展设置</li>
+</ol>
+<img src="/2026/03/17/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AAMod/6.png" class>
+<img src="/2026/03/17/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AAMod/11.png" class>
+<img src="/2026/03/17/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AAMod/10.png" class>
+<p>Editor_path: 你的godot引擎的exe路径</p>
+<p>GDscript_lsp_server_host: godot引擎语言服务器ip</p>
+<p>GDscript_lsp_server_host: godot引擎语言服务器端口号</p>
+<p>注意：语言服务器设置这里要跟Godot编辑器的设置对应上。对应的godot编辑器的设置：</p>
+<p>编辑器-&gt; 编辑器设置 -&gt; 网络 -&gt; 调试 -&gt; 远程主机、远程端口</p>
+<p>记得勾选高级设置</p>
+<img src="/2026/03/17/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AAMod/9.png" class>
+<ol start="3">
+<li>在godot编辑器中进行设置</li>
+</ol>
+<p>使用外部编辑器：√</p>
+<p>可执行文件路径：vscode可执行exe的路径</p>
+<p>执行参数：{project} --goto  {file}:{line}:{col}</p>
+<img src="/2026/03/17/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AAMod/12.png" class>
+<h1><span id="三-创建项目">三、创建项目</span></h1>
+<p>创建一个项目，渲染器尽量选择移动，和游戏保持一致</p>
+<img src="/2026/03/17/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AAMod/3.png" class title="alt text">
+<h1><span id="四-创建c解决方案">四、创建C#解决方案</span></h1>
+<img src="/2026/03/17/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AAMod/4.png" class title="alt text">
+<h1><span id="五-创建modidjson">五、创建{modid}.json</span></h1>
+<p>用VS Code打开项目文件夹。创建一个新文件（双击资源管理器或者右键新建文件），名字为{modid}.json。modid建议和项目名以及其中内容相同。填写以下内容。(记得删掉注释)</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;id&quot;</span>: <span class="string">&quot;MyMod&quot;</span>,           <span class="comment">// 必填，唯一 ID，建议和项目名一致</span></span><br><span class="line">  <span class="string">&quot;name&quot;</span>: <span class="string">&quot;我的 Mod&quot;</span>,</span><br><span class="line">  <span class="string">&quot;author&quot;</span>: <span class="string">&quot;作者名&quot;</span>,</span><br><span class="line">  <span class="string">&quot;description&quot;</span>: <span class="string">&quot;Mod 描述&quot;</span>,</span><br><span class="line">  <span class="string">&quot;version&quot;</span>: <span class="string">&quot;1.0&quot;</span>,</span><br><span class="line">  <span class="string">&quot;has_pck&quot;</span>: <span class="literal">true</span>,         <span class="comment">// 是否有 .pck 资源包</span></span><br><span class="line">  <span class="string">&quot;has_dll&quot;</span>: <span class="literal">true</span>,        <span class="comment">// 是否有 .dll 代码</span></span><br><span class="line">  <span class="string">&quot;dependencies&quot;</span>: [<span class="string">&quot;&quot;</span>],     <span class="comment">// 依赖的其他mod id</span></span><br><span class="line">  <span class="string">&quot;affects_gameplay&quot;</span>: <span class="literal">true</span> <span class="comment">// 多人模式时是否影响内容，如果是替换模型和优化等不影响内容的mod可填false，默认true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1><span id="六-修改csproj">六、修改.csproj</span></h1>
+<p>打开你的.csproj文件，修改并换成以下内容：</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&lt;Project Sdk=<span class="string">&quot;Godot.NET.Sdk/4.5.1&quot;</span>&gt;</span><br><span class="line">  &lt;PropertyGroup&gt;</span><br><span class="line">    &lt;TargetFramework&gt;net9<span class="number">.0</span>&lt;/TargetFramework&gt;</span><br><span class="line">    &lt;ImplicitUsings&gt;<span class="literal">true</span>&lt;/ImplicitUsings&gt;</span><br><span class="line">    &lt;LangVersion&gt;<span class="number">12.0</span>&lt;/LangVersion&gt;</span><br><span class="line">    &lt;Nullable&gt;enable&lt;/Nullable&gt;</span><br><span class="line">    &lt;AllowUnsafeBlocks&gt;<span class="literal">true</span>&lt;/AllowUnsafeBlocks&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 改成你的杀戮尖塔<span class="number">2</span>目录 --&gt;</span><br><span class="line">    &lt;Sts2Dir&gt;D:\xxx\Steam\steamapps\common\Slay the Spire <span class="number">2</span>&lt;/Sts2Dir&gt;</span><br><span class="line">    &lt;Sts2DataDir&gt;$(Sts2Dir)\data_sts2_windows_x86_64&lt;/Sts2DataDir&gt;</span><br><span class="line">  &lt;/PropertyGroup&gt;</span><br><span class="line"></span><br><span class="line">  &lt;ItemGroup&gt;</span><br><span class="line">    &lt;Reference Include=<span class="string">&quot;sts2&quot;</span>&gt;</span><br><span class="line">      &lt;HintPath&gt;$(Sts2DataDir)\sts2.dll&lt;/HintPath&gt;</span><br><span class="line">      &lt;Private&gt;<span class="literal">false</span>&lt;/Private&gt;</span><br><span class="line">    &lt;/Reference&gt;</span><br><span class="line"></span><br><span class="line">    &lt;Reference Include=<span class="string">&quot;0Harmony&quot;</span>&gt;</span><br><span class="line">      &lt;HintPath&gt;$(Sts2DataDir)\<span class="number">0</span>Harmony.dll&lt;/HintPath&gt;</span><br><span class="line">      &lt;Private&gt;<span class="literal">false</span>&lt;/Private&gt;</span><br><span class="line">    &lt;/Reference&gt;</span><br><span class="line">  &lt;/ItemGroup&gt;</span><br><span class="line"></span><br><span class="line">  &lt;!-- 自动复制dll和json --&gt;</span><br><span class="line">  &lt;Target Name=<span class="string">&quot;Copy Mod&quot;</span> AfterTargets=<span class="string">&quot;PostBuildEvent&quot;</span>&gt;</span><br><span class="line">    &lt;Message Text=<span class="string">&quot;Copying mod to Slay the Spire 2 mods folder...&quot;</span> Importance=<span class="string">&quot;high&quot;</span> /&gt;</span><br><span class="line">    &lt;MakeDir Directories=<span class="string">&quot;$(Sts2Dir)\mods\&quot; /&gt;</span></span><br><span class="line"><span class="string">    &lt;Copy SourceFiles=&quot;</span>$(TargetPath)<span class="string">&quot; DestinationFolder=&quot;</span>$(Sts2Dir)\mods\$(MSBuildProjectName)\<span class="string">&quot; /&gt;</span></span><br><span class="line"><span class="string">    &lt;Copy SourceFiles=&quot;</span>$(MSBuildProjectName).json<span class="string">&quot; DestinationFolder=&quot;</span>$(Sts2Dir)/mods/$(MSBuildProjectName)/<span class="string">&quot; /&gt;</span></span><br><span class="line"><span class="string">  &lt;/Target&gt;</span></span><br><span class="line"><span class="string">&lt;/Project&gt;</span></span><br></pre></td></tr></table></figure>
+<h1><span id="七-创建entrycs">七、创建Entry.cs</span></h1>
+<p>创建一个Scripts文件夹，创建一个Entry.cs文件（两者命名随意，为了整洁美观）。内容改成以下：</p>
+<p>建议命名空间第一段改成你自己的，不要用Test以免后续更改麻烦。另外不要忘记每个文件都加上namespace！</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Godot.Bridge;</span><br><span class="line"><span class="keyword">using</span> HarmonyLib;</span><br><span class="line"><span class="keyword">using</span> MegaCrit.Sts2.Core.Logging;</span><br><span class="line"><span class="keyword">using</span> MegaCrit.Sts2.Core.Modding;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">Test.Scripts</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 必须要加的属性，用于注册Mod。字符串和初始化函数命名一致。</span></span><br><span class="line">[<span class="meta">ModInitializer(<span class="string">&quot;Init&quot;</span>)</span>]</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Entry</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 初始化函数</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Init</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 打patch（即修改游戏代码的功能）用</span></span><br><span class="line">        <span class="comment">// 传入参数随意，只要不和其他人撞车即可</span></span><br><span class="line">        <span class="keyword">var</span> harmony = <span class="keyword">new</span> Harmony(<span class="string">&quot;sts2.reme.testmod&quot;</span>);</span><br><span class="line">        harmony.PatchAll();</span><br><span class="line">        <span class="comment">// 使得tscn可以加载自定义脚本</span></span><br><span class="line">        ScriptManagerBridge.LookupScriptsInAssembly(<span class="keyword">typeof</span>(Entry).Assembly);</span><br><span class="line">        Log.Debug(<span class="string">&quot;Mod initialized!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>写入这段代码可能会发生报错。</p>
+<ol>
+<li>using HarmonyLib和using MegaCrit报错</li>
+</ol>
+<p>不知道报错的原因，.csproj文件里面也有这两个依赖。</p>
+<p>我在网上找了一会解决方法，找着找着，什么都还没做，报错就消失了。</p>
+<ol start="2">
+<li>using Godot.Bridge报错</li>
+</ol>
+<p>可能原因是.NET版本不同导致，我的.NET版本为8.0，.csproj文件中设置的版本为9.0。</p>
+<p><a target="_blank" rel="noopener" href="http://xn--ldrr53a.NET">前往.NET</a> 9.0的下载地址：<a target="_blank" rel="noopener" href="https://dotnet.microsoft.com/zh-cn/download/dotnet/9.0">https://dotnet.microsoft.com/zh-cn/download/dotnet/9.0</a></p>
+<p><a target="_blank" rel="noopener" href="http://xn--ghq880n.NET">下载.NET</a> 9.0 SDK</p>
+<p>下载后，进入cmd，cd到你的项目中，执行命令dotnet build。</p>
+<p>如果成功，会显示以下信息：</p>
+<img src="/2026/03/17/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AAMod/13.png" class title="alt text">
+<p>进入vscode，可以看到报错消失</p>
+<h1><span id="八-构建dll">八、构建DLL</span></h1>
+<p>按下ctrl+shift+b选择dotnet: build，或者终端命令行输入dotnet build创建dll文件。由于之前.csproj文件的配置，dll文件自动复制到游戏根目录的mods文件夹里了。</p>
+<h1><span id="九-导出pck">九、导出PCK</span></h1>
+<p>回到Godot编辑器，点击项目→导出，点击上方的添加一个windows预设（如果没有导出模板的话，似乎要下载一个导出模版。不过我没有导出模版，也成功导出了，不知道为什么）</p>
+<p>然后，点击导出pck/zip，把文件名字改成[项目名].pck。</p>
+<p>文件夹选择你之前导出的dll同名目录，也就是游戏目录下的mods目录。</p>
+<p>注意一定得是pck！！！</p>
+<h1><span id="十-了解导出结果">十、了解导出结果</span></h1>
+<p>现在你的mods文件夹里有一个你的mod命名的文件夹，里面有一个dll文件、一个pck文件和一个json文件，这三个文件是构成一个mod的组件。</p>
+<p>dll文件是mod的代码。如果你没有代码，可以不要。如果你之后改动了代码，只要重新build一下就行。</p>
+<p>pck文件是mod的素材资源。如果你没有素材，可以不要。如果你没有素材上的变动，不需要重新打包一次pck。</p>
+<p>json文件是mod的配置文件，是必须的。</p>
+<h1><span id="十一-运行并验证">十一、运行并验证</span></h1>
+<p>运行游戏。第一次会提示是否开启mod，选择是，然后游戏会关闭，打开第二次即可，如果右下角显示“已加载模组”即加载成功。</p>
+<img src="/2026/03/17/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AAMod/14.png" class title="alt text">
+<img src="/2026/03/17/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AAMod/15.png" class title="alt text">
+<p>如果发现自己的存档丢失，是正常的。</p>
+<p>因为尖塔2不安装模组和安装模组的存档是分开的。</p>
+<p>所以当你玩模组版时需要复制一份非模组版的存档。</p>
+<p>存档位置：C:\Users[用户名]\AppData\Roaming\SlayTheSpire2\steam[你的steamid]</p>
+<p>把profile1等复制到modded里即可。</p>
+<h1><span id="参考文献">参考文献</span></h1>
+<p><a target="_blank" rel="noopener" href="https://glitchedreme.github.io/SlayTheSpire2ModdingTutorials/docs/01-env-setup/">https://glitchedreme.github.io/SlayTheSpire2ModdingTutorials/docs/01-env-setup/</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/678998729">https://zhuanlan.zhihu.com/p/678998729</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42140780/article/details/134763264">https://blog.csdn.net/qq_42140780/article/details/134763264</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2026/03/17/STL/" rel="prev" title="STL">
+      <i class="fa fa-chevron-left"></i> STL
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">一、下载godot</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">二、将Vscode作为godot的外部编辑器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">三、创建项目</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">四、创建C#解决方案</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">五、创建{modid}.json</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">六、修改.csproj</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">七、创建Entry.cs</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">八、构建DLL</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">九、导出PCK</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">十、了解导出结果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">十一、运行并验证</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">参考文献</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ITTT"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">ITTT</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/originone494" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;originone494" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:2531293780@qq.com" title="E-Mail → mailto:2531293780@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ITTT</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">80k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:26</span>
+</div>
+
+<!-- 网站运行时间的设置 -->
+<span id="timeDate">载入天数...</span>
+<span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("12/29/2025 17:04:14"); //此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒.";
+    }
+setInterval("createtime()",250);
+</script>
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
