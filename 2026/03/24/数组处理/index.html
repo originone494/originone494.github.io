@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"originone494.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="&#x4E8C;&#x5206;&#x67E5;&#x627E;# 12345678910111213141516171819class Solution {public:    int search(vector&lt;int&gt;&amp; nums, int target) {        int left &#x3D; 0;        int right &#x3D; nums.size(); &#x2F;&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数组处理">
+<meta property="og:url" content="https://originone494.github.io/2026/03/24/%E6%95%B0%E7%BB%84%E5%A4%84%E7%90%86/index.html">
+<meta property="og:site_name" content="OneBlog">
+<meta property="og:description" content="&#x4E8C;&#x5206;&#x67E5;&#x627E;# 12345678910111213141516171819class Solution {public:    int search(vector&lt;int&gt;&amp; nums, int target) {        int left &#x3D; 0;        int right &#x3D; nums.size(); &#x2F;&#x2F;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://originone494.github.io/2026/03/24/%E6%95%B0%E7%BB%84%E5%A4%84%E7%90%86/%E7%A7%BB%E9%99%A4%E5%85%83%E7%B4%A0-%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95.gif">
+<meta property="og:image" content="https://originone494.github.io/2026/03/24/%E6%95%B0%E7%BB%84%E5%A4%84%E7%90%86/%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84%E7%9A%84%E5%B9%B3%E6%96%B9.gif">
+<meta property="og:image" content="https://originone494.github.io/2026/03/24/%E6%95%B0%E7%BB%84%E5%A4%84%E7%90%86/%E9%95%BF%E5%BA%A6%E6%9C%80%E5%B0%8F%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84.gif">
+<meta property="article:published_time" content="2026-03-24T03:52:07.000Z">
+<meta property="article:modified_time" content="2026-03-24T08:44:33.837Z">
+<meta property="article:author" content="ITTT">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://originone494.github.io/2026/03/24/%E6%95%B0%E7%BB%84%E5%A4%84%E7%90%86/%E7%A7%BB%E9%99%A4%E5%85%83%E7%B4%A0-%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95.gif">
+
+<link rel="canonical" href="https://originone494.github.io/2026/03/24/%E6%95%B0%E7%BB%84%E5%A4%84%E7%90%86/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>数组处理 | OneBlog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">OneBlog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://originone494.github.io/2026/03/24/%E6%95%B0%E7%BB%84%E5%A4%84%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ITTT">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="OneBlog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数组处理
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2026-03-24 11:52:07 / 修改时间：16:44:33" itemprop="dateCreated datePublished" datetime="2026-03-24T11:52:07+08:00">2026-03-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>10 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1><span id="&#x4E8C;&#x5206;&#x67E5;&#x627E;">&#x4E8C;&#x5206;&#x67E5;&#x627E;</span><a href="#&#x4E8C;&#x5206;&#x67E5;&#x627E;" class="header-anchor">#</a></h1>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> {</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">search</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> target)</span> </span>{</span><br><span class="line">        <span class="type">int</span> left = <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> right = nums.<span class="built_in">size</span>(); <span class="comment">// &#x5B9A;&#x4E49;target&#x5728;&#x5DE6;&#x95ED;&#x53F3;&#x5F00;&#x7684;&#x533A;&#x95F4;&#x91CC;&#xFF0C;&#x5373;&#xFF1A;[left, right)</span></span><br><span class="line">        <span class="keyword">while</span> (left &lt; right) { <span class="comment">// &#x56E0;&#x4E3A;left == right&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x5728;[left, right)&#x662F;&#x65E0;&#x6548;&#x7684;&#x7A7A;&#x95F4;&#xFF0C;&#x6240;&#x4EE5;&#x4F7F;&#x7528; &lt;</span></span><br><span class="line">            <span class="type">int</span> middle = left + ((right - left) &gt;&gt; <span class="number">1</span>);</span><br><span class="line">            <span class="keyword">if</span> (nums[middle] &gt; target) {</span><br><span class="line">                right = middle; <span class="comment">// target &#x5728;&#x5DE6;&#x533A;&#x95F4;&#xFF0C;&#x5728;[left, middle)&#x4E2D;</span></span><br><span class="line">            } <span class="keyword">else</span> <span class="keyword">if</span> (nums[middle] &lt; target) {</span><br><span class="line">                left = middle + <span class="number">1</span>; <span class="comment">// target &#x5728;&#x53F3;&#x533A;&#x95F4;&#xFF0C;&#x5728;[middle + 1, right)&#x4E2D;</span></span><br><span class="line">            } <span class="keyword">else</span> { <span class="comment">// nums[middle] == target</span></span><br><span class="line">                <span class="keyword">return</span> middle; <span class="comment">// &#x6570;&#x7EC4;&#x4E2D;&#x627E;&#x5230;&#x76EE;&#x6807;&#x503C;&#xFF0C;&#x76F4;&#x63A5;&#x8FD4;&#x56DE;&#x4E0B;&#x6807;</span></span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        <span class="comment">// &#x672A;&#x627E;&#x5230;&#x76EE;&#x6807;&#x503C;</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    }</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
+<h1><span id="&#x539F;&#x5730;&#x79FB;&#x9664;&#x5143;&#x7D20;">&#x539F;&#x5730;&#x79FB;&#x9664;&#x5143;&#x7D20;</span><a href="#&#x539F;&#x5730;&#x79FB;&#x9664;&#x5143;&#x7D20;" class="header-anchor">#</a></h1>
+<h2><span id="&#x66B4;&#x529B;&#x6CD5;">&#x66B4;&#x529B;&#x6CD5;</span><a href="#&#x66B4;&#x529B;&#x6CD5;" class="header-anchor">#</a></h2>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// &#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#xFF1A;O(n^2)</span></span><br><span class="line"><span class="comment">// &#x7A7A;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#xFF1A;O(1)</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">removeElement</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> val)</span> </span>{</span><br><span class="line">        <span class="type">int</span> size = nums.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; size; i++) {</span><br><span class="line">            <span class="keyword">if</span> (nums[i] == val) { <span class="comment">// &#x53D1;&#x73B0;&#x9700;&#x8981;&#x79FB;&#x9664;&#x7684;&#x5143;&#x7D20;&#xFF0C;&#x5C31;&#x5C06;&#x6570;&#x7EC4;&#x96C6;&#x4F53;&#x5411;&#x524D;&#x79FB;&#x52A8;&#x4E00;&#x4F4D;</span></span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> j = i + <span class="number">1</span>; j &lt; size; j++) {</span><br><span class="line">                    nums[j - <span class="number">1</span>] = nums[j];</span><br><span class="line">                }</span><br><span class="line">                i--; <span class="comment">// &#x56E0;&#x4E3A;&#x4E0B;&#x6807;i&#x4EE5;&#x540E;&#x7684;&#x6570;&#x503C;&#x90FD;&#x5411;&#x524D;&#x79FB;&#x52A8;&#x4E86;&#x4E00;&#x4F4D;&#xFF0C;&#x6240;&#x4EE5;i&#x4E5F;&#x5411;&#x524D;&#x79FB;&#x52A8;&#x4E00;&#x4F4D;</span></span><br><span class="line">                size--; <span class="comment">// &#x6B64;&#x65F6;&#x6570;&#x7EC4;&#x7684;&#x5927;&#x5C0F;-1</span></span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">return</span> size;</span><br><span class="line"></span><br><span class="line">    }</span><br></pre></td></tr></table></figure>
+<h2><span id="&#x53CC;&#x6307;&#x9488;&#x6CD5;">&#x53CC;&#x6307;&#x9488;&#x6CD5;</span><a href="#&#x53CC;&#x6307;&#x9488;&#x6CD5;" class="header-anchor">#</a></h2>
+<p>&#x53CC;&#x6307;&#x9488;&#x6CD5;&#xFF08;&#x5FEB;&#x6162;&#x6307;&#x9488;&#x6CD5;&#xFF09;&#xFF1A; &#x901A;&#x8FC7;&#x4E00;&#x4E2A;&#x5FEB;&#x6307;&#x9488;&#x548C;&#x6162;&#x6307;&#x9488;&#x5728;&#x4E00;&#x4E2A;for&#x5FAA;&#x73AF;&#x4E0B;&#x5B8C;&#x6210;&#x4E24;&#x4E2A;for&#x5FAA;&#x73AF;&#x7684;&#x5DE5;&#x4F5C;&#x3002;</p>
+<p>&#x5B9A;&#x4E49;&#x5FEB;&#x6162;&#x6307;&#x9488;</p>
+<p>&#x5FEB;&#x6307;&#x9488;&#xFF1A;&#x5BFB;&#x627E;&#x65B0;&#x6570;&#x7EC4;&#x7684;&#x5143;&#x7D20; &#xFF0C;&#x65B0;&#x6570;&#x7EC4;&#x5C31;&#x662F;&#x4E0D;&#x542B;&#x6709;&#x76EE;&#x6807;&#x5143;&#x7D20;&#x7684;&#x6570;&#x7EC4;</p>
+<p>&#x6162;&#x6307;&#x9488;&#xFF1A;&#x6307;&#x5411;&#x66F4;&#x65B0; &#x65B0;&#x6570;&#x7EC4;&#x4E0B;&#x6807;&#x7684;&#x4F4D;&#x7F6E;</p>
+<img src="/2026/03/24/%E6%95%B0%E7%BB%84%E5%A4%84%E7%90%86/%E7%A7%BB%E9%99%A4%E5%85%83%E7%B4%A0-%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95.gif" class>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// &#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#xFF1A;O(n)</span></span><br><span class="line"><span class="comment">// &#x7A7A;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#xFF1A;O(1)</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">removeElement</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> val)</span> </span>{</span><br><span class="line">        <span class="type">int</span> slowIndex = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> fastIndex = <span class="number">0</span>; fastIndex &lt; nums.<span class="built_in">size</span>(); fastIndex++) {</span><br><span class="line">            <span class="keyword">if</span> (val != nums[fastIndex]) {</span><br><span class="line">                nums[slowIndex++] = nums[fastIndex];</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">return</span> slowIndex;</span><br><span class="line">    }</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1><span id="&#x6709;&#x5E8F;&#x6570;&#x7EC4;&#x7684;&#x5E73;&#x65B9;">&#x6709;&#x5E8F;&#x6570;&#x7EC4;&#x7684;&#x5E73;&#x65B9;</span><a href="#&#x6709;&#x5E8F;&#x6570;&#x7EC4;&#x7684;&#x5E73;&#x65B9;" class="header-anchor">#</a></h1>
+<p>&#x529B;&#x6263;&#x9898;&#x76EE;&#x94FE;&#x63A5;&#xFF1A;<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/squares-of-a-sorted-array/">https://leetcode.cn/problems/squares-of-a-sorted-array/</a></p>
+<p>&#x7ED9;&#x4F60;&#x4E00;&#x4E2A;&#x6309; &#x975E;&#x9012;&#x51CF;&#x987A;&#x5E8F; &#x6392;&#x5E8F;&#x7684;&#x6574;&#x6570;&#x6570;&#x7EC4; nums&#xFF0C;&#x8FD4;&#x56DE; &#x6BCF;&#x4E2A;&#x6570;&#x5B57;&#x7684;&#x5E73;&#x65B9; &#x7EC4;&#x6210;&#x7684;&#x65B0;&#x6570;&#x7EC4;&#xFF0C;&#x8981;&#x6C42;&#x4E5F;&#x6309; &#x975E;&#x9012;&#x51CF;&#x987A;&#x5E8F; &#x6392;&#x5E8F;&#x3002;</p>
+<p>&#x793A;&#x4F8B; 1&#xFF1A;</p>
+<p>&#x8F93;&#x5165;&#xFF1A;nums = [-4,-1,0,3,10]</p>
+<p>&#x8F93;&#x51FA;&#xFF1A;[0,1,9,16,100]</p>
+<p>&#x89E3;&#x91CA;&#xFF1A;&#x5E73;&#x65B9;&#x540E;&#xFF0C;&#x6570;&#x7EC4;&#x53D8;&#x4E3A; [16,1,0,9,100]&#xFF0C;&#x6392;&#x5E8F;&#x540E;&#xFF0C;&#x6570;&#x7EC4;&#x53D8;&#x4E3A; [0,1,9,16,100]</p>
+<p>&#x793A;&#x4F8B; 2&#xFF1A;</p>
+<p>&#x8F93;&#x5165;&#xFF1A;nums = [-7,-3,2,3,11]</p>
+<p>&#x8F93;&#x51FA;&#xFF1A;[4,9,9,49,121]</p>
+<h2><span id="&#x66B4;&#x529B;&#x6CD5;">&#x66B4;&#x529B;&#x6CD5;</span><a href="#&#x66B4;&#x529B;&#x6CD5;" class="header-anchor">#</a></h2>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">sortedSquares</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; A)</span> </span>{</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; A.<span class="built_in">size</span>(); i++) {</span><br><span class="line">            A[i] *= A[i];</span><br><span class="line">        }</span><br><span class="line">        <span class="built_in">sort</span>(A.<span class="built_in">begin</span>(), A.<span class="built_in">end</span>()); <span class="comment">// &#x5FEB;&#x901F;&#x6392;&#x5E8F;</span></span><br><span class="line">        <span class="keyword">return</span> A;</span><br><span class="line">    }</span><br></pre></td></tr></table></figure>
+<h2><span id="&#x53CC;&#x6307;&#x9488;&#x6CD5;">&#x53CC;&#x6307;&#x9488;&#x6CD5;</span><a href="#&#x53CC;&#x6307;&#x9488;&#x6CD5;" class="header-anchor">#</a></h2>
+<p>&#x6570;&#x7EC4;&#x5176;&#x5B9E;&#x662F;&#x6709;&#x5E8F;&#x7684;&#xFF0C; &#x53EA;&#x4E0D;&#x8FC7;&#x8D1F;&#x6570;&#x5E73;&#x65B9;&#x4E4B;&#x540E;&#x53EF;&#x80FD;&#x6210;&#x4E3A;&#x6700;&#x5927;&#x6570;&#x4E86;&#x3002;</p>
+<p>&#x90A3;&#x4E48;&#x6570;&#x7EC4;&#x5E73;&#x65B9;&#x7684;&#x6700;&#x5927;&#x503C;&#x5C31;&#x5728;&#x6570;&#x7EC4;&#x7684;&#x4E24;&#x7AEF;&#xFF0C;&#x4E0D;&#x662F;&#x6700;&#x5DE6;&#x8FB9;&#x5C31;&#x662F;&#x6700;&#x53F3;&#x8FB9;&#xFF0C;&#x4E0D;&#x53EF;&#x80FD;&#x662F;&#x4E2D;&#x95F4;&#x3002;</p>
+<p>&#x6B64;&#x65F6;&#x53EF;&#x4EE5;&#x8003;&#x8651;&#x53CC;&#x6307;&#x9488;&#x6CD5;&#x4E86;&#xFF0C;i&#x6307;&#x5411;&#x8D77;&#x59CB;&#x4F4D;&#x7F6E;&#xFF0C;j&#x6307;&#x5411;&#x7EC8;&#x6B62;&#x4F4D;&#x7F6E;&#x3002;</p>
+<p>&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x65B0;&#x6570;&#x7EC4;result&#xFF0C;&#x548C;A&#x6570;&#x7EC4;&#x4E00;&#x6837;&#x7684;&#x5927;&#x5C0F;&#xFF0C;&#x8BA9;k&#x6307;&#x5411;result&#x6570;&#x7EC4;&#x7EC8;&#x6B62;&#x4F4D;&#x7F6E;&#x3002;</p>
+<p>&#x5982;&#x679C;A[i] * A[i] &lt; A[j] * A[j] &#x90A3;&#x4E48;result[k&#x2013;] = A[j] * A[j]; &#x3002;</p>
+<p>&#x5982;&#x679C;A[i] * A[i] &gt;= A[j] * A[j] &#x90A3;&#x4E48;result[k&#x2013;] = A[i] * A[i]; &#x3002;</p>
+<img src="/2026/03/24/%E6%95%B0%E7%BB%84%E5%A4%84%E7%90%86/%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84%E7%9A%84%E5%B9%B3%E6%96%B9.gif" class>
+<p>&#x4E00;&#x5F00;&#x59CB;&#x770B;&#x9898;&#x76EE;&#x8FD8;&#x60F3;&#x4E0D;&#x5230;&#x89E3;&#x6CD5;&#xFF0C;&#x4E00;&#x770B;&#x7B54;&#x6848;&#xFF0C;&#x53D1;&#x73B0;&#x8FD9;&#x4F3C;&#x4E4E;&#x6709;&#x70B9;&#x50CF;&#x662F;&#x5F52;&#x5E76;&#x7B97;&#x6CD5;</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">sortedSquares</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; A)</span> </span>{</span><br><span class="line">        <span class="type">int</span> k = A.<span class="built_in">size</span>() - <span class="number">1</span>;</span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">result</span><span class="params">(A.size(), <span class="number">0</span>)</span></span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>, j = A.<span class="built_in">size</span>() - <span class="number">1</span>; i &lt;= j;) { <span class="comment">// &#x6CE8;&#x610F;&#x8FD9;&#x91CC;&#x8981;i &lt;= j&#xFF0C;&#x56E0;&#x4E3A;&#x6700;&#x540E;&#x8981;&#x5904;&#x7406;&#x4E24;&#x4E2A;&#x5143;&#x7D20;</span></span><br><span class="line">            <span class="keyword">if</span> (A[i] * A[i] &lt; A[j] * A[j])  {</span><br><span class="line">                result[k--] = A[j] * A[j];</span><br><span class="line">                j--;</span><br><span class="line">            }</span><br><span class="line">            <span class="keyword">else</span> {</span><br><span class="line">                result[k--] = A[i] * A[i];</span><br><span class="line">                i++;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    }</span><br></pre></td></tr></table></figure>
+<h1><span id="&#x957F;&#x5EA6;&#x6700;&#x5C0F;&#x7684;&#x5B50;&#x6570;&#x7EC4;">&#x957F;&#x5EA6;&#x6700;&#x5C0F;&#x7684;&#x5B50;&#x6570;&#x7EC4;</span><a href="#&#x957F;&#x5EA6;&#x6700;&#x5C0F;&#x7684;&#x5B50;&#x6570;&#x7EC4;" class="header-anchor">#</a></h1>
+<p>&#x529B;&#x6263;&#x9898;&#x76EE;&#x94FE;&#x63A5;&#xFF1A;<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-size-subarray-sum/">https://leetcode.cn/problems/minimum-size-subarray-sum/</a></p>
+<h2><span id="&#x66B4;&#x529B;&#x6CD5;">&#x66B4;&#x529B;&#x6CD5;</span><a href="#&#x66B4;&#x529B;&#x6CD5;" class="header-anchor">#</a></h2>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">minSubArrayLen</span><span class="params">(<span class="type">int</span> s, vector&lt;<span class="type">int</span>&gt;&amp; nums)</span> </span>{</span><br><span class="line">        <span class="type">int</span> result = INT32_MAX; <span class="comment">// &#x6700;&#x7EC8;&#x7684;&#x7ED3;&#x679C;</span></span><br><span class="line">        <span class="type">int</span> sum = <span class="number">0</span>; <span class="comment">// &#x5B50;&#x5E8F;&#x5217;&#x7684;&#x6570;&#x503C;&#x4E4B;&#x548C;</span></span><br><span class="line">        <span class="type">int</span> subLength = <span class="number">0</span>; <span class="comment">// &#x5B50;&#x5E8F;&#x5217;&#x7684;&#x957F;&#x5EA6;</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; nums.<span class="built_in">size</span>(); i++) { <span class="comment">// &#x8BBE;&#x7F6E;&#x5B50;&#x5E8F;&#x5217;&#x8D77;&#x70B9;&#x4E3A;i</span></span><br><span class="line">            sum = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = i; j &lt; nums.<span class="built_in">size</span>(); j++) { <span class="comment">// &#x8BBE;&#x7F6E;&#x5B50;&#x5E8F;&#x5217;&#x7EC8;&#x6B62;&#x4F4D;&#x7F6E;&#x4E3A;j</span></span><br><span class="line">                sum += nums[j];</span><br><span class="line">                <span class="keyword">if</span> (sum &gt;= s) { <span class="comment">// &#x4E00;&#x65E6;&#x53D1;&#x73B0;&#x5B50;&#x5E8F;&#x5217;&#x548C;&#x8D85;&#x8FC7;&#x4E86;s&#xFF0C;&#x66F4;&#x65B0;result</span></span><br><span class="line">                    subLength = j - i + <span class="number">1</span>; <span class="comment">// &#x53D6;&#x5B50;&#x5E8F;&#x5217;&#x7684;&#x957F;&#x5EA6;</span></span><br><span class="line">                    result = result &lt; subLength ? result : subLength;</span><br><span class="line">                    <span class="keyword">break</span>; <span class="comment">// &#x56E0;&#x4E3A;&#x6211;&#x4EEC;&#x662F;&#x627E;&#x7B26;&#x5408;&#x6761;&#x4EF6;&#x6700;&#x77ED;&#x7684;&#x5B50;&#x5E8F;&#x5217;&#xFF0C;&#x6240;&#x4EE5;&#x4E00;&#x65E6;&#x7B26;&#x5408;&#x6761;&#x4EF6;&#x5C31;break</span></span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        <span class="comment">// &#x5982;&#x679C;result&#x6CA1;&#x6709;&#x88AB;&#x8D4B;&#x503C;&#x7684;&#x8BDD;&#xFF0C;&#x5C31;&#x8FD4;&#x56DE;0&#xFF0C;&#x8BF4;&#x660E;&#x6CA1;&#x6709;&#x7B26;&#x5408;&#x6761;&#x4EF6;&#x7684;&#x5B50;&#x5E8F;&#x5217;</span></span><br><span class="line">        <span class="keyword">return</span> result == INT32_MAX ? <span class="number">0</span> : result;</span><br><span class="line">    }</span><br></pre></td></tr></table></figure>
+<h2><span id="&#x6ED1;&#x52A8;&#x7A97;&#x53E3;">&#x6ED1;&#x52A8;&#x7A97;&#x53E3;</span><a href="#&#x6ED1;&#x52A8;&#x7A97;&#x53E3;" class="header-anchor">#</a></h2>
+<p>&#x6240;&#x8C13;&#x6ED1;&#x52A8;&#x7A97;&#x53E3;&#xFF0C;&#x5C31;&#x662F;&#x4E0D;&#x65AD;&#x7684;&#x8C03;&#x8282;&#x5B50;&#x5E8F;&#x5217;&#x7684;&#x8D77;&#x59CB;&#x4F4D;&#x7F6E;&#x548C;&#x7EC8;&#x6B62;&#x4F4D;&#x7F6E;&#xFF0C;&#x4ECE;&#x800C;&#x5F97;&#x51FA;&#x6211;&#x4EEC;&#x60F3;&#x8981;&#x7684;&#x7ED3;&#x679C;&#x3002;</p>
+<p>&#x7A97;&#x53E3;&#x7684;&#x8D77;&#x59CB;&#x4F4D;&#x7F6E;&#x5982;&#x4F55;&#x79FB;&#x52A8;&#xFF1A;&#x5982;&#x679C;&#x5F53;&#x524D;&#x7A97;&#x53E3;&#x7684;&#x503C;&#x5927;&#x4E8E;&#x7B49;&#x4E8E;s&#x4E86;&#xFF0C;&#x7A97;&#x53E3;&#x5C31;&#x8981;&#x5411;&#x524D;&#x79FB;&#x52A8;&#x4E86;&#xFF08;&#x4E5F;&#x5C31;&#x662F;&#x8BE5;&#x7F29;&#x5C0F;&#x4E86;&#xFF09;&#x3002;</p>
+<p>&#x7A97;&#x53E3;&#x7684;&#x7ED3;&#x675F;&#x4F4D;&#x7F6E;&#x5982;&#x4F55;&#x79FB;&#x52A8;&#xFF1A;&#x7A97;&#x53E3;&#x7684;&#x7ED3;&#x675F;&#x4F4D;&#x7F6E;&#x5C31;&#x662F;&#x904D;&#x5386;&#x6570;&#x7EC4;&#x7684;&#x6307;&#x9488;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;for&#x5FAA;&#x73AF;&#x91CC;&#x7684;&#x7D22;&#x5F15;&#x3002;</p>
+<img src="/2026/03/24/%E6%95%B0%E7%BB%84%E5%A4%84%E7%90%86/%E9%95%BF%E5%BA%A6%E6%9C%80%E5%B0%8F%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84.gif" class>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">minSubArrayLen</span><span class="params">(<span class="type">int</span> target, vector&lt;<span class="type">int</span>&gt;&amp; nums)</span> </span>{</span><br><span class="line">        <span class="type">int</span> left = <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> size = nums.<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> sum = <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> minLen = INT_MAX;</span><br><span class="line">        <span class="type">int</span> curLen = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; size; j++) {</span><br><span class="line">            sum += nums[j];</span><br><span class="line">            <span class="keyword">while</span> (sum &gt;= target) {</span><br><span class="line"></span><br><span class="line">                curLen = j - left + <span class="number">1</span>;</span><br><span class="line">                minLen = curLen &lt; minLen ? curLen : minLen;</span><br><span class="line">                sum -= nums[left++];</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (minLen == INT_MAX)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">return</span> minLen;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<h1><span id="&#x87BA;&#x65CB;&#x77E9;&#x9635;ii">&#x87BA;&#x65CB;&#x77E9;&#x9635;II</span><a href="#&#x87BA;&#x65CB;&#x77E9;&#x9635;ii" class="header-anchor">#</a></h1>
+<p>&#x529B;&#x6263;&#x9898;&#x76EE;&#x94FE;&#x63A5;&#xFF1A;<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/spiral-matrix-ii/">https://leetcode.cn/problems/spiral-matrix-ii/</a></p>
+<p>&#x7ED9;&#x5B9A;&#x4E00;&#x4E2A;&#x6B63;&#x6574;&#x6570; n&#xFF0C;&#x751F;&#x6210;&#x4E00;&#x4E2A;&#x5305;&#x542B; 1 &#x5230; n^2 &#x6240;&#x6709;&#x5143;&#x7D20;&#xFF0C;&#x4E14;&#x5143;&#x7D20;&#x6309;&#x987A;&#x65F6;&#x9488;&#x987A;&#x5E8F;&#x87BA;&#x65CB;&#x6392;&#x5217;&#x7684;&#x6B63;&#x65B9;&#x5F62;&#x77E9;&#x9635;&#x3002;</p>
+<p>&#x793A;&#x4F8B;:</p>
+<p>&#x8F93;&#x5165;: 3 &#x8F93;&#x51FA;: [ [ 1, 2, 3 ], [ 8, 9, 4 ], [ 7, 6, 5 ] ]</p>
+<p>&#x6CE8;&#x610F;&#x5230;&#xFF0C;&#x5143;&#x7D20;&#x884C;&#x8FDB;&#x7684;&#x65B9;&#x5411;&#x6709;&#x56DB;&#x79CD;&#xFF0C;&#x5206;&#x522B;&#x662F;&#x5411;&#x53F3;&#xFF0C;&#x5411;&#x4E0B;&#xFF0C;&#x5411;&#x5DE6;&#xFF0C;&#x5411;&#x4E0A;&#x3002;</p>
+<p>&#x56E0;&#x6B64;&#xFF0C;&#x6211;&#x4EEC;&#x53EA;&#x9700;&#x8981;&#x5212;&#x5B9A;&#x5143;&#x7D20;&#x7684;&#x8FB9;&#x754C;&#xFF0C;&#x7136;&#x540E;&#x4E00;&#x76F4;&#x91CD;&#x590D;&#x8FD9;&#x56DB;&#x4E2A;&#x65B9;&#x5411;&#x5373;&#x53EF;&#x3002;</p>
+<p>&#x5F53;&#x5143;&#x7D20;&#x5411;&#x53F3;&#x6392;&#x5217;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x5728;&#x5411;&#x53F3;&#x4E4B;&#x524D;&#x8FDB;&#x884C;isOutRange&#x7684;&#x5224;&#x65AD;&#xFF0C;&#x5982;&#x679C;&#x901A;&#x8FC7;&#x5C31;&#x80FD;&#x65E0;&#x8111;&#x5411;&#x53F3;&#xFF0C;&#x76F4;&#x5230;&#x4E0D;&#x80FD;&#x5411;&#x53F3;&#x4E3A;&#x6B62;&#xFF0C;&#x4EE5;&#x6B64;&#x7C7B;&#x63A8;&#x3002;</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">isOutRange</span><span class="params">(<span class="type">int</span> i, <span class="type">int</span> j, <span class="type">int</span> n, vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; res)</span> </span>{</span><br><span class="line">        <span class="keyword">if</span> (i &gt;= n || j &gt;= n || i &lt; <span class="number">0</span> || j &lt; <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">if</span> (res[i][j] != <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    }</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">generateMatrix</span>(<span class="type">int</span> n) {</span><br><span class="line">        <span class="type">int</span> count = n * n;</span><br><span class="line">        vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">res</span>(n, <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(n, <span class="number">0</span>));</span><br><span class="line">        <span class="type">int</span> s = <span class="number">0</span>, i = <span class="number">0</span>, j = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (s != count) {</span><br><span class="line">            <span class="keyword">while</span> (<span class="literal">true</span>) {</span><br><span class="line">                <span class="keyword">if</span> (!<span class="built_in">isOutRange</span>(i, j, n, res))</span><br><span class="line">                    res[i][j++] = ++s;</span><br><span class="line">                <span class="keyword">else</span> {</span><br><span class="line">                    i++;</span><br><span class="line">                    j--;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">            <span class="keyword">while</span> (<span class="literal">true</span>) {</span><br><span class="line">                <span class="keyword">if</span> (!<span class="built_in">isOutRange</span>(i, j, n, res))</span><br><span class="line">                    res[i++][j] = ++s;</span><br><span class="line">                <span class="keyword">else</span> {</span><br><span class="line">                    i--;</span><br><span class="line">                    j--;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">            <span class="keyword">while</span> (<span class="literal">true</span>) {</span><br><span class="line">                <span class="keyword">if</span> (!<span class="built_in">isOutRange</span>(i, j, n, res))</span><br><span class="line">                    res[i][j--] = ++s;</span><br><span class="line">                <span class="keyword">else</span> {</span><br><span class="line">                    i--;</span><br><span class="line">                    j++;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">            <span class="keyword">while</span> (<span class="literal">true</span>) {</span><br><span class="line">                <span class="keyword">if</span> (!<span class="built_in">isOutRange</span>(i, j, n, res))</span><br><span class="line">                    res[i--][j] = ++s;</span><br><span class="line">                <span class="keyword">else</span> {</span><br><span class="line">                    i++;</span><br><span class="line">                    j++;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    }</span><br></pre></td></tr></table></figure>
+<h1><span id="&#x533A;&#x95F4;&#x548C;">&#x533A;&#x95F4;&#x548C;</span><a href="#&#x533A;&#x95F4;&#x548C;" class="header-anchor">#</a></h1>
+<p>&#x9898;&#x76EE;&#x63CF;&#x8FF0;</p>
+<p>&#x7ED9;&#x5B9A;&#x4E00;&#x4E2A;&#x6574;&#x6570;&#x6570;&#x7EC4; Array&#xFF0C;&#x8BF7;&#x8BA1;&#x7B97;&#x8BE5;&#x6570;&#x7EC4;&#x5728;&#x6BCF;&#x4E2A;&#x6307;&#x5B9A;&#x533A;&#x95F4;&#x5185;&#x5143;&#x7D20;&#x7684;&#x603B;&#x548C;&#x3002;</p>
+<p>&#x8F93;&#x5165;&#x63CF;&#x8FF0;</p>
+<p>&#x7B2C;&#x4E00;&#x884C;&#x8F93;&#x5165;&#x4E3A;&#x6574;&#x6570;&#x6570;&#x7EC4; Array &#x7684;&#x957F;&#x5EA6; n&#xFF0C;&#x63A5;&#x4E0B;&#x6765; n &#x884C;&#xFF0C;&#x6BCF;&#x884C;&#x4E00;&#x4E2A;&#x6574;&#x6570;&#xFF0C;&#x8868;&#x793A;&#x6570;&#x7EC4;&#x7684;&#x5143;&#x7D20;&#x3002;&#x968F;&#x540E;&#x7684;&#x8F93;&#x5165;&#x4E3A;&#x9700;&#x8981;&#x8BA1;&#x7B97;&#x603B;&#x548C;&#x7684;&#x533A;&#x95F4;&#xFF0C;&#x76F4;&#x81F3;&#x6587;&#x4EF6;&#x7ED3;&#x675F;&#x3002;</p>
+<p>&#x8F93;&#x51FA;&#x63CF;&#x8FF0;</p>
+<p>&#x8F93;&#x51FA;&#x6BCF;&#x4E2A;&#x6307;&#x5B9A;&#x533A;&#x95F4;&#x5185;&#x5143;&#x7D20;&#x7684;&#x603B;&#x548C;&#x3002;</p>
+<p>&#x8F93;&#x5165;&#x793A;&#x4F8B;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">5</span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">0 1</span><br><span class="line">1 3</span><br></pre></td></tr></table></figure>
+<p>&#x8F93;&#x51FA;&#x793A;&#x4F8B;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">3</span><br><span class="line">9</span><br></pre></td></tr></table></figure>
+<p>&#x6570;&#x636E;&#x8303;&#x56F4;&#xFF1A;</p>
+<p>0 &lt; n &lt;= 100000</p>
+<p>&#x8FD9;&#x9053;&#x9898;&#x770B;&#x4E0A;&#x53BB;&#x5F88;&#x7B80;&#x5355;&#xFF0C;&#x53EA;&#x9700;&#x628A;&#x533A;&#x95F4;&#x4E4B;&#x95F4;&#x7684;&#x6570;&#x52A0;&#x8D77;&#x6765;&#x5C31;&#x597D;</p>
+<p>&#x4F46;&#x8BE5;&#x7B97;&#x6CD5;&#x7684;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x662F; O(n * m)</p>
+<p>m &#x662F;&#x67E5;&#x8BE2;&#x7684;&#x6B21;&#x6570;</p>
+<p>&#x5047;&#x5982;&#x67E5;&#x8BE2;&#x6B21;&#x6570;&#x5F88;&#x5927;&#x7684;&#x8BDD;&#xFF0C;&#x5C31;&#x4F1A;&#x82B1;&#x8D39;&#x5F88;&#x591A;&#x65F6;&#x95F4;&#xFF0C;&#x5BFC;&#x81F4;&#x8D85;&#x65F6;</p>
+<p>&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x5F15;&#x7528;&#x524D;&#x7F00;&#x548C;&#x7684;&#x6982;&#x5FF5;</p>
+<p>&#x524D;&#x7F00;&#x548C;&#x7684;&#x601D;&#x60F3;&#x662F;&#x91CD;&#x590D;&#x5229;&#x7528;&#x8BA1;&#x7B97;&#x8FC7;&#x7684;&#x5B50;&#x6570;&#x7EC4;&#x4E4B;&#x548C;&#xFF0C;&#x4ECE;&#x800C;&#x964D;&#x4F4E;&#x533A;&#x95F4;&#x67E5;&#x8BE2;&#x9700;&#x8981;&#x7D2F;&#x52A0;&#x8BA1;&#x7B97;&#x7684;&#x6B21;&#x6570;&#x3002;</p>
+<p>&#x65B0;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x548C;&#x6570;&#x5B57;&#x6570;&#x7EC4;&#x7B49;&#x5927;&#x7684;&#x6570;&#x7EC4;&#xFF0C;&#x7528;&#x6765;&#x5B58;&#x50A8;&#x524D;&#x7F00;&#x548C;</p>
+<p>&#x5BF9;&#x4E8E;&#x4E00;&#x4E2A;&#x6570;&#x7EC4; 1 2 3 4 5</p>
+<p>&#x5B83;&#x7684;&#x524D;&#x7F00;&#x548C;&#x6570;&#x7EC4;&#x5C31;&#x662F; 1 3 6 10 15</p>
+<p>&#x5982;&#x679C;&#x9700;&#x8981;&#x6C42; 0 &#x5230; 1 &#x4E4B;&#x95F4;&#x7684;&#x533A;&#x95F4;&#x548C;&#xFF0C;&#x90A3;&#x4E48;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x4ECE;&#x524D;&#x7F00;&#x548C;&#x6570;&#x7EC4;&#x4E2D;&#x5F97;&#x5230;</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>{</span><br><span class="line">    <span class="type">int</span> n, a, b;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">vec</span><span class="params">(n)</span></span>;</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">p</span><span class="params">(n)</span></span>;</span><br><span class="line">    <span class="type">int</span> presum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) {</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;vec[i]);</span><br><span class="line">        presum += vec[i];</span><br><span class="line">        p[i] = presum;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (~<span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>, &amp;a, &amp;b)) {</span><br><span class="line">        <span class="type">int</span> sum;</span><br><span class="line">        <span class="keyword">if</span> (a == <span class="number">0</span>) sum = p[b];</span><br><span class="line">        <span class="keyword">else</span> sum = p[b] - p[a - <span class="number">1</span>];</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, sum);</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1><span id="&#x53C2;&#x8003;&#x5185;&#x5BB9;">&#x53C2;&#x8003;&#x5185;&#x5BB9;</span><a href="#&#x53C2;&#x8003;&#x5185;&#x5BB9;" class="header-anchor">#</a></h1>
+<p><a target="_blank" rel="noopener" href="https://www.programmercarl.com/%E6%95%B0%E7%BB%84%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80.html">https://www.programmercarl.com/&#x6570;&#x7EC4;&#x7406;&#x8BBA;&#x57FA;&#x7840;.html</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2026/03/19/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AAMod3/" rel="prev" title="如何在杀戮尖塔2制作一个Mod（三）">
+      <i class="fa fa-chevron-left"></i> 如何在杀戮尖塔2制作一个Mod（三）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2026/03/24/%E8%A7%A3%E5%86%B3VsCode%E6%A3%80%E6%B5%8B%E5%88%B0-include%E9%94%99%E8%AF%AF/" rel="next" title="解决VsCode检测到#include错误">
+      解决VsCode检测到#include错误 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">二分查找</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">原地移除元素</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text">暴力法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text">双指针法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">有序数组的平方</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text">暴力法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text">双指针法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">长度最小的子数组</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text">暴力法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text">滑动窗口</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">螺旋矩阵II</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">区间和</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">参考内容</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ITTT"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">ITTT</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/originone494" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;originone494" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:2531293780@qq.com" title="E-Mail → mailto:2531293780@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ITTT</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">103k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:07</span>
+</div>
+
+<!-- 网站运行时间的设置 -->
+<span id="timeDate">载入天数...</span>
+<span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("12/29/2025 17:04:14"); //此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒.";
+    }
+setInterval("createtime()",250);
+</script>
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/js/fix-toc.js"></script>
+</body>
+</html>
