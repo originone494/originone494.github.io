@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"originone494.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="&#x4E00;&#x3001;&#x4EE3;&#x7801;&#x8C03;&#x7528;&#x4E91;&#x7AEF;&#x5927;&#x6A21;&#x578B;#   &#x5728;&#x4EFB;&#x610F;&#x5927;&#x6A21;&#x578B;&#x670D;&#x52A1;&#x5E73;&#x53F0;&#x751F;&#x6210; APIKey &amp;#xF">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RAG与Agent智能体搭建的相关知识（一）">
+<meta property="og:url" content="https://originone494.github.io/2026/03/29/RAG%E4%B8%8EAgent%E6%99%BA%E8%83%BD%E4%BD%93%E6%90%AD%E5%BB%BA%E7%9A%84%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
+<meta property="og:site_name" content="OneBlog">
+<meta property="og:description" content="&#x4E00;&#x3001;&#x4EE3;&#x7801;&#x8C03;&#x7528;&#x4E91;&#x7AEF;&#x5927;&#x6A21;&#x578B;#   &#x5728;&#x4EFB;&#x610F;&#x5927;&#x6A21;&#x578B;&#x670D;&#x52A1;&#x5E73;&#x53F0;&#x751F;&#x6210; APIKey &amp;#xF">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://originone494.github.io/2026/03/29/RAG%E4%B8%8EAgent%E6%99%BA%E8%83%BD%E4%BD%93%E6%90%AD%E5%BB%BA%E7%9A%84%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%EF%BC%88%E4%B8%80%EF%BC%89/image.png">
+<meta property="og:image" content="https://originone494.github.io/2026/03/29/RAG%E4%B8%8EAgent%E6%99%BA%E8%83%BD%E4%BD%93%E6%90%AD%E5%BB%BA%E7%9A%84%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%EF%BC%88%E4%B8%80%EF%BC%89/image-1.png">
+<meta property="og:image" content="https://originone494.github.io/2026/03/29/RAG%E4%B8%8EAgent%E6%99%BA%E8%83%BD%E4%BD%93%E6%90%AD%E5%BB%BA%E7%9A%84%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%EF%BC%88%E4%B8%80%EF%BC%89/image-2.png">
+<meta property="og:image" content="https://originone494.github.io/2026/03/29/RAG%E4%B8%8EAgent%E6%99%BA%E8%83%BD%E4%BD%93%E6%90%AD%E5%BB%BA%E7%9A%84%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%EF%BC%88%E4%B8%80%EF%BC%89/image-3.png">
+<meta property="og:image" content="https://originone494.github.io/2026/03/29/RAG%E4%B8%8EAgent%E6%99%BA%E8%83%BD%E4%BD%93%E6%90%AD%E5%BB%BA%E7%9A%84%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%EF%BC%88%E4%B8%80%EF%BC%89/image-4.png">
+<meta property="article:published_time" content="2026-03-29T11:13:58.000Z">
+<meta property="article:modified_time" content="2026-04-02T11:25:31.814Z">
+<meta property="article:author" content="ITTT">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://originone494.github.io/2026/03/29/RAG%E4%B8%8EAgent%E6%99%BA%E8%83%BD%E4%BD%93%E6%90%AD%E5%BB%BA%E7%9A%84%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%EF%BC%88%E4%B8%80%EF%BC%89/image.png">
+
+<link rel="canonical" href="https://originone494.github.io/2026/03/29/RAG%E4%B8%8EAgent%E6%99%BA%E8%83%BD%E4%BD%93%E6%90%AD%E5%BB%BA%E7%9A%84%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%EF%BC%88%E4%B8%80%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>RAG与Agent智能体搭建的相关知识（一） | OneBlog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">OneBlog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://originone494.github.io/2026/03/29/RAG%E4%B8%8EAgent%E6%99%BA%E8%83%BD%E4%BD%93%E6%90%AD%E5%BB%BA%E7%9A%84%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%EF%BC%88%E4%B8%80%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ITTT">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="OneBlog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          RAG与Agent智能体搭建的相关知识（一）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2026-03-29 19:13:58" itemprop="dateCreated datePublished" datetime="2026-03-29T19:13:58+08:00">2026-03-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2026-04-02 19:25:31" itemprop="dateModified" datetime="2026-04-02T19:25:31+08:00">2026-04-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" itemprop="url" rel="index"><span itemprop="name">人工智能</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>13 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1><span id="&#x4E00;-&#x4EE3;&#x7801;&#x8C03;&#x7528;&#x4E91;&#x7AEF;&#x5927;&#x6A21;&#x578B;">&#x4E00;&#x3001;&#x4EE3;&#x7801;&#x8C03;&#x7528;&#x4E91;&#x7AEF;&#x5927;&#x6A21;&#x578B;</span><a href="#&#x4E00;-&#x4EE3;&#x7801;&#x8C03;&#x7528;&#x4E91;&#x7AEF;&#x5927;&#x6A21;&#x578B;" class="header-anchor">#</a></h1>
+<ol>
+<li>
+<p>&#x5728;&#x4EFB;&#x610F;&#x5927;&#x6A21;&#x578B;&#x670D;&#x52A1;&#x5E73;&#x53F0;&#x751F;&#x6210; APIKey &#xFF0C;&#x8FD9;&#x91CC;&#x6211;&#x4F7F;&#x7528;&#x7684;&#x662F;&#x963F;&#x91CC;&#x4E91;&#x767E;&#x70BC;&#x3002;</p>
+</li>
+<li>
+<p>&#x5728;&#x547D;&#x4EE4;&#x884C;&#x4E2D;&#x6267;&#x884C;&#x4EE3;&#x7801; pip install openai</p>
+</li>
+</ol>
+<p>&#x5982;&#x679C;&#x4E0B;&#x8F7D;&#x6BD4;&#x8F83;&#x6162;&#x7684;&#x8BDD;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; pip install openai -i <a target="_blank" rel="noopener" href="https://pypi.tuna.tsinghua.edu.cn/simple">https://pypi.tuna.tsinghua.edu.cn/simple</a></p>
+<ol start="3">
+<li>&#x5728; PyCharm &#x521B;&#x5EFA;&#x65B0;&#x9879;&#x76EE;</li>
+</ol>
+<img src="/2026/03/29/RAG%E4%B8%8EAgent%E6%99%BA%E8%83%BD%E4%BD%93%E6%90%AD%E5%BB%BA%E7%9A%84%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%EF%BC%88%E4%B8%80%EF%BC%89/image.png" class title="alt text">
+<ol start="4">
+<li>&#x4F7F;&#x7528; .env &#x5B58;&#x50A8;&#x73AF;&#x5883;&#x53D8;&#x91CF;</li>
+</ol>
+<p>&#x5728;&#x547D;&#x4EE4;&#x884C;&#x6267;&#x884C;&#x6307;&#x4EE4; pip install dotenv</p>
+<p>&#x7136;&#x540E;&#x5728;&#x9879;&#x76EE;&#x7684;&#x6839;&#x76EE;&#x5F55;&#x521B;&#x5EFA; .env &#x6587;&#x4EF6;</p>
+<p>&#x5728;&#x91CC;&#x9762;&#x5199;&#x5165;&#x8FD9;&#x4E9B;&#x5185;&#x5BB9;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">OPENAI_API_KEY = xxx</span><br><span class="line">DASHSCOPE_API_KEY = xxx</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>&#x65B0;&#x5EFA;&#x4E00;&#x4E2A; py &#x6587;&#x4EF6;&#xFF0C;&#x590D;&#x5236;&#x5B98;&#x65B9;&#x7684;&#x793A;&#x4F8B;&#x4EE3;&#x7801;&#xFF0C;&#x5E76;&#x505A;&#x4E00;&#x4E9B;&#x4FEE;&#x6539;</li>
+</ol>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> openai <span class="keyword">import</span> OpenAI</span><br><span class="line"><span class="keyword">from</span> dotenv <span class="keyword">import</span>  load_dotenv</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">load_dotenv()</span><br><span class="line"></span><br><span class="line">client = OpenAI(</span><br><span class="line">    <span class="comment"># &#x5982;&#x679C;&#x6CA1;&#x6709;&#x914D;&#x7F6E;&#x73AF;&#x5883;&#x53D8;&#x91CF;&#xFF0C;&#x8BF7;&#x7528;&#x963F;&#x91CC;&#x4E91;&#x767E;&#x70BC;API Key&#x66FF;&#x6362;&#xFF1A;api_key=&quot;sk-xxx&quot;</span></span><br><span class="line">    api_key=os.getenv(<span class="string">&apos;OPENAI_API_KEY&apos;</span>),</span><br><span class="line">    base_url=<span class="string">&quot;https://dashscope.aliyuncs.com/compatible-mode/v1&quot;</span>,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">messages = [{<span class="string">&quot;role&quot;</span>: <span class="string">&quot;user&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;&#x4F60;&#x662F;&#x8C01;&quot;</span>}]</span><br><span class="line">completion = client.chat.completions.create(</span><br><span class="line">    model=<span class="string">&quot;qwen3-max&quot;</span>,  <span class="comment"># &#x60A8;&#x53EF;&#x4EE5;&#x6309;&#x9700;&#x66F4;&#x6362;&#x4E3A;&#x5176;&#x5B83;&#x6DF1;&#x5EA6;&#x601D;&#x8003;&#x6A21;&#x578B;</span></span><br><span class="line">    messages=messages,</span><br><span class="line">    extra_body={<span class="string">&quot;enable_thinking&quot;</span>: <span class="literal">True</span>},</span><br><span class="line">    stream=<span class="literal">True</span></span><br><span class="line">)</span><br><span class="line">is_answering = <span class="literal">False</span>  <span class="comment"># &#x662F;&#x5426;&#x8FDB;&#x5165;&#x56DE;&#x590D;&#x9636;&#x6BB5;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\n&quot;</span> + <span class="string">&quot;=&quot;</span> * <span class="number">20</span> + <span class="string">&quot;&#x601D;&#x8003;&#x8FC7;&#x7A0B;&quot;</span> + <span class="string">&quot;=&quot;</span> * <span class="number">20</span>)</span><br><span class="line"><span class="keyword">for</span> chunk <span class="keyword">in</span> completion:</span><br><span class="line">    delta = chunk.choices[<span class="number">0</span>].delta</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">hasattr</span>(delta, <span class="string">&quot;reasoning_content&quot;</span>) <span class="keyword">and</span> delta.reasoning_content <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> is_answering:</span><br><span class="line">            <span class="built_in">print</span>(delta.reasoning_content, end=<span class="string">&quot;&quot;</span>, flush=<span class="literal">True</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">hasattr</span>(delta, <span class="string">&quot;content&quot;</span>) <span class="keyword">and</span> delta.content:</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> is_answering:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;\n&quot;</span> + <span class="string">&quot;=&quot;</span> * <span class="number">20</span> + <span class="string">&quot;&#x5B8C;&#x6574;&#x56DE;&#x590D;&quot;</span> + <span class="string">&quot;=&quot;</span> * <span class="number">20</span>)</span><br><span class="line">            is_answering = <span class="literal">True</span></span><br><span class="line">        <span class="built_in">print</span>(delta.content, end=<span class="string">&quot;&quot;</span>, flush=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<p>&#x8FD0;&#x884C;&#x540E;&#xFF0C;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x7ED3;&#x679C;</p>
+<img src="/2026/03/29/RAG%E4%B8%8EAgent%E6%99%BA%E8%83%BD%E4%BD%93%E6%90%AD%E5%BB%BA%E7%9A%84%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%EF%BC%88%E4%B8%80%EF%BC%89/image-1.png" class title="alt text">
+<h1><span id="&#x4E8C;-openai&#x5E93;&#x7684;&#x57FA;&#x672C;&#x4F7F;&#x7528;">&#x4E8C;&#x3001;OpenAI&#x5E93;&#x7684;&#x57FA;&#x672C;&#x4F7F;&#x7528;</span><a href="#&#x4E8C;-openai&#x5E93;&#x7684;&#x57FA;&#x672C;&#x4F7F;&#x7528;" class="header-anchor">#</a></h1>
+<ol>
+<li>ChatCompletion &#x5BF9;&#x8C61;</li>
+</ol>
+<p>client.chat.completions.create &#x53EF;&#x4EE5;&#x521B;&#x5EFA; ChatCompletion &#x5BF9;&#x8C61;&#xFF0C;&#x4E3B;&#x8981;&#x53C2;&#x6570;&#x6709;&#x4E24;&#x4E2A;&#xFF1A;</p>
+<p>model&#xFF1A;&#x9009;&#x62E9;&#x6240;&#x7528;&#x6A21;&#x578B;</p>
+<p>message&#xFF1A;&#x63D0;&#x4F9B;&#x7ED9;&#x6A21;&#x578B;&#x7684;&#x6D88;&#x606F;&#xFF0C;&#x7C7B;&#x578B;&#x4E3A; list &#xFF0C;&#x91CC;&#x9762;&#x53EF;&#x4EE5;&#x5305;&#x542B;&#x591A;&#x4E2A;&#x5B57;&#x5178;&#x6D88;&#x606F;&#xFF0C;&#x6BCF;&#x4E2A;&#x5B57;&#x5178;&#x5305;&#x542B;&#x4E24;&#x4E2A; key &#xFF0C; role &#xFF1A;&#x89D2;&#x8272;&#xFF0C;&#x548C; content &#xFF1A;&#x5185;&#x5BB9;&#x3002;</p>
+<p>&#x82E5; role &#x4E3A; system &#xFF0C;&#x5219;&#x53EF;&#x4EE5;&#x8BBE;&#x5B9A;&#x52A9;&#x624B;&#x7684;&#x6574;&#x4F53;&#x884C;&#x4E3A;&#x3001;&#x89D2;&#x8272;&#x548C;&#x89C4;&#x5219;&#xFF0C;&#x4E3A;&#x5BF9;&#x8BDD;&#x63D0;&#x4F9B;&#x4E0A;&#x4E0B;&#x6587;&#x6846;&#x67B6;&#xFF08;&#x5982;&#x6307;&#x5B9A;&#x52A9;&#x624B;&#x7684;&#x8EAB;&#x4EFD;&#x3001;&#x56DE;&#x7B54;&#x98CE;&#x683C;&#x3001;&#x6838;&#x5FC3;&#x8981;&#x6C42;&#xFF09;&#xFF0C;&#x662F;&#x5168;&#x5C40;&#x7684;&#x80CC;&#x666F;&#x8BBE;&#x5B9A;&#xFF0C;&#x5F71;&#x54CD;&#x540E;&#x7EED;&#x6240;&#x6709;&#x4EA4;&#x4E92;&#x3002;</p>
+<p>&#x82E5; role &#x4E3A; assistant &#xFF0C;&#x4EE3;&#x8868; AI &#x52A9;&#x624B;&#x7684;&#x56DE;&#x7B54;&#xFF0C;&#x53EF;&#x4EE5;&#x5728;&#x4EE3;&#x7801;&#x4E2D;&#x4EBA;&#x4E3A;&#x8BBE;&#x5B9A;&#x3002;</p>
+<p>&#x82E5; role &#x4E3A; user &#xFF0C;&#x4EE3;&#x8868;&#x7528;&#x6237;&#x53D1;&#x9001;&#x7684;&#x95EE;&#x9898;&#x3001;&#x6307;&#x4EE4;&#x548C;&#x9700;&#x6C42;&#x3002;</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">completion = client.chat.completions.create(</span><br><span class="line">    model=<span class="string">&quot;qwen3.5-flash&quot;</span>, </span><br><span class="line">    messages=[{<span class="string">&quot;role&quot;</span>: <span class="string">&quot;user&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;&#x4F60;&#x662F;&#x8C01;&quot;</span>},{<span class="string">&quot;role&quot;</span>: <span class="string">&quot;assistant&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;xxx&quot;</span>}]</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>&#x6BCF;&#x4E2A; ChatCompletion &#x5BF9;&#x8C61;&#x90FD;&#x5305;&#x542B;&#x4EE5;&#x4E0B;&#x4FE1;&#x606F;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; print(response.choices[0].message.content) &#x8F93;&#x51FA;&#x6A21;&#x578B;&#x7ED9;&#x51FA;&#x7684;&#x56DE;&#x7B54;&#x4FE1;&#x606F;&#x3002;</p>
+<img src="/2026/03/29/RAG%E4%B8%8EAgent%E6%99%BA%E8%83%BD%E4%BD%93%E6%90%AD%E5%BB%BA%E7%9A%84%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%EF%BC%88%E4%B8%80%EF%BC%89/image-2.png" class title="alt text">
+<ol start="2">
+<li>&#x6D41;&#x5F0F;&#x8F93;&#x51FA;</li>
+</ol>
+<p>&#x5728;&#x4F7F;&#x7528; client.chat.completions.create &#x8C03;&#x7528; ChatCompletion &#x5BF9;&#x8C61;&#x65F6;&#xFF0C;&#x589E;&#x52A0;&#x53C2;&#x6570;&#xFF1A;stream = True &#x3002;</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">completion = client.chat.completions.create(</span><br><span class="line">    model=<span class="string">&quot;qwen3.5-flash&quot;</span>,</span><br><span class="line">    messages= [{<span class="string">&quot;role&quot;</span>: <span class="string">&quot;user&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;&#x4F60;&#x662F;&#x8C01;&quot;</span>}],</span><br><span class="line">    stream=<span class="literal">True</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> chunk <span class="keyword">in</span> completion:</span><br><span class="line">    <span class="keyword">if</span> chunk.choice[<span class="number">0</span>].delta.content:</span><br><span class="line">        <span class="built_in">print</span>(</span><br><span class="line">            chunk.choice[<span class="number">0</span>].delta.content,</span><br><span class="line">            end=<span class="string">&quot;&quot;</span>, <span class="comment">#&#x6BCF;&#x4E00;&#x6BB5;&#x4E0D;&#x5206;&#x9694;</span></span><br><span class="line">            flush=<span class="literal">True</span> <span class="comment">#&#x7ACB;&#x523B;&#x5237;&#x65B0;&#x7F13;&#x51B2;&#x533A;</span></span><br><span class="line">        )</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>&#x9644;&#x5E26;&#x5386;&#x53F2;&#x6D88;&#x606F;</li>
+</ol>
+<p>message &#x4E2D;&#x7684;&#x53EF;&#x4EE5;&#x5305;&#x542B;&#x5F88;&#x591A;&#x6D88;&#x606F;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5C06;&#x5386;&#x53F2;&#x6D88;&#x606F;&#x586B;&#x5165;&#xFF0C;&#x8BA9;&#x6A21;&#x578B;&#x77E5;&#x6653;&#x5BF9;&#x8BDD;&#x7684;&#x4E0A;&#x4E0B;&#x6587;&#x3002;</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">completion = client.chat.completions.create(</span><br><span class="line">    model=<span class="string">&quot;qwen3.5-flash&quot;</span>, </span><br><span class="line">    messages=[</span><br><span class="line">        {<span class="string">&quot;role&quot;</span>: <span class="string">&quot;user&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;&#x5C0F;&#x660E;&#x6709;&#x4E24;&#x6761;&#x5BA0;&#x7269;&#x72D7;&quot;</span>},</span><br><span class="line">        {<span class="string">&quot;role&quot;</span>: <span class="string">&quot;assistant&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;&#x597D;&#x7684;&#x3002;&quot;</span>},</span><br><span class="line">        {<span class="string">&quot;role&quot;</span>: <span class="string">&quot;user&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;&#x5C0F;&#x660E;&#x8FD8;&#x6709;&#x4E24;&#x6761;&#x5BA0;&#x7269;&#x732B;&quot;</span>},</span><br><span class="line">        {<span class="string">&quot;role&quot;</span>: <span class="string">&quot;assistant&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;&#x597D;&#x7684;&#x3002;&quot;</span>},</span><br><span class="line">        {<span class="string">&quot;role&quot;</span>: <span class="string">&quot;user&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;&#x5C0F;&#x660E;&#x4E00;&#x5171;&#x6709;&#x51E0;&#x53EA;&#x5BA0;&#x7269;&#xFF1F;&quot;</span>}</span><br><span class="line">    ]</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h1><span id="&#x4E09;-&#x63D0;&#x793A;&#x8BCD;&#x5DE5;&#x7A0B;">&#x4E09;&#x3001;&#x63D0;&#x793A;&#x8BCD;&#x5DE5;&#x7A0B;</span><a href="#&#x4E09;-&#x63D0;&#x793A;&#x8BCD;&#x5DE5;&#x7A0B;" class="header-anchor">#</a></h1>
+<p>&#x63D0;&#x793A;&#x8BCD;&#x5DE5;&#x7A0B;&#x5C31;&#x662F;&#x63D0;&#x95EE;&#x7684;&#x6280;&#x5DE7;&#x3002;</p>
+<p>&#x4EFB;&#x4F55;prompt&#x6280;&#x5DE7;&#xFF0C;&#x90FD;&#x4E0D;&#x5982;&#x6E05;&#x6670;&#x5730;&#x8868;&#x8FBE;&#x4F60;&#x7684;&#x9700;&#x6C42;&#x3002;</p>
+<p>&#x56E0;&#x6B64;&#x3002;</p>
+<p>&#x6280;&#x5DE7;1&#xFF1A;&#x8BE6;&#x7EC6;&#x7684;&#x63CF;&#x8FF0;&#x3002;</p>
+<p>&#x6280;&#x5DE7;2&#xFF1A;&#x8BA9;&#x6A21;&#x578B;&#x5145;&#x5F53;&#x67D0;&#x4E2A;&#x89D2;&#x8272;&#x3002;</p>
+<p>&#x6280;&#x5DE7;3&#xFF1A;&#x4F7F;&#x7528;&#x5206;&#x9694;&#x7B26;&#x8868;&#x9762;&#x8F93;&#x5165;&#x7684;&#x4E0D;&#x540C;&#x90E8;&#x5206;&#x3002;</p>
+<p>&#x6BD4;&#x5982;&#xFF1A;&#x7528; 20 &#x4E2A;&#x5B57;&#x7B26;&#x6765;&#x603B;&#x7ED3;&#x7531;&#x4E09;&#x5F15;&#x53F7;&#x5F15;&#x8D77;&#x6765;&#x7684;&#x6587;&#x672C;&#xFF0C;&#x201C;&#x201C;&#x201C;xxx&#x201D;&#x201D;&#x201D;</p>
+<p>&#x6280;&#x5DE7;4&#xFF1A;&#x5BF9;&#x4EFB;&#x52A1;&#x6307;&#x5B9A;&#x6B65;&#x9AA4;&#x3002;</p>
+<p>&#x6280;&#x5DE7;5&#xFF1A;&#x63D0;&#x4F9B;&#x4F8B;&#x5B50;&#x3002;</p>
+<p>&#x6280;&#x5DE7;6&#xFF1A;&#x63D0;&#x4F9B;&#x53C2;&#x8003;&#x6587;&#x672C;&#xFF0C;&#x8BA9;&#x5927;&#x6A21;&#x578B;&#x57FA;&#x4E8E;&#x6211;&#x4EEC;&#x7684;&#x53C2;&#x8003;&#x6587;&#x672C;&#x8FDB;&#x884C;&#x56DE;&#x7B54;&#x3002;</p>
+<h1><span id="&#x56DB;-rag&#x4ECB;&#x7ECD;">&#x56DB;&#x3001;RAG&#x4ECB;&#x7ECD;</span><a href="#&#x56DB;-rag&#x4ECB;&#x7ECD;" class="header-anchor">#</a></h1>
+<p>RAG &#x662F;&#x68C0;&#x7D22;&#x589E;&#x5F3A;&#x751F;&#x6210;&#x6280;&#x672F;&#xFF0C;&#x5229;&#x7528;&#x68C0;&#x7D22;&#x5916;&#x90E8;&#x6587;&#x6863;&#x63D0;&#x5347;&#x751F;&#x6210;&#x7ED3;&#x679C;&#x8D28;&#x91CF;&#x3002;</p>
+<img src="/2026/03/29/RAG%E4%B8%8EAgent%E6%99%BA%E8%83%BD%E4%BD%93%E6%90%AD%E5%BB%BA%E7%9A%84%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%EF%BC%88%E4%B8%80%EF%BC%89/image-3.png" class title="alt text">
+<p>&#x7B80;&#x5355;&#x6765;&#x8BF4;&#xFF0C; RAG &#x5DE5;&#x4F5C;&#x5206;&#x4E3A;&#x4E24;&#x4E2A;&#x6D41;&#x7A0B;&#x3002;</p>
+<img src="/2026/03/29/RAG%E4%B8%8EAgent%E6%99%BA%E8%83%BD%E4%BD%93%E6%90%AD%E5%BB%BA%E7%9A%84%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%EF%BC%88%E4%B8%80%EF%BC%89/image-4.png" class title="alt text">
+<p>&#x4E3A;&#x4EC0;&#x4E48;&#x8981;&#x4F7F;&#x7528; RAG &#xFF1F;</p>
+<p>&#x56E0;&#x4E3A;&#x901A;&#x7528;&#x7684;&#x57FA;&#x7840;&#x5927;&#x6A21;&#x578B;&#x5B58;&#x5728;&#x4E00;&#x4E9B;&#x95EE;&#x9898;&#xFF1A;</p>
+<p>&#xB7; &#x77E5;&#x8BC6;&#x4E0D;&#x662F;&#x5B9E;&#x65F6;&#x7684;&#xFF0C;&#x6A21;&#x578B;&#x8BAD;&#x7EC3;&#x597D;&#x540E;&#x4E0D;&#x5177;&#x5907;&#x81EA;&#x52A8;&#x66F4;&#x65B0;&#x77E5;&#x8BC6;&#x7684;&#x80FD;&#x529B;&#xFF0C;&#x4F1A;&#x5BFC;&#x81F4;&#x90E8;&#x5206;&#x4FE1;&#x606F;&#x6EDE;&#x540E;&#x3002;</p>
+<p>&#xB7; &#x7F3A;&#x4E4F;&#x9886;&#x57DF;&#x77E5;&#x8BC6;&#xFF0C;&#x5927;&#x6A21;&#x578B;&#x7684;&#x77E5;&#x8BC6;&#x6765;&#x81EA;&#x8BAD;&#x7EC3;&#x6570;&#x636E;&#xFF0C;&#x4E3B;&#x8981;&#x6765;&#x81EA;&#x516C;&#x5F00;&#x7684;&#x4E92;&#x8054;&#x7F51;&#x548C;&#x5F00;&#x6E90;&#x6570;&#x636E;&#x96C6;&#xFF0C;&#x65E0;&#x6CD5;&#x8986;&#x76D6;&#x7279;&#x5B9A;&#x9886;&#x57DF;&#x6216;&#x9AD8;&#x5EA6;&#x4E13;&#x4E1A;&#x5316;&#x7684;&#x5185;&#x90E8;&#x77E5;&#x8BC6;&#x3002;</p>
+<p>&#xB7; &#x5E7B;&#x89C9;&#x95EE;&#x9898;&#xFF0C;&#x5927;&#x6A21;&#x578B;&#x53EF;&#x80FD;&#x4F1A;&#x751F;&#x6210;&#x770B;&#x4F3C;&#x5408;&#x7406;&#xFF0C;&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x9519;&#x8BEF;&#x7684;&#x56DE;&#x7B54;&#x3002;</p>
+<p>&#xB7; &#x4FDD;&#x8BC1;&#x6570;&#x636E;&#x5B89;&#x5168;&#x6027;&#x3002;</p>
+<h1><span id="&#x4E94;-&#x5411;&#x91CF;&#x7684;&#x6982;&#x5FF5;">&#x4E94;&#x3001;&#x5411;&#x91CF;&#x7684;&#x6982;&#x5FF5;</span><a href="#&#x4E94;-&#x5411;&#x91CF;&#x7684;&#x6982;&#x5FF5;" class="header-anchor">#</a></h1>
+<p>RAG &#x6D41;&#x7A0B;&#x4E2D;&#xFF0C;&#x5411;&#x91CF;&#x5E93;&#x662F;&#x4E00;&#x4E2A;&#x91CD;&#x8981;&#x7684;&#x8282;&#x70B9;&#x3002;</p>
+<p>&#x5411;&#x91CF;&#xFF08;Vector&#xFF09;&#x662F;&#x6587;&#x672C;&#x7684;&#x201C;&#x6570;&#x5B57;&#x8EAB;&#x4EFD;&#x8BC1;&#x201D;&#xFF0C;&#x5B83;&#x5C06;&#x4E00;&#x6BB5;&#x6587;&#x672C;&#x7684;&#x8BED;&#x4E49;&#x4FE1;&#x606F;&#xFF0C;&#x8F6C;&#x6362;&#x6210;&#x4E00;&#x6BB5;&#x56FA;&#x5B9A;&#x957F;&#x5EA6;&#x7684;&#x6570;&#x5B57;&#x5217;&#x8868;&#xFF0C;&#x8BA9;&#x8BA1;&#x7B97;&#x673A;&#x80FD;&#x591F;&#x201C;&#x770B;&#x61C2;&#x201D;&#x6587;&#x5B57;&#x7684;&#x542B;&#x4E49;&#x5E76;&#x505A;&#x76F8;&#x4F3C;&#x5EA6;&#x8BA1;&#x7B97;&#x3002;</p>
+<p>&#x7B80;&#x5355;&#x6765;&#x8BF4;&#xFF0C;&#x5C31;&#x662F;&#x8BA9;&#x8BA1;&#x7B97;&#x673A;&#x66F4;&#x65B9;&#x4FBF;&#x5730;&#x7406;&#x89E3;&#x4E0D;&#x540C;&#x7684;&#x6587;&#x672C;&#x610F;&#x601D;&#xFF0C;&#x662F;&#x5426;&#x5728;&#x8868;&#x8FF0;&#x540C;&#x4E00;&#x4E2A;&#x610F;&#x601D;&#x3002;</p>
+<p>&#x5728;&#x5411;&#x91CF;&#x5D4C;&#x5165;&#x7684;&#x8FC7;&#x7A0B;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x6587;&#x672C;&#x5D4C;&#x5165;&#x6A21;&#x578B;&#xFF0C;&#x901A;&#x8FC7;&#x6DF1;&#x5EA6;&#x5B66;&#x4E60;&#x7B49;&#x6280;&#x672F;&#xFF0C;&#x4ECE;&#x6587;&#x672C;&#x63D0;&#x53D6;&#x8BED;&#x4E49;&#x7279;&#x5F81;&#x5E76;&#x6620;&#x5C04;&#x4E3A;&#x56FA;&#x5B9A;&#x957F;&#x5EA6;&#x7684;&#x6570;&#x5B57;&#x5E8F;&#x5217;&#x3002;</p>
+<p>&#x5728;&#x5411;&#x91CF;&#x5339;&#x914D;&#x7684;&#x8FC7;&#x7A0B;&#xFF0C;&#x5982;&#x4F55;&#x8BC6;&#x522B;2&#x6BB5;&#x6587;&#x672C;&#x662F;&#x5426;&#x8868;&#x8FF0;&#x76F8;&#x4F3C;&#x7684;&#x610F;&#x601D;&#xFF0C;&#x4E3B;&#x8981;&#x901A;&#x8FC7;&#x4F59;&#x5F26;&#x76F8;&#x4F3C;&#x5EA6;&#x7B49;&#x7B97;&#x6CD5;&#x6765;&#x5B8C;&#x6210;&#x3002;</p>
+<p>&#x5982;&#x4F55;&#x8FDB;&#x884C;&#x66F4;&#x4E3A;&#x7CBE;&#x51C6;&#x7684;&#x8BED;&#x4E49;&#x5339;&#x914D;&#xFF0C;&#x751F;&#x6210;&#x5411;&#x91CF;&#x7684;&#x7EF4;&#x5EA6;&#x662F;&#x4E00;&#x4E2A;&#x5F88;&#x91CD;&#x8981;&#x7684;&#x6307;&#x6807;&#x3002;</p>
+<p>&#x5982;&#x67D0;&#x4E2A;&#x6A21;&#x578B;&#x53EF;&#x4EE5;&#x751F;&#x6210; 1536 &#x7EF4;&#x7684;&#x5411;&#x91CF;&#xFF0C;&#x4E00;&#x6BB5;&#x6587;&#x672C;&#x56FA;&#x5B9A;&#x5F97;&#x5230; 1536 &#x4E2A;&#x6570;&#x5B57;&#x5E8F;&#x5217;&#x3002; 1536&#x4E2A;&#x6570;&#x5B57;&#x8868;&#x793A;&#x8FD9;&#x6BB5;&#x6587;&#x672C;&#x5728; 1536 &#x4E2A;&#x4E3B;&#x9898;&#xFF08;&#x62BD;&#x8C61;&#x7684;&#x8BED;&#x4E49;&#x7279;&#x5F81;&#xFF09;&#x65B9;&#x5411;&#x4E0A;&#x7684;&#x5F97;&#x5206;&#xFF08;&#x5F3A;&#x5EA6;&#xFF09;&#x3002;</p>
+<h1><span id="&#x516D;-&#x4F59;&#x5F26;&#x76F8;&#x4F3C;&#x5EA6;">&#x516D;&#x3001;&#x4F59;&#x5F26;&#x76F8;&#x4F3C;&#x5EA6;</span><a href="#&#x516D;-&#x4F59;&#x5F26;&#x76F8;&#x4F3C;&#x5EA6;" class="header-anchor">#</a></h1>
+<p>&#x5728;&#x6587;&#x672C;&#x5411;&#x91CF;&#x8BED;&#x4E49;&#x5339;&#x914D;&#x4E2D;&#xFF0C;&#x4F59;&#x5F26;&#x76F8;&#x4F3C;&#x5EA6;&#x662F;&#x8861;&#x91CF;&#x4E24;&#x4E2A;&#x5411;&#x91CF;&#x65B9;&#x5411;&#x76F8;&#x4F3C;&#x7A0B;&#x5EA6;&#x7684;&#x6838;&#x5FC3;&#x7B97;&#x6CD5;&#xFF0C;&#x5373;&#x5224;&#x65AD;&#x4E24;&#x6BB5;&#x6587;&#x672C;&#x8BED;&#x4E49;&#x662F;&#x5426;&#x76F8;&#x8FD1;&#x3002;</p>
+<p>&#x5411;&#x91CF;&#x7684;&#x6570;&#x5B57;&#x5E8F;&#x5217;&#xFF0C;&#x5171;&#x540C;&#x51B3;&#x5B9A;&#x4E86;&#x5411;&#x91CF;&#x5728;&#x9AD8;&#x7EF4;&#x7A7A;&#x95F4;&#x4E2D;&#x7684;&#x65B9;&#x5411;&#x548C;&#x957F;&#x5EA6;&#x3002;</p>
+<p>&#x800C;&#x4F59;&#x5F26;&#x76F8;&#x4F3C;&#x5EA6;&#x4E3B;&#x8981;&#x662F;&#x6487;&#x9664;&#x957F;&#x5EA6;&#x7684;&#x5F71;&#x54CD;&#xFF0C;&#x5F97;&#x5230;&#x65B9;&#x5411;&#x7684;&#x5939;&#x89D2;&#xFF0C;&#x5939;&#x89D2;&#x8D8A;&#x5C0F;&#x8D8A;&#x76F8;&#x4F3C;&#xFF0C;&#x5373;&#x65B9;&#x5411;&#x76F8;&#x540C;&#x3002;</p>
+<p>&#x4EE5;&#x4E00;&#x7EF4;&#x5411;&#x91CF;&#x4E3A;&#x4F8B;&#xFF0C;&#x4E00;&#x4E2A; 0.5 &#x548C; -0.5 &#x7684;&#x5411;&#x91CF;&#x65B9;&#x5411;&#x76F8;&#x53CD;&#xFF0C;&#x5939;&#x89D2;&#x8F83;&#x5927;&#xFF0C;&#x4E00;&#x4E2A; 0.5 &#x548C; 1 &#x7684;&#x5411;&#x91CF;&#xFF0C;&#x65B9;&#x5411;&#x76F8;&#x540C;&#xFF0C;&#x5939;&#x89D2;&#x66F4;&#x5C0F;&#x3002;</p>
+<p>&#x4EE5;&#x4E8C;&#x7EF4;&#x5411;&#x91CF;&#x4E3A;&#x4F8B;&#xFF0C;&#x4E00;&#x4E2A; [0.5,0.5] &#x548C; [0.5,-0.5]&#x7684;&#x5411;&#x91CF;&#x663E;&#x7136;&#x5B58;&#x5728;&#x5939;&#x89D2;&#xFF0C;&#x5939;&#x89D2;&#x66F4;&#x5C0F;&#x7684;&#x4E24;&#x4E2A;&#x5411;&#x91CF;&#x66F4;&#x52A0;&#x76F8;&#x4F3C;&#x3002;</p>
+<p>&#x4F59;&#x5F26;&#x76F8;&#x4F3C;&#x5EA6; = &#x4E24;&#x4E2A;&#x5411;&#x91CF;&#x7684;&#x70B9;&#x79EF; / &#x4E24;&#x4E2A;&#x5411;&#x91CF;&#x6A21;&#x957F;&#x7684;&#x4E58;&#x79EF;</p>
+<h1><span id="&#x4E03;-langchain-&#x5B89;&#x88C5;">&#x4E03;&#x3001;LangChain &#x5B89;&#x88C5;</span><a href="#&#x4E03;-langchain-&#x5B89;&#x88C5;" class="header-anchor">#</a></h1>
+<p>LangChain &#x7684;&#x6838;&#x5FC3;&#x7406;&#x5FF5;&#x662F;&#x4E3A;&#x5404;&#x79CD; LLMs &#x5B9E;&#x73B0;&#x901A;&#x7528;&#x63A5;&#x53E3;&#xFF0C;&#x5E76;&#x4E0D;&#x53BB;&#x5F00;&#x53D1; LLMs &#x3002;</p>
+<p>&#x5728;&#x547D;&#x4EE4;&#x884C;&#x4E2D;&#x6267;&#x884C;&#x6307;&#x4EE4;&#xFF1A; pip install langchain langchain-community dashscope chromadb</p>
+<p>&#x5176;&#x4E2D; langchain &#x662F;LangChain&#x7684;&#x6838;&#x5FC3;&#x5305;&#x3002;</p>
+<p>langchain-community &#x662F;&#x793E;&#x533A;&#x652F;&#x6301;&#x5305;&#x3002;</p>
+<p>dashscope &#x662F;&#x963F;&#x91CC;&#x4E91;&#x901A;&#x4E49;&#x5343;&#x95EE;&#x7684; Python SDK &#x3002;</p>
+<p>chormadb &#x662F;&#x8F7B;&#x91CF;&#x5411;&#x91CF;&#x6570;&#x636E;&#x5E93;&#x3002;</p>
+<h1><span id="&#x516B;-langchain-&#x7EC4;&#x4EF6;">&#x516B;&#x3001;LangChain &#x7EC4;&#x4EF6;</span><a href="#&#x516B;-langchain-&#x7EC4;&#x4EF6;" class="header-anchor">#</a></h1>
+<ol>
+<li>&#x901A;&#x8FC7; LangChain &#x8C03;&#x7528;&#x5927;&#x8BED;&#x8A00;&#x6A21;&#x578B;</li>
+</ol>
+<p>&#x901A;&#x8FC7;&#x4E0B;&#x9762;&#x8FD9;&#x6BB5;&#x4EE3;&#x7801;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; LangChain &#x8C03;&#x7528;&#x5927;&#x8BED;&#x8A00;&#x6A21;&#x578B;&#x3002;</p>
+<p>&#x4E0D;&#x7528; qwen3-max &#x56E0;&#x4E3A; qwen3-max &#x662F;&#x804A;&#x5929;&#x6A21;&#x578B;&#x3002;</p>
+<p>&#x8FD9;&#x91CC;&#x4F7F;&#x7528;&#x5927;&#x8BED;&#x8A00;&#x6A21;&#x578B; qwen-max&#x3002;</p>
+<p>&#x8981;&#x6CE8;&#x610F;&#x533A;&#x5206;&#x5927;&#x8BED;&#x8A00;&#x6A21;&#x578B;&#x548C;&#x804A;&#x5929;&#x6A21;&#x578B;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x51FA;&#x73B0; url &#x9519;&#x8BEF;&#x7684;&#x4FE1;&#x606F;&#xFF0C;&#x53EF;&#x80FD;&#x7684;&#x539F;&#x56E0;&#x662F;&#x6A21;&#x578B;&#x4F7F;&#x7528;&#x9519;&#x8BEF;&#x3002;</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> langchain_community.llms.tongyi <span class="keyword">import</span> Tongyi</span><br><span class="line"><span class="keyword">from</span> dotenv <span class="keyword">import</span> load_dotenv</span><br><span class="line"></span><br><span class="line">load_dotenv()</span><br><span class="line"></span><br><span class="line">model = Tongyi(model=<span class="string">&quot;qwen-max&quot;</span>)</span><br><span class="line"></span><br><span class="line">res = model.invoke(<span class="built_in">input</span>=<span class="string">&quot;&#x4F60;&#x662F;&#x8C01;&#xFF1F;&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(res)</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>&#x6D41;&#x5F0F;&#x8F93;&#x51FA;</li>
+</ol>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> langchain_community.llms.tongyi <span class="keyword">import</span> Tongyi</span><br><span class="line"><span class="keyword">from</span> dotenv <span class="keyword">import</span> load_dotenv</span><br><span class="line"></span><br><span class="line">load_dotenv()</span><br><span class="line"></span><br><span class="line">model = Tongyi(model=<span class="string">&quot;qwen-max&quot;</span>)</span><br><span class="line"></span><br><span class="line">res = model.stream(<span class="built_in">input</span>=<span class="string">&quot;&#x4F60;&#x662F;&#x8C01;&#xFF1F;&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> chunk <span class="keyword">in</span> res:</span><br><span class="line">    <span class="built_in">print</span>(chunk,end=<span class="string">&quot;&quot;</span>,flush=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>&#x804A;&#x5929;&#x6A21;&#x578B;&#x7684;&#x4F7F;&#x7528;</li>
+</ol>
+<p>&#x804A;&#x5929;&#x6D88;&#x606F;&#x5305;&#x542B;&#x4E0B;&#x9762;&#x51E0;&#x79CD;&#x7C7B;&#x578B;&#xFF1A;</p>
+<p>&#xB7; AIMessage&#xFF1A;AI&#x8F93;&#x51FA;&#x7684;&#x6D88;&#x606F;</p>
+<p>&#xB7; HumanMessage&#xFF1A;&#x7528;&#x6237;&#x7684;&#x6D88;&#x606F;</p>
+<p>&#xB7; SystemMessage&#xFF1A;&#x6307;&#x5B9A;&#x6A21;&#x578B;&#x5177;&#x4F53;&#x6240;&#x5904;&#x7684;&#x73AF;&#x5883;&#x548C;&#x80CC;&#x666F;</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> langchain_community.chat_models.tongyi <span class="keyword">import</span> ChatTongyi</span><br><span class="line"><span class="keyword">from</span> langchain_core.messages <span class="keyword">import</span> HumanMessage,SystemMessage,AIMessage</span><br><span class="line"><span class="keyword">from</span> dotenv <span class="keyword">import</span> load_dotenv</span><br><span class="line"></span><br><span class="line">load_dotenv()</span><br><span class="line"></span><br><span class="line">model = ChatTongyi(model=<span class="string">&quot;qwen3-max-2026-01-23&quot;</span>)</span><br><span class="line"></span><br><span class="line">message = [</span><br><span class="line">    SystemMessage(content=<span class="string">&quot;&#x4F60;&#x662F;&#x4E00;&#x4E2A;&#x6765;&#x81EA;&#x8FB9;&#x585E;&#x7684;&#x8BD7;&#x4EBA;&quot;</span>),</span><br><span class="line">    HumanMessage(content=<span class="string">&quot;&#x7ED9;&#x6211;&#x5199;&#x4E00;&#x53E5;&#x5510;&#x8BD7;&quot;</span>),</span><br><span class="line">    AIMessage(content=<span class="string">&quot;&#x9504;&#x79BE;&#x65E5;&#x5F53;&#x5348;&#xFF0C;&#x6C57;&#x6EF4;&#x79BE;&#x4E0B;&#x571F;&#x3002;&quot;</span>),</span><br><span class="line">    HumanMessage(content=<span class="string">&quot;&#x4E0B;&#x4E00;&#x53E5;&#x662F;&#x4EC0;&#x4E48;&#xFF1F;&quot;</span>),</span><br><span class="line"></span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> chunk <span class="keyword">in</span> model.stream(<span class="built_in">input</span>=message):</span><br><span class="line">    <span class="built_in">print</span>(chunk.content,end=<span class="string">&quot;&quot;</span>,flush=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>&#x6D88;&#x606F;&#x7684;&#x7B80;&#x5199;&#x5F62;&#x5F0F;</li>
+</ol>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> langchain_community.chat_models.tongyi <span class="keyword">import</span> ChatTongyi</span><br><span class="line"><span class="keyword">from</span> dotenv <span class="keyword">import</span> load_dotenv</span><br><span class="line"></span><br><span class="line">load_dotenv()</span><br><span class="line"></span><br><span class="line">model = ChatTongyi(model=<span class="string">&quot;qwen3-max-2026-01-23&quot;</span>)</span><br><span class="line"></span><br><span class="line">message = [</span><br><span class="line">    (<span class="string">&quot;system&quot;</span>,<span class="string">&quot;&#x4F60;&#x662F;&#x4E00;&#x4E2A;&#x6765;&#x81EA;&#x8FB9;&#x585E;&#x7684;&#x8BD7;&#x4EBA;&quot;</span>),</span><br><span class="line">    (<span class="string">&quot;human&quot;</span>,<span class="string">&quot;&#x7ED9;&#x6211;&#x5199;&#x4E00;&#x53E5;&#x5510;&#x8BD7;&quot;</span>),</span><br><span class="line">    (<span class="string">&quot;ai&quot;</span>,<span class="string">&quot;&#x9504;&#x79BE;&#x65E5;&#x5F53;&#x5348;&#xFF0C;&#x6C57;&#x6EF4;&#x79BE;&#x4E0B;&#x571F;&#x3002;&quot;</span>),</span><br><span class="line">    (<span class="string">&quot;human&quot;</span>,<span class="string">&quot;&#x4E0B;&#x4E00;&#x53E5;&#x662F;&#x4EC0;&#x4E48;&#xFF1F;&quot;</span>)</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> chunk <span class="keyword">in</span> model.stream(<span class="built_in">input</span>=message):</span><br><span class="line">    <span class="built_in">print</span>(chunk.content,end=<span class="string">&quot;&quot;</span>,flush=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>&#x5D4C;&#x5165;&#x6A21;&#x578B;&#x7684;&#x4F7F;&#x7528;</li>
+</ol>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> dotenv <span class="keyword">import</span> load_dotenv</span><br><span class="line"><span class="keyword">from</span> langchain_community.embeddings <span class="keyword">import</span> DashScopeEmbeddings</span><br><span class="line"></span><br><span class="line">load_dotenv()</span><br><span class="line"></span><br><span class="line">embed = DashScopeEmbeddings()</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(embed.embed_query(<span class="string">&quot;&#x6211;&#x559C;&#x6B22;&#x4F60;&quot;</span>)) <span class="comment"># &#x5355;&#x4E2A;&#x5B57;&#x7B26;&#x4E32;&#x8F6C;&#x6362;</span></span><br><span class="line"><span class="built_in">print</span>(embed.embed_documents([<span class="string">&apos;&#x6211;&#x559C;&#x6B22;&#x4F60;&apos;</span>,<span class="string">&apos;&#x6211;&#x7A00;&#x996D;&#x4F60;&apos;</span>,<span class="string">&apos;&#x665A;&#x4E0A;&#x5403;&#x5565;&apos;</span>])) <span class="comment">#&#x6279;&#x91CF;&#x8F6C;&#x6362;</span></span><br></pre></td></tr></table></figure>
+<h1><span id="&#x4E5D;-&#x63D0;&#x793A;&#x8BCD;&#x6A21;&#x677F;">&#x4E5D;&#x3001;&#x63D0;&#x793A;&#x8BCD;&#x6A21;&#x677F;</span><a href="#&#x4E5D;-&#x63D0;&#x793A;&#x8BCD;&#x6A21;&#x677F;" class="header-anchor">#</a></h1>
+<p>LangChain &#x4E2D;&#x7684; PromptTemplate &#x7C7B;&#x53EF;&#x4EE5;&#x6784;&#x5EFA;&#x81EA;&#x5B9A;&#x4E49;&#x63D0;&#x793A;&#x8BCD;&#x6A21;&#x677F;&#xFF0C;&#x652F;&#x6301;&#x53D8;&#x91CF;&#x7684;&#x6CE8;&#x5165;&#xFF0C;&#x6700;&#x7EC8;&#x751F;&#x6210;&#x6240;&#x9700;&#x8981;&#x7684;&#x63D0;&#x793A;&#x8BCD;&#xFF0C;&#x4ECE;&#x800C;&#x534F;&#x52A9;&#x4F18;&#x5316;&#x63D0;&#x793A;&#x8BCD;&#xFF0C;</p>
+<p>&#x6807;&#x51C6;&#x5199;&#x6CD5;</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> dotenv <span class="keyword">import</span> load_dotenv</span><br><span class="line"><span class="keyword">from</span> langchain_core.prompts <span class="keyword">import</span> PromptTemplate</span><br><span class="line"><span class="keyword">from</span> langchain_community.llms.tongyi <span class="keyword">import</span> Tongyi</span><br><span class="line"></span><br><span class="line">load_dotenv()</span><br><span class="line"></span><br><span class="line">promt_template = PromptTemplate.from_template(</span><br><span class="line">    <span class="string">&quot;&#x6211;&#x7684;&#x90BB;&#x5C45;&#x59D3;{lastname}&#xFF0C;&#x521A;&#x751F;&#x4E86;{gender}&#xFF0C;&#x5E2E;&#x5FD9;&#x8D77;&#x540D;&#xFF0C;&#x7B80;&#x7565;&#x56DE;&#x7B54;&#x3002;&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">promt_text = promt_template.<span class="built_in">format</span>(lastname=<span class="string">&quot;&#x5F20;&quot;</span>, gender=<span class="string">&quot;&#x5973;&#x513F;&quot;</span>)</span><br><span class="line"></span><br><span class="line">model = Tongyi(model=<span class="string">&quot;tongyi-xiaomi-analysis-flash&quot;</span>)</span><br><span class="line">res =model.invoke(<span class="built_in">input</span>=promt_text)</span><br><span class="line"><span class="built_in">print</span>(res)</span><br></pre></td></tr></table></figure>
+<p>&#x57FA;&#x4E8E; chain &#x94FE;&#x7684;&#x5199;&#x6CD5;</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> dotenv <span class="keyword">import</span> load_dotenv</span><br><span class="line"><span class="keyword">from</span> langchain_core.prompts <span class="keyword">import</span> PromptTemplate</span><br><span class="line"><span class="keyword">from</span> langchain_community.llms.tongyi <span class="keyword">import</span> Tongyi</span><br><span class="line"></span><br><span class="line">load_dotenv()</span><br><span class="line"></span><br><span class="line">promt_template = PromptTemplate.from_template(</span><br><span class="line">    <span class="string">&quot;&#x6211;&#x7684;&#x90BB;&#x5C45;&#x59D3;{lastname}&#xFF0C;&#x521A;&#x751F;&#x4E86;{gender}&#xFF0C;&#x5E2E;&#x5FD9;&#x8D77;&#x540D;&#xFF0C;&#x7B80;&#x7565;&#x56DE;&#x7B54;&#x3002;&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">model = Tongyi(model=<span class="string">&quot;tongyi-xiaomi-analysis-flash&quot;</span>)</span><br><span class="line">chain = promt_template | model</span><br><span class="line">res = chain.invoke(<span class="built_in">input</span>={<span class="string">&quot;lastname&quot;</span>:<span class="string">&quot;&#x5F20;&quot;</span>,<span class="string">&quot;gender&quot;</span>:<span class="string">&quot;&#x5973;&#x513F;&quot;</span>})</span><br><span class="line"><span class="built_in">print</span>(res)</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2026/03/24/%E8%A7%A3%E5%86%B3VsCode%E6%A3%80%E6%B5%8B%E5%88%B0#include%E9%94%99%E8%AF%AF/" rel="prev" title="解决VsCode检测到#include错误">
+      <i class="fa fa-chevron-left"></i> 解决VsCode检测到#include错误
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2026/03/31/%E5%A6%82%E4%BD%95%E5%9C%A8vscode%E6%8E%92%E9%99%A4%E6%96%87%E4%BB%B6/" rel="next" title="如何在vscode排除文件">
+      如何在vscode排除文件 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">一、代码调用云端大模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">二、OpenAI库的基本使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">三、提示词工程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">四、RAG介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">五、向量的概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">六、余弦相似度</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">七、LangChain 安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">八、LangChain 组件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">九、提示词模板</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ITTT"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">ITTT</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/originone494" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;originone494" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:2531293780@qq.com" title="E-Mail → mailto:2531293780@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ITTT</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">113k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:25</span>
+</div>
+
+<!-- 网站运行时间的设置 -->
+<span id="timeDate">载入天数...</span>
+<span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("12/29/2025 17:04:14"); //此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒.";
+    }
+setInterval("createtime()",250);
+</script>
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/js/fix-toc.js"></script>
+</body>
+</html>

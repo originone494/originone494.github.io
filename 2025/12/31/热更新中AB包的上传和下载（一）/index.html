@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"originone494.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="&#x4E00;&#x3001;&#x70ED;&#x66F4;&#x65B0;&#x6D41;&#x7A0B;# &#x5728;&#x8D44;&#x6E90;&#x9700;&#x8981;&#x53D8;&#x5316;&#x65F6;&#xFF0C;&#x5411;&#x8D44;&#x6E90;&#x670D;&#x52A1;&#x5668;&#xFF08;FTP&#x3001;HTT">
+<meta property="og:type" content="article">
+<meta property="og:title" content="热更新中AB包的上传和下载（一）">
+<meta property="og:url" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
+<meta property="og:site_name" content="OneBlog">
+<meta property="og:description" content="&#x4E00;&#x3001;&#x70ED;&#x66F4;&#x65B0;&#x6D41;&#x7A0B;# &#x5728;&#x8D44;&#x6E90;&#x9700;&#x8981;&#x53D8;&#x5316;&#x65F6;&#xFF0C;&#x5411;&#x8D44;&#x6E90;&#x670D;&#x52A1;&#x5668;&#xFF08;FTP&#x3001;HTT">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic1.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic2.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic3.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic4.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic5.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic6.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic7.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic8.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic9.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic10.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic11.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic12.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic13.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic14.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic15.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic16.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic17.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic18.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic19.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic20.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic21.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic22.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic23.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic24.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic25.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic26.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic27.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic28.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic29.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic30.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic31.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic32.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic33.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic34.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic35.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic36.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic37.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic38.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic39.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic40.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic41.png">
+<meta property="og:image" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic42.png">
+<meta property="article:published_time" content="2025-12-31T02:42:24.000Z">
+<meta property="article:modified_time" content="2026-01-03T10:33:50.282Z">
+<meta property="article:author" content="ITTT">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic1.png">
+
+<link rel="canonical" href="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>热更新中AB包的上传和下载（一） | OneBlog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">OneBlog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://originone494.github.io/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ITTT">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="OneBlog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          热更新中AB包的上传和下载（一）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2025-12-31 10:42:24" itemprop="dateCreated datePublished" datetime="2025-12-31T10:42:24+08:00">2025-12-31</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2026-01-03 18:33:50" itemprop="dateModified" datetime="2026-01-03T18:33:50+08:00">2026-01-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Unity/" itemprop="url" rel="index"><span itemprop="name">Unity</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>11 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1><span id="&#x4E00;-&#x70ED;&#x66F4;&#x65B0;&#x6D41;&#x7A0B;">&#x4E00;&#x3001;&#x70ED;&#x66F4;&#x65B0;&#x6D41;&#x7A0B;</span><a href="#&#x4E00;-&#x70ED;&#x66F4;&#x65B0;&#x6D41;&#x7A0B;" class="header-anchor">#</a></h1>
+<p>&#x5728;&#x8D44;&#x6E90;&#x9700;&#x8981;&#x53D8;&#x5316;&#x65F6;&#xFF0C;&#x5411;&#x8D44;&#x6E90;&#x670D;&#x52A1;&#x5668;&#xFF08;FTP&#x3001;HTTP&#x7B49;&#xFF09;&#x4E0A;&#x4F20;AB&#x5305;&#x548C;&#x8D44;&#x6E90;&#x5BF9;&#x6BD4;&#x6587;&#x4EF6;&#x3002;<br>
+&#x6BCF;&#x6B21;&#x901A;&#x8FC7;&#x6E38;&#x620F;&#x5BA2;&#x6237;&#x7AEF;&#x8FDB;&#x5165;&#x65F6;&#xFF1A;</p>
+<ol>
+<li>&#x4E0B;&#x8F7D;&#x670D;&#x52A1;&#x5668;&#x4E0A;&#x7684;&#x8D44;&#x6E90;&#x5BF9;&#x6BD4;&#x6587;&#x4EF6;</li>
+<li>&#x7528;&#x4E0B;&#x8F7D;&#x4E0B;&#x6765;&#x7684;&#x8D44;&#x6E90;&#x5BF9;&#x6BD4;&#x6587;&#x4EF6;&#x548C;&#x672C;&#x5730;&#x6587;&#x4EF6;&#x8FDB;&#x884C;&#x5BF9;&#x6BD4;&#xFF0C;&#x8BB0;&#x5F55;&#x9700;&#x8981;&#x8FDB;&#x884C;&#x66F4;&#x65B0;&#x7684;AB&#x5305;</li>
+<li>&#x5C06;&#x9700;&#x8981;&#x66F4;&#x65B0;&#x7684;AB&#x5305;&#x8FDB;&#x884C;&#x66F4;&#x65B0;&#xFF0C;&#x518D;&#x66F4;&#x65B0;&#x8D44;&#x6E90;&#x5BF9;&#x6BD4;&#x6587;&#x4EF6;</li>
+<li>&#x5B8C;&#x6210;&#x540E;&#xFF0C;&#x6B63;&#x5F0F;&#x8FDB;&#x5165;&#x6E38;&#x620F;</li>
+</ol>
+<h1><span id="&#x4E8C;-&#x51C6;&#x5907;&#x6253;&#x5305;ab&#x5305;&#x7684;&#x811A;&#x672C;">&#x4E8C;&#x3001;&#x51C6;&#x5907;&#x6253;&#x5305;AB&#x5305;&#x7684;&#x811A;&#x672C;</span><a href="#&#x4E8C;-&#x51C6;&#x5907;&#x6253;&#x5305;ab&#x5305;&#x7684;&#x811A;&#x672C;" class="header-anchor">#</a></h1>
+<p>&#x5728;github&#x4E0A;&#x4E0B;&#x8F7D;AssetBundles Browser<br>
+&#x53EF;&#x4EE5;&#x901A;&#x8FC7;url&#x5728;&#x5305;&#x7BA1;&#x7406;&#x5668;&#x91CC;&#x6DFB;&#x52A0;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x5728;<a target="_blank" rel="noopener" href="https://github.com/Unity-Technologies/AssetBundles-Browser%E7%9B%B4%E6%8E%A5%E4%B8%8B%E8%BD%BD%E5%8E%8B%E7%BC%A9%E5%8C%85%E3%80%82">https://github.com/Unity-Technologies/AssetBundles-Browser&#x76F4;&#x63A5;&#x4E0B;&#x8F7D;&#x538B;&#x7F29;&#x5305;&#x3002;</a><br>
+&#x5982;&#x679C;&#x662F;&#x76F4;&#x63A5;&#x5728;github&#x4E0A;&#x4E0B;&#x8F7D;&#x538B;&#x7F29;&#x5305;&#xFF0C;&#x9700;&#x8981;&#x5C06;&#x91CC;&#x9762;&#x7684;Test&#x6587;&#x4EF6;&#x5220;&#x9664;&#xFF0C;&#x4E0D;&#x7136;&#x76F4;&#x63A5;&#x5728;unity&#x91CC;&#x4F1A;&#x62A5;&#x9519;</p>
+<img src="/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic1.png" class title="&#x56FE;&#x7247;">
+<p>&#x5220;&#x9664;&#x4EE5;&#x540E;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x5C06;&#x538B;&#x7F29;&#x5305;&#x91CC;&#x9762;&#x7684;&#x6587;&#x4EF6;&#x7C98;&#x8D34;&#x5230;Unity&#x9879;&#x76EE;&#x7684;Packages&#x6587;&#x4EF6;&#x5939;&#x4E0B;</p>
+<img src="/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic2.png" class title="&#x56FE;&#x7247;">
+<p>&#x6DFB;&#x52A0;&#x540E;&#xFF0C;&#x5728;Unity&#x6309;&#x4E0B;Ctrl+R&#x5373;&#x53EF;&#x5237;&#x65B0;&#xFF0C;&#x5305;&#x5C31;&#x5BFC;&#x5165;&#x5230;&#x9879;&#x76EE;&#x4E2D;&#x4E86;<br>
+&#x63A5;&#x7740;&#x5C31;&#x80FD;&#x5728;&#x7A97;&#x53E3;&#x9009;&#x9879;&#x91CC;&#x9762;&#x627E;&#x5230;AssetBundle Browser&#x7684;&#x9009;&#x9879;</p>
+<img src="/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic3.png" class title="&#x56FE;&#x7247;">
+<p>&#x70B9;&#x5F00;&#x540E;&#x5F97;&#x5230;&#x8FD9;&#x6837;&#x7684;&#x754C;&#x9762;&#xFF1A;</p>
+<img src="/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic4.png" class title="&#x56FE;&#x7247;">
+<h1><span id="&#x4E09;-&#x51C6;&#x5907;&#x9700;&#x8981;&#x6253;&#x5305;&#x7684;&#x5185;&#x5BB9;">&#x4E09;&#x3001;&#x51C6;&#x5907;&#x9700;&#x8981;&#x6253;&#x5305;&#x7684;&#x5185;&#x5BB9;</span><a href="#&#x4E09;-&#x51C6;&#x5907;&#x9700;&#x8981;&#x6253;&#x5305;&#x7684;&#x5185;&#x5BB9;" class="header-anchor">#</a></h1>
+<p>&#x5728;&#x573A;&#x666F;&#x4E2D;&#x521B;&#x5EFA;&#x7B80;&#x5355;&#x7684;&#x7ACB;&#x65B9;&#x4F53;&#x3001;&#x7403;&#x4F53;&#x548C;&#x5706;&#x67F1;&#x4F53;&#xFF0C;&#x7528;&#x6765;&#x6A21;&#x62DF;&#x9700;&#x8981;&#x6253;&#x5305;&#x7684;&#x5185;&#x5BB9;&#x3002;<br>
+&#x5C06;&#x521B;&#x5EFA;&#x597D;&#x7684;&#x7269;&#x4F53;&#x62D6;&#x5230;&#x81EA;&#x5DF1;&#x521B;&#x5EFA;&#x597D;&#x7684;Assets/ArtRes/Prefab&#x6587;&#x4EF6;&#x5939;&#x4E0B;&#x3002;</p>
+<img src="/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic5.png" class title="&#x56FE;&#x7247;">
+<p>&#x540C;&#x65F6;&#xFF0C;&#x521B;&#x5EFA;&#x597D;Assets/ArtRes/Lua&#x6587;&#x4EF6;&#x5939;&#x7528;&#x6765;&#x5B58;&#x653E;lua&#x811A;&#x672C;&#x3002;<br>
+&#x6253;&#x5F00;Assets/ArtRes/Lua&#x6587;&#x4EF6;&#x5939;&#x7684;&#x8D44;&#x6E90;&#x7BA1;&#x7406;&#x5668;&#xFF0C;&#x5728;&#x91CC;&#x9762;&#x65B0;&#x5EFA;&#x4E24;&#x4E2A;txt&#x6587;&#x672C;&#x7528;&#x6765;&#x6A21;&#x62DF;lua&#x811A;&#x672C;</p>
+<img src="/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic6.png" class title="&#x56FE;&#x7247;">
+<p>&#x5C06;&#x4E09;&#x4E2A;&#x521A;&#x521A;&#x521B;&#x5EFA;&#x7684;&#x9884;&#x5236;&#x4F53;&#x6DFB;&#x52A0;&#x5230;model&#x5305;&#xFF08;&#x81EA;&#x5DF1;&#x521B;&#x5EFA;&#xFF09;&#x91CC;</p>
+<img src="/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic7.png" class title="&#x56FE;&#x7247;">
+<p>&#x63A5;&#x7740;&#xFF0C;&#x6211;&#x4EEC;&#x5C31;&#x53EF;&#x4EE5;&#x5728;AssetBundle Browser&#x89C6;&#x7A97;&#x770B;&#x5230;&#x6211;&#x4EEC;model&#x5305;&#x4E0B;&#x7684;&#x7269;&#x4F53;&#x4E86;</p>
+<img src="/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic8.png" class title="&#x56FE;&#x7247;">
+<p>&#x4E5F;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x76F4;&#x63A5;&#x5728;AssetBundle Browser&#x89C6;&#x7A97;&#xFF0C;&#x76F4;&#x63A5;&#x65B0;&#x5EFA;&#x4E00;&#x4E2A;&#x5305;</p>
+<img src="/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic9.png" class title="&#x56FE;&#x7247;">
+<p>&#x8FD9;&#x91CC;&#x65B0;&#x5EFA;&#x4E00;&#x4E2A;lua&#x5305;&#xFF0C;&#x7528;&#x6765;&#x88C5;lua&#x811A;&#x672C;</p>
+<img src="/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic10.png" class title="&#x56FE;&#x7247;">
+<p>&#x5C06;&#x4E4B;&#x524D;&#x65B0;&#x5EFA;&#x7684;&#x7528;&#x6765;&#x6A21;&#x62DF;lua&#x811A;&#x672C;&#x7684;txt&#x6587;&#x4EF6;&#x653E;&#x5165;lua&#x5305;&#x4E2D;</p>
+<img src="/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic11.png" class title="&#x56FE;&#x7247;">
+<h1><span id="&#x56DB;-&#x8FDB;&#x884C;&#x6253;&#x5305;">&#x56DB;&#x3001;&#x8FDB;&#x884C;&#x6253;&#x5305;</span><a href="#&#x56DB;-&#x8FDB;&#x884C;&#x6253;&#x5305;" class="header-anchor">#</a></h1>
+<p>&#x70B9;&#x51FB;build&#x6309;&#x94AE;&#xFF0C;&#x6765;&#x5230;build&#x754C;&#x9762;&#x3002;</p>
+<img src="/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic12.png" class title="&#x56FE;&#x7247;">
+<p>&#x6211;&#x4EEC;&#x9700;&#x8981;&#x65B0;&#x5EFA;Assets/ArtRes/AB/PC&#x6587;&#x4EF6;&#x5939;&#x6765;&#x5B58;&#x50A8;build&#x7684;&#x8F93;&#x51FA;&#x7ED3;&#x679C;</p>
+<img src="/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic13.png" class title="&#x56FE;&#x7247;">
+<p>&#x5C06;&#x8DEF;&#x5F84;Assets/ArtRes/AB/PC&#x653E;&#x5230;Output Path&#x4E2D;</p>
+<img src="/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic14.png" class title="&#x56FE;&#x7247;">
+<p>&#x5728;&#x9AD8;&#x7EA7;&#x8BBE;&#x7F6E;&#x91CC;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x5C06;&#x538B;&#x7F29;&#x65B9;&#x5F0F;&#x6539;&#x4E3A;LZ4&#x65B9;&#x5F0F;&#xFF0C;&#x662F;&#x4E00;&#x79CD;&#x6BD4;&#x8F83;&#x597D;&#x7684;&#x538B;&#x7F29;&#x65B9;&#x5F0F;&#xFF0C;&#x5176;&#x4ED6;&#x7684;&#x9009;&#x9879;&#x90FD;&#x4E0D;&#x7528;&#x52A8;</p>
+<img src="/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic15.png" class title="&#x56FE;&#x7247;">
+<p>&#x6700;&#x7EC8;&#x8BBE;&#x7F6E;&#x4E3A;&#xFF1A;</p>
+<img src="/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic16.png" class title="&#x56FE;&#x7247;">
+<p>&#x70B9;&#x51FB;Build&#xFF0C;&#x7B49;&#x5F85;&#xFF0C;&#x7136;&#x540E;&#x5C31;&#x53EF;&#x4EE5;&#x5728;Assets/ArtRes/AB/PC&#x6587;&#x4EF6;&#x5939;&#x4E0B;&#x770B;&#x5230;&#x6253;&#x5305;&#x51FA;&#x6765;&#x7684;&#x8D44;&#x6E90;</p>
+<img src="/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic17.png" class title="&#x56FE;&#x7247;">
+<h1><span id="&#x4E94;-&#x83B7;&#x53D6;ab&#x5305;&#x6587;&#x4EF6;&#x7684;md5&#x7801;">&#x4E94;&#x3001;&#x83B7;&#x53D6;AB&#x5305;&#x6587;&#x4EF6;&#x7684;MD5&#x7801;</span><a href="#&#x4E94;-&#x83B7;&#x53D6;ab&#x5305;&#x6587;&#x4EF6;&#x7684;md5&#x7801;" class="header-anchor">#</a></h1>
+<ol>
+<li>MD5&#x7801;&#x662F;&#x4EC0;&#x4E48;</li>
+</ol>
+<p>MD5&#x662F;&#x4FE1;&#x606F;&#x6458;&#x8981;&#x7B97;&#x6CD5;&#x7684;&#x7B80;&#x79F0;&#xFF0C;&#x662F;&#x4E00;&#x79CD;&#x5E7F;&#x6CDB;&#x4F7F;&#x7528;&#x7684;&#x5BC6;&#x7801;&#x6563;&#x5217;&#x51FD;&#x6570;&#xFF0C;&#x53EF;&#x4EE5;&#x751F;&#x6210;&#x4E00;&#x4E2A;16&#x5B57;&#x8282;&#x7684;&#x6563;&#x5217;&#x503C;&#xFF0C;&#x7528;&#x4E8E;&#x786E;&#x4FDD;&#x4FE1;&#x606F;&#x7684;&#x5B8C;&#x6574;&#x4E00;&#x81F4;&#x6027;<br>
+&#x5F53;&#x6211;&#x4EEC;&#x628A;&#x6570;&#x636E;&#x7ECF;&#x8FC7;MD5&#x7B97;&#x6CD5;&#x8BA1;&#x7B97;&#x540E;&#xFF0C;&#x4E0D;&#x7BA1;&#x6211;&#x4EEC;&#x4F20;&#x5165;&#x7684;&#x6570;&#x636E;&#x6709;&#x591A;&#x5927;&#xFF0C;&#x90FD;&#x4F1A;&#x751F;&#x6210;&#x4E00;&#x4E2A;&#x56FA;&#x5B9A;&#x957F;&#x5EA6;&#x7684;MD5&#x7801;<br>
+&#x76F8;&#x540C;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x7ECF;&#x8FC7;MD5&#x7B97;&#x6CD5;&#x8BA1;&#x7B97;&#x540E;&#x7684;&#x7ED3;&#x679C;&#x662F;&#x4E00;&#x6837;&#x7684;<br>
+&#x5982;&#x679C;&#x6570;&#x636E;&#x53D1;&#x751F;&#x53D8;&#x5316;&#xFF0C;MD5&#x7801;&#x4F1A;&#x53D1;&#x751F;&#x53D8;&#x5316;<br>
+&#x56E0;&#x6B64;&#xFF0C;&#x6211;&#x4EEC;&#x901A;&#x8FC7;MD5&#x7801;&#x4F5C;&#x4E3A;&#x6587;&#x4EF6;&#x7684;&#x552F;&#x4E00;&#x6807;&#x8BC6;&#xFF0C;&#x901A;&#x8FC7;&#x5176;&#x5224;&#x65AD;&#x6587;&#x4EF6;&#x5185;&#x5BB9;&#x662F;&#x5426;&#x53D1;&#x751F;&#x53D8;&#x5316;</p>
+<ol start="2">
+<li>&#x7F16;&#x5199;&#x83B7;&#x5F97;MD5&#x7801;&#x7684;&#x811A;&#x672C;</li>
+</ol>
+<p>&#x6D41;&#x7A0B;&#xFF1A;&#x6839;&#x636E;&#x6587;&#x4EF6;&#x8DEF;&#x5F84;&#x83B7;&#x5F97;&#x6587;&#x4EF6;&#x6D41;&#x4FE1;&#x606F;-&gt;&#x5229;&#x7528;MOD&#x52A0;&#x5BC6;&#x670D;&#x52A1;&#x63D0;&#x4F9B;&#x5546;&#xFF08;&#x901A;&#x8FC7;MD5CryptoServiceProvider&#x65B0;&#x5EFA;&#x4E00;&#x4E2A;&#xFF09;&#x5BF9;&#x8C61;&#xFF0C;&#x6839;&#x636E;&#x6D41;&#x4FE1;&#x606F;&#xFF0C;&#x8BA1;&#x7B97;&#x51FA;MD5&#x7801;-&gt;&#x5C06;&#x5B57;&#x8282;&#x6570;&#x7EC4;&#x5F62;&#x5F0F;&#x7684;MD5&#x7801;&#x8F6C;&#x4E3A;16&#x8FDB;&#x5236;&#x5B57;&#x7B26;&#x4E32;</p>
+<p>&#x5B8C;&#x6574;&#x4EE3;&#x7801;&#xFF1A;</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.IO;</span><br><span class="line"><span class="keyword">using</span> System.Security.Cryptography;</span><br><span class="line"><span class="keyword">using</span> System.Text;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">GetMD5</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">{</span><br><span class="line">    <span class="comment">// Start is called before the first frame update</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Start</span>()</span></span><br><span class="line">    {</span><br><span class="line">        print(getfileMd5(Application.dataPath + <span class="string">&quot;/ArtRes/AB/PC/lua&quot;</span>));</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Update is called once per frame</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Update</span>()</span></span><br><span class="line">    {</span><br><span class="line">        </span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="built_in">string</span> <span class="title">getfileMd5</span>(<span class="params"><span class="built_in">string</span> filePath</span>)</span></span><br><span class="line">    {</span><br><span class="line">        <span class="comment">//&#x5C06;&#x6587;&#x4EF6;&#x4EE5;&#x6D41;&#x7684;&#x5F62;&#x5F0F;&#x6253;&#x5F00;</span></span><br><span class="line">        <span class="keyword">using</span>(FileStream <span class="keyword">file</span> = <span class="keyword">new</span> FileStream(filePath, FileMode.Open))</span><br><span class="line">        {</span><br><span class="line">            MD5 md5 = <span class="keyword">new</span> MD5CryptoServiceProvider();<span class="comment">//&#x58F0;&#x660E;&#x4E00;&#x4E2A;MD5&#x5BF9;&#x8C61;</span></span><br><span class="line">            <span class="built_in">byte</span>[] md5Info = md5.ComputeHash(<span class="keyword">file</span>);<span class="comment">//&#x83B7;&#x5F97;&#x6570;&#x636E;MD5&#x7801; 16&#x4E2A;&#x5B57;&#x8282;&#x7684;&#x6570;&#x7EC4;</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">//&#x5173;&#x95ED;&#x6587;&#x4EF6;&#x6D41;</span></span><br><span class="line">            <span class="keyword">file</span>.Close();</span><br><span class="line"></span><br><span class="line">            StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">            <span class="keyword">for</span>(<span class="built_in">int</span> i = <span class="number">0</span>;i &lt; md5Info.Length; i++)</span><br><span class="line">            {</span><br><span class="line">                sb.Append(md5Info[i].ToString(<span class="string">&quot;x2&quot;</span>));<span class="comment">//&#x8F6C;&#x6362;&#x6210;16&#x8FDB;&#x5236;&#x5B57;&#x7B26;&#x4E32;</span></span><br><span class="line">            }</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> sb.ToString();</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x8FD0;&#x884C;&#x540E;&#xFF0C;&#x53EF;&#x4EE5;&#x6B63;&#x786E;&#x5F97;&#x5230;lua&#x5305;&#x7684;MD5&#x7801;</p>
+<img src="/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic18.png" class title="&#x56FE;&#x7247;">
+<p>&#x5F53;&#x6211;&#x4EEC;&#x6539;&#x53D8;lua&#x5305;&#x91CC;&#x9762;&#x7684;&#x5185;&#x5BB9;&#x65F6;&#xFF0C;&#x6BD4;&#x5982;&#x5728;lua&#x5305;&#x91CC;&#x65B0;&#x589E;&#x4E00;&#x4E2A;lua&#x811A;&#x672C;&#x7684;txt&#x6587;&#x4EF6;&#xFF0C;&#x90A3;&#x4E48;lua&#x5305;&#x7684;MD5&#x7801;&#x5C31;&#x4F1A;&#x53D1;&#x751F;&#x6539;&#x53D8;</p>
+<h1><span id="&#x516D;-&#x751F;&#x6210;ab&#x5305;&#x8D44;&#x6E90;&#x5BF9;&#x6BD4;&#x6587;&#x4EF6;">&#x516D;&#x3001;&#x751F;&#x6210;AB&#x5305;&#x8D44;&#x6E90;&#x5BF9;&#x6BD4;&#x6587;&#x4EF6;</span><a href="#&#x516D;-&#x751F;&#x6210;ab&#x5305;&#x8D44;&#x6E90;&#x5BF9;&#x6BD4;&#x6587;&#x4EF6;" class="header-anchor">#</a></h1>
+<p>&#x529F;&#x80FD;&#xFF1A;</p>
+<ol>
+<li>&#x5728;&#x83DC;&#x5355;&#x680F;&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;&#x6309;&#x94AE;&#xFF0C;&#x70B9;&#x51FB;&#x540E;&#x80FD;&#x591F;&#x751F;&#x6210;AB&#x5305;&#x8D44;&#x6E90;&#x5BF9;&#x6BD4;&#x6587;&#x4EF6;</li>
+<li>&#x904D;&#x5386;AB&#x5305;&#x6587;&#x4EF6;&#x5939;&#xFF0C;&#x83B7;&#x53D6;&#x6240;&#x6709;AB&#x5305;&#x6587;&#x4EF6;&#x4FE1;&#x606F;&#xFF08;&#x6587;&#x4EF6;&#x540D;&#x3001;&#x5927;&#x5C0F;&#x3001;MD5&#x7801;&#xFF09;&#xFF0C;&#x5C06;&#x5176;&#x5B58;&#x5165;&#x8D44;&#x6E90;&#x5BF9;&#x6BD4;&#x6587;&#x4EF6;</li>
+</ol>
+<p>&#x9996;&#x5148;&#x5728;Assets&#x6587;&#x4EF6;&#x5939;&#x4E0B;&#x65B0;&#x5EFA;Editor&#x6587;&#x4EF6;&#x5939;&#xFF0C;&#x6B64;&#x6587;&#x4EF6;&#x5939;&#x4E0B;&#x7684;&#x4EE3;&#x7801;&#x4E0D;&#x9700;&#x8981;&#x5728;&#x6E38;&#x620F;&#x4E2D;&#x4F7F;&#x7528;&#xFF0C;&#x53EA;&#x5728;Unity&#x7F16;&#x8F91;&#x5668;&#x4E2D;&#x4F7F;&#x7528;&#xFF0C;&#x56E0;&#x6B64;&#x653E;&#x5728;&#x6B64;&#x6587;&#x4EF6;&#x5939;&#x4E0B;&#x4F7F;&#x5176;&#x4E0D;&#x4F1A;&#x88AB;&#x6253;&#x5305;&#x51FA;&#x53BB;&#x3002;<br>
+&#x5E76;&#x5728;Editor&#x6587;&#x4EF6;&#x5939;&#x4E0B;&#x65B0;&#x5EFA;CreateABCompare&#x811A;&#x672C;&#xFF0C;&#x7528;&#x6765;&#x5B9E;&#x73B0;&#x5BF9;&#x5E94;&#x529F;&#x80FD;</p>
+<img src="/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic19.png" class title="&#x56FE;&#x7247;">
+<p>&#x5B8C;&#x6574;&#x4EE3;&#x7801;&#xFF1A;</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.IO;</span><br><span class="line"><span class="keyword">using</span> System.Security.Cryptography;</span><br><span class="line"><span class="keyword">using</span> System.Text;</span><br><span class="line"><span class="keyword">using</span> UnityEditor;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">CreateABCompare</span></span><br><span class="line">{</span><br><span class="line">    [<span class="meta">MenuItem(<span class="string">&quot;Tool/&#x521B;&#x5EFA;AB&#x5305;&#x5BF9;&#x6BD4;&#x6587;&#x4EF6;&quot;</span>)</span>]</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">CreateABCompareFile</span>()</span></span><br><span class="line">    {</span><br><span class="line">        <span class="comment">//&#x83B7;&#x53D6;&#x6587;&#x4EF6;&#x5939;&#x4FE1;&#x606F;</span></span><br><span class="line">        DirectoryInfo directory = Directory.CreateDirectory(</span><br><span class="line">            Application.dataPath + <span class="string">&quot;/ArtRes/AB/PC&quot;</span>);</span><br><span class="line">        <span class="comment">//&#x83B7;&#x53D6;&#x8BE5;&#x76EE;&#x5F55;&#x4E0B;&#x6240;&#x6709;&#x6587;&#x4EF6;</span></span><br><span class="line">        FileInfo[] files = directory.GetFiles();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//&#x7528;&#x4E8E;&#x5B58;&#x50A8;&#x4FE1;&#x606F;&#x7684;&#x5B57;&#x7B26;&#x4E32;</span></span><br><span class="line">        <span class="built_in">string</span> abCompareInfo = <span class="string">&quot;&quot;</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">foreach</span> (FileInfo <span class="keyword">file</span> <span class="keyword">in</span> files)</span><br><span class="line">        {</span><br><span class="line">            <span class="comment">//&#x6CA1;&#x6709;&#x540E;&#x7F00;&#x7684;&#x662F;AB&#x5305;</span></span><br><span class="line">            <span class="keyword">if</span>(<span class="keyword">file</span>.Extension == <span class="string">&quot;&quot;</span>)</span><br><span class="line">            {</span><br><span class="line">                abCompareInfo += <span class="keyword">file</span>.Name + <span class="string">&quot; &quot;</span> + <span class="keyword">file</span>.Length + <span class="string">&quot; &quot;</span> + getfileMd5(<span class="keyword">file</span>.FullName);</span><br><span class="line">                abCompareInfo += <span class="string">&quot;|&quot;</span>;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="comment">//&#x5FAA;&#x73AF;&#x5B8C;&#x6BD5;&#x540E;&#xFF0C;&#x622A;&#x53D6;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x201C;|&#x201D;</span></span><br><span class="line">        abCompareInfo = abCompareInfo.Substring(<span class="number">0</span>,abCompareInfo.Length - <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//&#x5B58;&#x50A8;&#x4FE1;&#x606F;</span></span><br><span class="line">        File.WriteAllText(Application.dataPath + <span class="string">&quot;/ArtRes/AB/PC/ABCompareInfo.txt&quot;</span>,abCompareInfo);</span><br><span class="line"></span><br><span class="line">        AssetDatabase.Refresh();</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="built_in">string</span> <span class="title">getfileMd5</span>(<span class="params"><span class="built_in">string</span> filePath</span>)</span></span><br><span class="line">    {</span><br><span class="line">        <span class="comment">//&#x5C06;&#x6587;&#x4EF6;&#x4EE5;&#x6D41;&#x7684;&#x5F62;&#x5F0F;&#x6253;&#x5F00;</span></span><br><span class="line">        <span class="keyword">using</span> (FileStream <span class="keyword">file</span> = <span class="keyword">new</span> FileStream(filePath, FileMode.Open))</span><br><span class="line">        {</span><br><span class="line">            MD5 md5 = <span class="keyword">new</span> MD5CryptoServiceProvider();<span class="comment">//&#x58F0;&#x660E;&#x4E00;&#x4E2A;MD5&#x5BF9;&#x8C61;</span></span><br><span class="line">            <span class="built_in">byte</span>[] md5Info = md5.ComputeHash(<span class="keyword">file</span>);<span class="comment">//&#x83B7;&#x5F97;&#x6570;&#x636E;MD5&#x7801; 16&#x4E2A;&#x5B57;&#x8282;&#x7684;&#x6570;&#x7EC4;</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">//&#x5173;&#x95ED;&#x6587;&#x4EF6;&#x6D41;</span></span><br><span class="line">            <span class="keyword">file</span>.Close();</span><br><span class="line"></span><br><span class="line">            StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">            <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; md5Info.Length; i++)</span><br><span class="line">            {</span><br><span class="line">                sb.Append(md5Info[i].ToString(<span class="string">&quot;x2&quot;</span>));<span class="comment">//&#x8F6C;&#x6362;&#x6210;16&#x8FDB;&#x5236;&#x5B57;&#x7B26;&#x4E32;</span></span><br><span class="line">            }</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> sb.ToString();</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>&#x53EF;&#x4EE5;&#x5F97;&#x5230;&#x4EE5;&#x4E0B;&#x7ED3;&#x679C;&#xFF1A;<br>
+&#x5DE6;&#x4E0A;&#x89D2;&#x51FA;&#x73B0;&#x4E86;tool&#x680F;&#xFF0C;tool&#x680F;&#x6709;&#x521B;&#x5EFA;AB&#x5305;&#x5BF9;&#x6BD4;&#x6587;&#x4EF6;&#x7684;&#x9009;&#x9879;</p>
+<img src="/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic20.png" class title="&#x56FE;&#x7247;">
+<p>&#x70B9;&#x51FB;&#x8BE5;&#x6309;&#x94AE;&#x540E;&#xFF0C;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x751F;&#x6210;&#x7684;&#x6587;&#x4EF6;</p>
+<img src="/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic21.png" class title="&#x56FE;&#x7247;">
+<p>&#x4EE5;&#x53CA;&#x6587;&#x4EF6;&#x7684;&#x5185;&#x5BB9;</p>
+<img src="/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic22.png" class title="&#x56FE;&#x7247;">
+<h1><span id="&#x4E03;-&#x642D;&#x5EFA;ftp&#x670D;&#x52A1;&#x5668;">&#x4E03;&#x3001;&#x642D;&#x5EFA;FTP&#x670D;&#x52A1;&#x5668;</span><a href="#&#x4E03;-&#x642D;&#x5EFA;ftp&#x670D;&#x52A1;&#x5668;" class="header-anchor">#</a></h1>
+<p>&#x7528;&#x4E8E;&#x6A21;&#x62DF;&#x8D44;&#x6E90;&#x670D;&#x52A1;&#x5668;&#xFF0C;&#x7528;&#x4E8E;&#x5B58;&#x50A8;&#x8D44;&#x6E90;&#x548C;&#x8D44;&#x6E90;&#x5BF9;&#x6BD4;&#x6587;&#x4EF6;</p>
+<ol>
+<li>
+<p>&#x4E0B;&#x8F7D;Serv-U<br>
+&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x8FD9;&#x4E2A;&#x7F51;&#x5740;&#x4E0B;&#x8F7D;&#xFF1A;<br>
+<a target="_blank" rel="noopener" href="https://www.yxtown.com/my/course/65/material?type=material&amp;page=2">https://www.yxtown.com/my/course/65/material?type=material&amp;page=2</a></p>
+</li>
+<li>
+<p>&#x6CE8;&#x518C;&#x4E0A;&#x4F20;&#x8D26;&#x53F7;&#x548C;&#x4E0B;&#x8F7D;&#x8D26;&#x53F7;&#xFF08;&#x533F;&#x540D;&#xFF09;</p>
+</li>
+</ol>
+<p>&#x662F;&#x5426;&#x5B9A;&#x4E49;&#x65B0;&#x57DF;&#xFF0C;&#x70B9;&#x51FB;&#x662F;</p>
+<img src="/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic23.png" class title="&#x56FE;&#x7247;">
+<p>&#x540D;&#x79F0;&#x968F;&#x4FBF;&#x586B;&#x4E00;&#x4E2A;</p>
+<img src="/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic24.png" class title="&#x56FE;&#x7247;">
+<p>&#x4E0B;&#x4E00;&#x6B65;</p>
+<img src="/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic25.png" class title="&#x56FE;&#x7247;">
+<p>&#x4E0B;&#x4E00;&#x6B65;</p>
+<img src="/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic26.png" class title="&#x56FE;&#x7247;">
+<p>&#x52FE;&#x9009;&#x5355;&#x5411;&#x52A0;&#x5BC6;&#xFF0C;&#x70B9;&#x5B8C;&#x6210;</p>
+<img src="/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic27.png" class title="&#x56FE;&#x7247;">
+<p>&#x63A5;&#x7740;&#x4F1A;&#x5F39;&#x51FA;&#x8FD9;&#x4E2A;&#x754C;&#x9762;&#xFF0C;&#x70B9;&#x662F;</p>
+<img src="/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic28.png" class title="&#x56FE;&#x7247;">
+<p>&#x968F;&#x4FBF;&#x586B;&#xFF0C;&#x4E0B;&#x4E00;&#x6B65;</p>
+<img src="/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic29.png" class title="&#x56FE;&#x7247;">
+<p>&#x968F;&#x4FBF;&#xFF0C;&#x4E0B;&#x4E00;&#x6B65;</p>
+<img src="/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic30.png" class title="&#x56FE;&#x7247;">
+<p>&#x8BBE;&#x7F6E;&#x6839;&#x76EE;&#x5F55;&#xFF0C;&#x4E4B;&#x540E;&#x4E0A;&#x4F20;&#x7684;&#x6587;&#x4EF6;&#x4F1A;&#x653E;&#x5728;&#x8FD9;&#x91CC;</p>
+<img src="/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic31.png" class title="&#x56FE;&#x7247;">
+<p>&#x9009;&#x62E9;&#x5B8C;&#x5168;&#x8BBF;&#x95EE;&#xFF0C;&#x70B9;&#x51FB;&#x5B8C;&#x6210;</p>
+<img src="/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic32.png" class title="&#x56FE;&#x7247;">
+<p>&#x63A5;&#x4E0B;&#x6765;&#x9700;&#x8981;&#x4E00;&#x4E2A;&#x533F;&#x540D;&#x7528;&#x6237;(&#x4E0D;&#x521B;&#x5EFA;&#x533F;&#x540D;&#x7528;&#x6237;&#x4E5F;&#x53EF;&#x4EE5;)&#xFF0C;&#x70B9;&#x51FB;&#x5411;&#x5BFC;</p>
+<img src="/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic33.png" class title="&#x56FE;&#x7247;">
+<p>&#x767B;&#x5F55;ID&#x8F93;&#x5165; Anonvmous&#xFF0C;&#x70B9;&#x4E0B;&#x4E00;&#x6B65;</p>
+<img src="/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic34.png" class title="&#x56FE;&#x7247;">
+<p>&#x5BC6;&#x7801;&#x4E3A;&#x7A7A;&#xFF0C;&#x533F;&#x540D;&#x8D26;&#x53F7;&#x4E0D;&#x9700;&#x8981;&#x5BC6;&#x7801;&#xFF0C;&#x70B9;&#x4E0B;&#x4E00;&#x6B65;</p>
+<img src="/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic35.png" class title="&#x56FE;&#x7247;">
+<p>&#x6839;&#x76EE;&#x5F55;&#x548C;&#x4E4B;&#x524D;&#x4E00;&#x6837;</p>
+<img src="/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic36.png" class title="&#x56FE;&#x7247;">
+<p>&#x9009;&#x62E9;&#x53EA;&#x8BFB;&#x8BBF;&#x95EE;&#xFF0C;&#x70B9;&#x5B8C;&#x6210;</p>
+<img src="/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic37.png" class title="&#x56FE;&#x7247;">
+<p>&#x6700;&#x7EC8;&#x4F1A;&#x51FA;&#x73B0;&#x4E24;&#x4E2A;&#x8D26;&#x53F7;</p>
+<img src="/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic38.png" class title="&#x56FE;&#x7247;">
+<ol start="3">
+<li>&#x9A8C;&#x8BC1;<br>
+&#x5728;&#x8D44;&#x6E90;&#x7BA1;&#x7406;&#x5668;&#x8F93;&#x5165;<a href="ftp://127.0.0.1">ftp://127.0.0.1</a></li>
+</ol>
+<img src="/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic39.png" class title="&#x56FE;&#x7247;">
+<p>&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x6587;&#x4EF6;&#x5939;&#x4E3A;&#x7A7A;<br>
+&#x5728;&#x4E4B;&#x524D;&#x8BBE;&#x7F6E;&#x7684;&#x6839;&#x76EE;&#x5F55;&#x4E2D;&#x968F;&#x4FBF;&#x65B0;&#x5EFA;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;</p>
+<img src="/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic40.png" class title="&#x56FE;&#x7247;">
+<p>&#x53EF;&#x4EE5;&#x770B;&#x5230;ftp&#x670D;&#x52A1;&#x5668;&#x4E0A;&#x591A;&#x51FA;&#x4E86;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;</p>
+<img src="/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic41.png" class title="&#x56FE;&#x7247;">
+<h1><span id="&#x516B;-&#x4E0A;&#x4F20;ab&#x5305;&#x548C;&#x8D44;&#x6E90;&#x5BF9;&#x6BD4;&#x6587;&#x4EF6;">&#x516B;&#x3001;&#x4E0A;&#x4F20;AB&#x5305;&#x548C;&#x8D44;&#x6E90;&#x5BF9;&#x6BD4;&#x6587;&#x4EF6;</span><a href="#&#x516B;-&#x4E0A;&#x4F20;ab&#x5305;&#x548C;&#x8D44;&#x6E90;&#x5BF9;&#x6BD4;&#x6587;&#x4EF6;" class="header-anchor">#</a></h1>
+<p>&#x65B0;&#x5EFA;&#x811A;&#x672C;UploadAB&#xFF0C;&#x7528;&#x6765;&#x5411;&#x8D44;&#x6E90;&#x670D;&#x52A1;&#x5668;&#x4E0A;&#x4F20;AB&#x5305;&#x548C;&#x8D44;&#x6E90;&#x5BF9;&#x6BD4;&#x6587;&#x4EF6;<br>
+&#x5B8C;&#x6574;&#x4EE3;&#x7801;&#xFF1A;</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.IO;</span><br><span class="line"><span class="keyword">using</span> System.Net;</span><br><span class="line"><span class="keyword">using</span> System.Threading.Tasks;</span><br><span class="line"><span class="keyword">using</span> UnityEditor;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">UploadAB</span></span><br><span class="line">{</span><br><span class="line">    [<span class="meta">MenuItem(<span class="string">&quot;Tool/&#x4E0A;&#x4F20;AB&#x5305;&#x548C;&#x5BF9;&#x6BD4;&#x6587;&#x4EF6;&quot;</span>)</span>]</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">UploadAllABFile</span>()</span></span><br><span class="line">    {</span><br><span class="line">        <span class="comment">//&#x83B7;&#x53D6;&#x6587;&#x4EF6;&#x5939;&#x4FE1;&#x606F;</span></span><br><span class="line">        DirectoryInfo directory = Directory.CreateDirectory(</span><br><span class="line">            Application.dataPath + <span class="string">&quot;/ArtRes/AB/PC&quot;</span>);</span><br><span class="line">        <span class="comment">//&#x83B7;&#x53D6;&#x8BE5;&#x76EE;&#x5F55;&#x4E0B;&#x6240;&#x6709;&#x6587;&#x4EF6;</span></span><br><span class="line">        FileInfo[] files = directory.GetFiles();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">foreach</span> (FileInfo <span class="keyword">file</span> <span class="keyword">in</span> files)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">file</span>.Extension == <span class="string">&quot;&quot;</span> || <span class="keyword">file</span>.Extension == <span class="string">&quot;.txt&quot;</span>)</span><br><span class="line">            {</span><br><span class="line">                FtpUploadFile(<span class="keyword">file</span>.FullName, <span class="keyword">file</span>.Name);</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">async</span> <span class="keyword">void</span> <span class="title">FtpUploadFile</span>(<span class="params"><span class="built_in">string</span> filePath, <span class="built_in">string</span> fileName</span>)</span></span><br><span class="line">    {</span><br><span class="line">        <span class="comment">//&#x5F02;&#x6B65;&#x5904;&#x7406;&#xFF0C;&#x5728;&#x4E0A;&#x4F20;&#x6587;&#x4EF6;&#x65F6;&#xFF0C;&#x4E0D;&#x4F1A;&#x5361;&#x4F4F;&#x4E3B;&#x7EBF;&#x7A0B;</span></span><br><span class="line">        <span class="keyword">await</span> Task.Run(() =&gt;</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">try</span></span><br><span class="line">            {</span><br><span class="line">                <span class="comment">//1.&#x521B;&#x5EFA;FTP&#x8FDE;&#x63A5;&#x7528;&#x4E8E;&#x4E0A;&#x4F20;</span></span><br><span class="line">                FtpWebRequest req = FtpWebRequest.Create(<span class="keyword">new</span> Uri(<span class="string">&quot;ftp://127.0.0.1/AB/PC/&quot;</span> + fileName)) <span class="keyword">as</span> FtpWebRequest;</span><br><span class="line"></span><br><span class="line">                <span class="comment">//2.&#x8BBE;&#x7F6E;&#x4E00;&#x4E2A;&#x901A;&#x4FE1;&#x51ED;&#x8BC1;&#xFF0C;&#x8FD9;&#x6837;&#x624D;&#x80FD;&#x4E0A;&#x4F20;</span></span><br><span class="line">                NetworkCredential n = <span class="keyword">new</span> NetworkCredential(<span class="string">&quot;qwe&quot;</span>, <span class="string">&quot;123000&quot;</span>);</span><br><span class="line">                req.Credentials = n;</span><br><span class="line"></span><br><span class="line">                <span class="comment">//3.&#x5176;&#x4ED6;&#x8BBE;&#x7F6E;</span></span><br><span class="line"></span><br><span class="line">                req.Proxy = <span class="literal">null</span>;<span class="comment">//&#x8BBE;&#x7F6E;&#x4EE3;&#x7406;&#x4E3A;&#x7A7A;</span></span><br><span class="line">                req.KeepAlive = <span class="literal">false</span>;<span class="comment">//&#x8BF7;&#x6C42;&#x5B8C;&#x6BD5;&#x540E;&#xFF0C;&#x662F;&#x5426;&#x5173;&#x95ED;&#x63A7;&#x5236;&#x8FDE;&#x63A5;</span></span><br><span class="line">                req.Method = WebRequestMethods.Ftp.UploadFile;<span class="comment">//&#x64CD;&#x4F5C;&#x547D;&#x4EE4;-&#x4E0A;&#x4F20;</span></span><br><span class="line">                req.UseBinary = <span class="literal">true</span>;<span class="comment">//&#x6307;&#x5B9A;&#x4F20;&#x8F93;&#x7684;&#x7C7B;&#x578B;-2&#x8FDB;&#x5236;</span></span><br><span class="line"></span><br><span class="line">                <span class="comment">//4.&#x4E0A;&#x4F20;&#x6587;&#x4EF6;</span></span><br><span class="line">                Stream upLoadStream = req.GetRequestStream();<span class="comment">//ftp&#x7684;&#x6D41;&#x5BF9;&#x8C61;</span></span><br><span class="line">                                                             <span class="comment">//&#x8BFB;&#x53D6;&#x6587;&#x4EF6;&#x4FE1;&#x606F;&#xFF0C;&#x5199;&#x5165;&#x8BE5;&#x6D41;&#x5BF9;&#x8C61;</span></span><br><span class="line"></span><br><span class="line">                <span class="keyword">using</span> (FileStream <span class="keyword">file</span> = File.OpenRead(filePath))</span><br><span class="line">                {</span><br><span class="line">                    <span class="comment">//&#x4E00;&#x70B9;&#x4E00;&#x70B9;&#x4E0A;&#x4F20;</span></span><br><span class="line">                    <span class="built_in">byte</span>[] bytes = <span class="keyword">new</span> <span class="built_in">byte</span>[<span class="number">2048</span>];</span><br><span class="line">                    <span class="comment">//&#x8BFB;&#x53D6;&#x4E86;&#x591A;&#x5C11;&#x5B57;&#x8282;</span></span><br><span class="line">                    <span class="built_in">int</span> contentLength = <span class="keyword">file</span>.Read(bytes, <span class="number">0</span>, bytes.Length);</span><br><span class="line"></span><br><span class="line">                    <span class="comment">//&#x5FAA;&#x73AF;&#x4E0A;&#x4F20;&#x6587;&#x4EF6;</span></span><br><span class="line">                    <span class="keyword">while</span> (contentLength != <span class="number">0</span>)</span><br><span class="line">                    {</span><br><span class="line">                        <span class="comment">//&#x5199;&#x5165;&#x5230;&#x4E0A;&#x4F20;&#x6D41;&#x4E2D;</span></span><br><span class="line">                        upLoadStream.Write(bytes, <span class="number">0</span>, contentLength);</span><br><span class="line">                        <span class="comment">//&#x5199;&#x5B8C;&#x518D;&#x8BFB;</span></span><br><span class="line">                        contentLength = <span class="keyword">file</span>.Read(bytes, <span class="number">0</span>, bytes.Length);</span><br><span class="line">                    }</span><br><span class="line"></span><br><span class="line">                    <span class="comment">//&#x5FAA;&#x73AF;&#x5B8C;&#x6BD5;&#x540E;&#xFF0C;&#x4E0A;&#x4F20;&#x5B8C;&#x6BD5;</span></span><br><span class="line">                    <span class="keyword">file</span>.Close();</span><br><span class="line">                    upLoadStream.Close();</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">            <span class="keyword">catch</span> (Exception ex)</span><br><span class="line">            {</span><br><span class="line">                Debug.Log(<span class="string">&quot;&#x4E0A;&#x4F20;&#x5931;&#x8D25; &quot;</span> + ex.Message);</span><br><span class="line">            }</span><br><span class="line"></span><br><span class="line">            Debug.Log(fileName + <span class="string">&quot;&#x4E0A;&#x4F20;&#x6210;&#x529F;&quot;</span>);</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        );</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x8FD0;&#x884C;Tool&#x9009;&#x9879;&#x91CC;&#x9762;&#x7684;&#x4E0A;&#x4F20;&#x6309;&#x94AE;&#x540E;&#xFF0C;&#x4F1A;&#x5728;&#x8D44;&#x6E90;&#x670D;&#x52A1;&#x5668;&#x91CC;&#x770B;&#x5230;&#x4E0A;&#x4F20;&#x7684;&#x7ED3;&#x679C;<br>
+&#x8981;&#x6CE8;&#x610F;&#x56E0;&#x4E3A;&#x4E0A;&#x4F20;&#x7684;&#x8DEF;&#x5F84;&#x662F; <a href="ftp://127.0.0.1/AB/PC/">ftp://127.0.0.1/AB/PC/</a> &#xFF0C;&#x56E0;&#x6B64;&#x5982;&#x679C;&#x8D44;&#x6E90;&#x670D;&#x52A1;&#x5668;&#x91CC;&#x6CA1;&#x6709;/AB/PC&#x6587;&#x4EF6;&#x5939;&#x7684;&#x8BDD;&#xFF0C;&#x4F1A;&#x53D1;&#x751F;&#x62A5;&#x9519;&#xFF0C;&#x56E0;&#x4E3A;&#x7A0B;&#x5E8F;&#x53EA;&#x8D1F;&#x8D23;&#x4E0A;&#x4F20;&#xFF0C;&#x4E0D;&#x4F1A;&#x81EA;&#x52A8;&#x521B;&#x5EFA;&#x65B0;&#x6587;&#x4EF6;&#x5939;</p>
+<img src="/2025/12/31/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%B8%80%EF%BC%89/pic42.png" class title="&#x56FE;&#x7247;">
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/12/30/UI%E7%B3%BB%E7%BB%9F/" rel="prev" title="UI系统">
+      <i class="fa fa-chevron-left"></i> UI系统
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2026/01/01/%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B8%ADAB%E5%8C%85%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%BA%8C%EF%BC%89/" rel="next" title="热更新中AB包的上传和下载（二）">
+      热更新中AB包的上传和下载（二） <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">一、热更新流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">二、准备打包AB包的脚本</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">三、准备需要打包的内容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">四、进行打包</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">五、获取AB包文件的MD5码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">六、生成AB包资源对比文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">七、搭建FTP服务器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">八、上传AB包和资源对比文件</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ITTT"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">ITTT</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/originone494" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;originone494" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:2531293780@qq.com" title="E-Mail → mailto:2531293780@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ITTT</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">113k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:25</span>
+</div>
+
+<!-- 网站运行时间的设置 -->
+<span id="timeDate">载入天数...</span>
+<span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("12/29/2025 17:04:14"); //此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒.";
+    }
+setInterval("createtime()",250);
+</script>
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/js/fix-toc.js"></script>
+</body>
+</html>

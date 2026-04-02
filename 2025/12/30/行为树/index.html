@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"originone494.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="&#x5B8C;&#x6574;&#x4EE3;&#x7801;# &#x4E00;&#x3001;Base&#x90E8;&#x5206;#  BehaviorTree.cs  1234567891011121314151617181920public class BehaviorTree{    public bool HaveRoot &#x3D;&gt; root !&#x3D; null;    priva">
+<meta property="og:type" content="article">
+<meta property="og:title" content="行为树">
+<meta property="og:url" content="https://originone494.github.io/2025/12/30/%E8%A1%8C%E4%B8%BA%E6%A0%91/index.html">
+<meta property="og:site_name" content="OneBlog">
+<meta property="og:description" content="&#x5B8C;&#x6574;&#x4EE3;&#x7801;# &#x4E00;&#x3001;Base&#x90E8;&#x5206;#  BehaviorTree.cs  1234567891011121314151617181920public class BehaviorTree{    public bool HaveRoot &#x3D;&gt; root !&#x3D; null;    priva">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-12-30T05:13:57.000Z">
+<meta property="article:modified_time" content="2025-12-30T05:37:53.730Z">
+<meta property="article:author" content="ITTT">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://originone494.github.io/2025/12/30/%E8%A1%8C%E4%B8%BA%E6%A0%91/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>行为树 | OneBlog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">OneBlog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://originone494.github.io/2025/12/30/%E8%A1%8C%E4%B8%BA%E6%A0%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ITTT">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="OneBlog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          行为树
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-12-30 13:13:57 / 修改时间：13:37:53" itemprop="dateCreated datePublished" datetime="2025-12-30T13:13:57+08:00">2025-12-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Unity/" itemprop="url" rel="index"><span itemprop="name">Unity</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>12k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>22 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1><span id="&#x5B8C;&#x6574;&#x4EE3;&#x7801;">&#x5B8C;&#x6574;&#x4EE3;&#x7801;</span><a href="#&#x5B8C;&#x6574;&#x4EE3;&#x7801;" class="header-anchor">#</a></h1>
+<h2><span id="&#x4E00;-base&#x90E8;&#x5206;">&#x4E00;&#x3001;Base&#x90E8;&#x5206;</span><a href="#&#x4E00;-base&#x90E8;&#x5206;" class="header-anchor">#</a></h2>
+<ol>
+<li>BehaviorTree.cs</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">BehaviorTree</span></span><br><span class="line">{</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">bool</span> HaveRoot =&gt; root != <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">private</span> BtBehaviour root;<span class="comment">//&#x6839;&#x8282;&#x70B9;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BehaviorTree</span>(<span class="params">BtBehaviour root</span>)</span></span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">this</span>.root = root;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Tick</span>()</span></span><br><span class="line">    {</span><br><span class="line">        root.Tick();</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SetRoot</span>(<span class="params">BtBehaviour root</span>)</span></span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">this</span>.root = root;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>BtActionNode.cs</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">BtActionNode</span> : <span class="title">BtBehaviour</span></span><br><span class="line">{</span><br><span class="line">    <span class="keyword">protected</span> EnemyController enemyController;</span><br><span class="line">    <span class="keyword">protected</span> Func&lt;EStatus&gt; action;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BtActionNode</span>(<span class="params">EnemyController enemyController, Func&lt;EStatus&gt; action</span>)</span></span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">this</span>.enemyController = enemyController;</span><br><span class="line">        <span class="keyword">this</span>.action = action;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> EStatus <span class="title">OnUpdate</span>()</span></span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">return</span> action();</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>BtBehaviour.cs</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="built_in">enum</span> EStatus</span><br><span class="line">{</span><br><span class="line">    <span class="comment">//&#x5931;&#x8D25;&#xFF0C;&#x6210;&#x529F;&#xFF0C;&#x8FD0;&#x884C;&#x4E2D;&#xFF0C;&#x4E2D;&#x65AD;&#xFF0C;&#x65E0;&#x6548;</span></span><br><span class="line">    Failure, Success, Running, Aborted, Invalid</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">BtBehaviour</span></span><br><span class="line">{</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">bool</span> IsTerminated =&gt; IsSuccess || IsFailure;<span class="comment">//&#x662F;&#x5426;&#x8FD0;&#x884C;&#x7ED3;&#x675F;</span></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">bool</span> IsSuccess =&gt; status == EStatus.Success;<span class="comment">//&#x662F;&#x5426;&#x6210;&#x529F;</span></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">bool</span> IsFailure =&gt; status == EStatus.Failure;<span class="comment">//&#x662F;&#x5426;&#x5931;&#x8D25;</span></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">bool</span> IsRunning =&gt; status == EStatus.Running;<span class="comment">//&#x662F;&#x5426;&#x6B63;&#x5728;&#x8FD0;&#x884C;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span> EStatus status;<span class="comment">//&#x8FD0;&#x884C;&#x72B6;&#x6001;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BtBehaviour</span>()</span></span><br><span class="line">    {</span><br><span class="line">        status = EStatus.Invalid;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">OnInitialize</span>()</span></span><br><span class="line">    { }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> EStatus <span class="title">OnUpdate</span>()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">OnTerminate</span>()</span></span><br><span class="line">    { }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> EStatus <span class="title">Tick</span>()</span></span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">if</span> (!IsRunning)</span><br><span class="line">            OnInitialize();</span><br><span class="line">        status = OnUpdate();</span><br><span class="line">        <span class="keyword">if</span> (!IsRunning)</span><br><span class="line">            OnTerminate();</span><br><span class="line">        <span class="keyword">return</span> status;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">AddChild</span>(<span class="params">BtBehaviour child</span>)</span></span><br><span class="line">    { }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Reset</span>()</span></span><br><span class="line">    {</span><br><span class="line">        status = EStatus.Invalid;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Abort</span>()</span></span><br><span class="line">    {</span><br><span class="line">        OnTerminate();</span><br><span class="line">        status = EStatus.Aborted;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>BtComposite.cs</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">BtComposite</span> : <span class="title">BtBehaviour</span></span><br><span class="line">{</span><br><span class="line">    <span class="keyword">protected</span> LinkedList&lt;BtBehaviour&gt; children;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BtComposite</span>()</span></span><br><span class="line">    {</span><br><span class="line">        children = <span class="keyword">new</span> LinkedList&lt;BtBehaviour&gt;();</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">//&#x79FB;&#x9664;&#x6307;&#x5B9A;&#x5B50;&#x8282;&#x70B9;</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">RemoveChild</span>(<span class="params">BtBehaviour child</span>)</span></span><br><span class="line">    {</span><br><span class="line">        children.Remove(child);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ClearChildren</span>()<span class="comment">//&#x6E05;&#x7A7A;&#x5B50;&#x8282;&#x70B9;&#x5217;&#x8868;</span></span></span><br><span class="line">    {</span><br><span class="line">        children.Clear();</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">AddChild</span>(<span class="params">BtBehaviour child</span>)<span class="comment">//&#x6DFB;&#x52A0;&#x5B50;&#x8282;&#x70B9;</span></span></span><br><span class="line">    {</span><br><span class="line">        <span class="comment">//&#x9ED8;&#x8BA4;&#x662F;&#x5C3E;&#x63D2;&#x5165;&#xFF0C;&#x5982;&#xFF1A;0&#x63D2;&#x5165;&#x300C;1&#xFF0C;2&#xFF0C;3&#x300D;&#x4E2D;&#xFF0C;&#x5C31;&#x4F1A;&#x53D8;&#x6210;&#x300C;1&#xFF0C;2&#xFF0C;3&#xFF0C;0&#x300D;</span></span><br><span class="line">        children.AddLast(child);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>BtDecorator.cs</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">BtDecorator</span> : <span class="title">BtBehaviour</span></span><br><span class="line">{</span><br><span class="line">    <span class="keyword">protected</span> BtBehaviour child;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">AddChild</span>(<span class="params">BtBehaviour child</span>)</span></span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">this</span>.child = child;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<h2><span id="&#x4E8C;-composite">&#x4E8C;&#x3001;Composite</span><a href="#&#x4E8C;-composite" class="header-anchor">#</a></h2>
+<ol>
+<li>BtActiveSelector.cs</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">BtActiveSelector</span> : <span class="title">BtSelector</span></span><br><span class="line">{</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> EStatus <span class="title">OnUpdate</span>()</span></span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">var</span> prev = currentChild;</span><br><span class="line">        <span class="keyword">base</span>.OnInitialize();<span class="comment">//&#x6CE8;&#x610F;&#x8FD9;&#x91CC;&#xFF0C;currentChild &#x4F1A;&#x88AB;&#x8D4B;&#x503C;&#x4E3A; children.First</span></span><br><span class="line">        <span class="keyword">var</span> res = <span class="keyword">base</span>.OnUpdate();<span class="comment">//&#x6309;Selector&#x7684;OnUpdate&#x6267;&#x884C;&#xFF0C;&#x987A;&#x5E8F;&#x904D;&#x5386;&#x9009;&#x62E9;</span></span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">        &#x53EA;&#x8981;&#x4E0D;&#x662F;&#x904D;&#x5386;&#x7ED3;&#x675F;&#x6216;&#x53EF;&#x6267;&#x884C;&#x8282;&#x70B9;&#x4E0D;&#x53D8;&#xFF0C;&#x90FD;&#x5E94;&#x8BE5;&#x4E2D;&#x65AD;&#x4E0A;&#x4E00;&#x6B21;&#x6267;&#x884C;&#x7684;&#x8282;&#x70B9;&#xFF0C;&#x65E0;&#x8BBA;&#x4F18;&#x5148;&#x662F;&#x9AD8;&#x662F;&#x4F4E;&#x3002;</span></span><br><span class="line"><span class="comment">        &#x56E0;&#x4E3A;&#x5982;&#x679C;&#x5F53;&#x524D;&#x4F18;&#x5148;&#x7EA7;&#x6BD4;&#x4E4B;&#x524D;&#x7684;&#x9AD8;&#xFF0C;&#x7406;&#x5E94;&#x4E2D;&#x65AD;&#x4E4B;&#x524D;&#x7684;&#xFF1B;</span></span><br><span class="line"><span class="comment">        &#x800C;&#x5982;&#x679C;&#x6BD4;&#x4E4B;&#x524D;&#x7684;&#x4F4E;&#xFF0C;&#x90A3;&#x5C31;&#x8BC1;&#x660E;&#x4E4B;&#x524D;&#x9AD8;&#x4F18;&#x5148;&#x7EA7;&#x7684;&#x884C;&#x4E3A;&#x65E0;&#x6CD5;&#x7EE7;&#x7EED;&#x4E86;&#xFF0C;</span></span><br><span class="line"><span class="comment">        &#x5426;&#x5219;&#x600E;&#x4E48;&#x4F1A;&#x7B49;&#x5230;&#x73B0;&#x5728;&#x7684;&#x4F4E;&#x4F18;&#x5148;&#x7EA7;&#x7684;&#x884C;&#x4E3A;&#x5462;&#xFF1F;&#x6240;&#x4EE5;&#x4E5F;&#x5E94;&#x4E2D;&#x65AD;&#x5B83;&#x3002;</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">        <span class="keyword">if</span> (prev != <span class="literal">null</span> &amp;&amp; currentChild != prev)</span><br><span class="line">            prev.Value.Abort();</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>BtFilter.cs</li>
+</ol>
+ <figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">BtFilter</span> : <span class="title">BtSequence</span></span><br><span class="line">{</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BtFilter</span>(<span class="params">BtBehaviour condition</span>)</span></span><br><span class="line">    {</span><br><span class="line">        AddCondition(condition);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BtFilter</span>(<span class="params">BtBehaviour condition1, BtBehaviour condition2</span>)</span></span><br><span class="line">    {</span><br><span class="line">        AddCondition(condition1);</span><br><span class="line">        AddCondition(condition2);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BtFilter</span>()</span></span><br><span class="line">    {</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">AddCondition</span>(<span class="params">BtBehaviour condition</span>)<span class="comment">//&#x6DFB;&#x52A0;&#x6761;&#x4EF6;&#xFF0C;&#x5C31;&#x7528;&#x5934;&#x63D2;&#x5165;</span></span></span><br><span class="line">    {</span><br><span class="line">        children.AddFirst(condition);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">AddAction</span>(<span class="params">BtBehaviour action</span>)<span class="comment">//&#x6DFB;&#x52A0;&#x52A8;&#x4F5C;&#xFF0C;&#x5C31;&#x7528;&#x5C3E;&#x63D2;&#x5165;</span></span></span><br><span class="line">    {</span><br><span class="line">        children.AddLast(action);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>BtMonitor.cs</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">BtMonitor</span> : <span class="title">BtParallel</span></span><br><span class="line">{</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BtMonitor</span>(<span class="params">Policy mSuccessPolicy, Policy mFailurePolicy</span>)</span></span><br><span class="line"><span class="function"> : <span class="title">base</span>(<span class="params">mSuccessPolicy, mFailurePolicy</span>)</span></span><br><span class="line">    {</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">AddCondition</span>(<span class="params">BtBehaviour condition</span>)</span></span><br><span class="line">    {</span><br><span class="line">        children.AddFirst(condition);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">AddAction</span>(<span class="params">BtBehaviour action</span>)</span></span><br><span class="line">    {</span><br><span class="line">        children.AddLast(action);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>BtParallel.cs</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">BtParallel</span> : <span class="title">BtComposite</span></span><br><span class="line">{</span><br><span class="line">    <span class="keyword">protected</span> Policy mSuccessPolicy;<span class="comment">//&#x6210;&#x529F;&#x7684;&#x6807;&#x51C6;</span></span><br><span class="line">    <span class="keyword">protected</span> Policy mFailurePolicy;<span class="comment">//&#x5931;&#x8D25;&#x7684;&#x6807;&#x51C6;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> Parallel&#x8282;&#x70B9;&#x6210;&#x529F;&#x4E0E;&#x5931;&#x8D25;&#x7684;&#x8981;&#x6C42;&#xFF0C;&#x662F;&#x5168;&#x90E8;&#x6210;&#x529F;/&#x5931;&#x8D25;&#xFF0C;&#x8FD8;&#x662F;&#x4E00;&#x4E2A;&#x6210;&#x529F;/&#x5931;&#x8D25;</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">enum</span> Policy</span><br><span class="line">    {</span><br><span class="line">        RequireOne, RequireAll,</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">//&#x6784;&#x9020;&#x51FD;&#x6570;&#x521D;&#x59CB;&#x5316;&#x65F6;&#xFF0C;&#x4F1A;&#x8981;&#x6C42;&#x7ED9;&#x5B9A;&#x6210;&#x529F;&#x548C;&#x5931;&#x8D25;&#x7684;&#x6807;&#x51C6;</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BtParallel</span>(<span class="params">Policy mSuccessPolicy, Policy mFailurePolicy</span>)</span></span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">this</span>.mSuccessPolicy = mSuccessPolicy;</span><br><span class="line">        <span class="keyword">this</span>.mFailurePolicy = mFailurePolicy;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> EStatus <span class="title">OnUpdate</span>()</span></span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">int</span> successCount = <span class="number">0</span>, failureCount = <span class="number">0</span>;<span class="comment">//&#x8BB0;&#x5F55;&#x6267;&#x884C;&#x6210;&#x529F;&#x548C;&#x6267;&#x884C;&#x5931;&#x8D25;&#x7684;&#x8282;&#x70B9;&#x6570;</span></span><br><span class="line">        <span class="keyword">var</span> b = children.First;<span class="comment">//&#x4ECE;&#x7B2C;&#x4E00;&#x4E2A;&#x5B50;&#x8282;&#x70B9;&#x5F00;&#x59CB;</span></span><br><span class="line">        <span class="keyword">var</span> size = children.Count;</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; size; ++i)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">var</span> bh = b.Value;</span><br><span class="line">            <span class="keyword">if</span> (!bh.IsTerminated)<span class="comment">//&#x5982;&#x679C;&#x8BE5;&#x5B50;&#x8282;&#x70B9;&#x8FD8;&#x6CA1;&#x8FD0;&#x884C;&#x7ED3;&#x675F;&#xFF0C;&#x5C31;&#x8FD0;&#x884C;&#x5B83;</span></span><br><span class="line">                bh.Tick();</span><br><span class="line">            b = b.Next;</span><br><span class="line">            <span class="keyword">if</span> (bh.IsSuccess)<span class="comment">//&#x8BE5;&#x5B50;&#x8282;&#x70B9;&#x8FD0;&#x884C;&#x7ED3;&#x675F;&#x540E;&#xFF0C;&#x5982;&#x679C;&#x8FD0;&#x884C;&#x6210;&#x529F;&#x4E86;</span></span><br><span class="line">            {</span><br><span class="line">                ++successCount;<span class="comment">//&#x6210;&#x529F;&#x6267;&#x884C;&#x7684;&#x8282;&#x70B9;&#x6570;+1</span></span><br><span class="line">                               <span class="comment">//&#x5982;&#x679C;&#x662F;&#x300C;&#x53EA;&#x8981;&#x6709;&#x4E00;&#x4E2A;&#x300D;&#x6807;&#x51C6;&#x7684;&#x8BDD;&#xFF0C;&#x90A3;&#x5C31;&#x53EF;&#x4EE5;&#x8FD4;&#x56DE;&#x7ED3;&#x679C;&#x4E86;</span></span><br><span class="line">                <span class="keyword">if</span> (mSuccessPolicy == Policy.RequireOne)</span><br><span class="line">                    <span class="keyword">return</span> EStatus.Success;</span><br><span class="line">            }</span><br><span class="line">            <span class="keyword">if</span> (bh.IsFailure)<span class="comment">//&#x8BE5;&#x5B50;&#x8282;&#x70B9;&#x8FD0;&#x884C;&#x5931;&#x8D25;&#x7684;&#x60C5;&#x51B5;&#x540C;&#x7406;</span></span><br><span class="line">            {</span><br><span class="line">                ++failureCount;</span><br><span class="line">                <span class="keyword">if</span> (mFailurePolicy == Policy.RequireOne)</span><br><span class="line">                    <span class="keyword">return</span> EStatus.Failure;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        <span class="comment">//&#x5982;&#x679C;&#x662F;&#x300C;&#x5168;&#x90FD;&#x300D;&#x6807;&#x51C6;&#x7684;&#x8BDD;&#xFF0C;&#x5C31;&#x9700;&#x8981;&#x6BD4;&#x5BF9;&#x5F53;&#x524D;&#x6210;&#x529F;/&#x5931;&#x8D25;&#x4E2A;&#x6570;&#x4E0E;&#x603B;&#x5B50;&#x8282;&#x70B9;&#x6570;</span></span><br><span class="line">        <span class="keyword">if</span> (mFailurePolicy == Policy.RequireAll &amp;&amp; failureCount == size)</span><br><span class="line">            <span class="keyword">return</span> EStatus.Failure;</span><br><span class="line">        <span class="keyword">if</span> (mSuccessPolicy == Policy.RequireAll &amp;&amp; successCount == size)</span><br><span class="line">            <span class="keyword">return</span> EStatus.Success;</span><br><span class="line">        <span class="keyword">return</span> EStatus.Running;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">//&#x7ED3;&#x675F;&#x51FD;&#x6570;&#xFF0C;&#x53EA;&#x8981;&#x7B80;&#x5355;&#x5730;&#x628A;&#x6240;&#x6709;&#x5B50;&#x8282;&#x70B9;&#x8BBE;&#x4E3A;&#x300C;&#x4E2D;&#x65AD;&#x300D;&#x5C31;&#x53EF;&#x4EE5;&#x4E86;</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">OnTerminate</span>()</span></span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">foreach</span> (<span class="keyword">var</span> b <span class="keyword">in</span> children)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">if</span> (b.IsRunning)</span><br><span class="line">                b.Abort();</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>BtSelector.cs</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">BtSelector</span> : <span class="title">BtSequence</span></span><br><span class="line">{</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> EStatus <span class="title">OnUpdate</span>()</span></span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">while</span> (<span class="literal">true</span>)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">var</span> s = currentChild.Value.Tick();</span><br><span class="line">            <span class="keyword">if</span> (s != EStatus.Failure)</span><br><span class="line">                <span class="keyword">return</span> s;</span><br><span class="line">            currentChild = currentChild.Next;</span><br><span class="line">            <span class="keyword">if</span> (currentChild == <span class="literal">null</span>)</span><br><span class="line">                <span class="keyword">return</span> EStatus.Failure;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>6.BtSequence.cs</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">BtSequence</span> : <span class="title">BtComposite</span></span><br><span class="line">{</span><br><span class="line">    <span class="keyword">protected</span> LinkedListNode&lt;BtBehaviour&gt; currentChild;<span class="comment">//&#x5F53;&#x524D;&#x8FD0;&#x884C;&#x7684;&#x5B50;&#x8282;&#x70B9;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">OnInitialize</span>()</span></span><br><span class="line">    {</span><br><span class="line">        currentChild = children.First;<span class="comment">//&#x4ECE;&#x7B2C;&#x4E00;&#x4E2A;&#x5B50;&#x8282;&#x70B9;&#x5F00;&#x59CB;</span></span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> EStatus <span class="title">OnUpdate</span>()</span></span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">while</span> (<span class="literal">true</span>)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">var</span> s = currentChild.Value.Tick();<span class="comment">//&#x8BB0;&#x5F55;&#x5B50;&#x8282;&#x70B9;&#x8FD0;&#x884C;&#x8FD4;&#x56DE;&#x7684;&#x7ED3;&#x679C;&#x72B6;&#x6001;</span></span><br><span class="line">            <span class="comment">/*</span></span><br><span class="line"><span class="comment">            &#x5982;&#x679C;&#x5B50;&#x8282;&#x70B9;&#x8FD0;&#x884C;&#xFF0C;&#x8FD8;&#x6CA1;&#x6709;&#x6210;&#x529F;&#xFF0C;&#x5C31;&#x76F4;&#x63A5;&#x8FD4;&#x56DE;&#x8BE5;&#x7ED3;&#x679C;&#x3002;</span></span><br><span class="line"><span class="comment">            &#x662F;&#x300C;&#x8FD0;&#x884C;&#x4E2D;&#x300D;&#x90A3;&#x5C31;&#x8868;&#x660E;&#x672C;&#x8282;&#x70B9;&#x4E5F;&#x662F;&#x8FD0;&#x884C;&#x4E2D;&#xFF0C;&#x6709;&#x8BB0;&#x5F55;&#x5F53;&#x524D;&#x8282;&#x70B9;&#xFF0C;&#x4E0B;&#x6B21;&#x8FD8;&#x4F1A;&#x7EE7;&#x7EED;&#x6267;&#x884C;&#xFF1B;</span></span><br><span class="line"><span class="comment">            &#x662F;&#x300C;&#x5931;&#x8D25;&#x300D;&#x5C31;&#x8868;&#x660E;&#x672C;&#x8282;&#x70B9;&#x4E5F;&#x8FD0;&#x884C;&#x5931;&#x8D25;&#x4E86;&#xFF0C;&#x4E0B;&#x6B21;&#x4F1A;&#x518D;&#x7ECF;&#x5386;OnInitialize&#xFF0C;&#x4ECE;&#x5934;&#x5F00;&#x59CB;&#x3002;</span></span><br><span class="line"><span class="comment">            */</span></span><br><span class="line">            <span class="keyword">if</span> (s != EStatus.Success)</span><br><span class="line">                <span class="keyword">return</span> s;</span><br><span class="line">            <span class="comment">//&#x5982;&#x679C;&#x8FD0;&#x884C;&#x6210;&#x529F;&#xFF0C;&#x5C31;&#x6362;&#x5230;&#x4E0B;&#x4E00;&#x4E2A;&#x5B50;&#x8282;&#x70B9;</span></span><br><span class="line">            currentChild = currentChild.Next;</span><br><span class="line">            <span class="comment">//&#x5982;&#x679C;&#x5168;&#x90FD;&#x6210;&#x529F;&#x8FD0;&#x884C;&#x5B8C;&#x4E86;&#xFF0C;&#x5C31;&#x8FD4;&#x56DE;&#x300C;&#x6210;&#x529F;&#x300D;</span></span><br><span class="line">            <span class="keyword">if</span> (currentChild == <span class="literal">null</span>)</span><br><span class="line">                <span class="keyword">return</span> EStatus.Success;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"><span class="meta">## &#x4E09;&#x3001;Decorator</span></span><br><span class="line"><span class="number">1.</span> BtInverter.cs</span><br><span class="line">```C<span class="meta">#</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">BtInverter</span> : <span class="title">BtDecorator</span></span><br><span class="line">{</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> EStatus <span class="title">OnUpdate</span>()</span></span><br><span class="line">    {</span><br><span class="line">        child.Tick();</span><br><span class="line">        <span class="keyword">if</span> (child.IsFailure)</span><br><span class="line">            <span class="keyword">return</span> EStatus.Success;</span><br><span class="line">        <span class="keyword">if</span> (child.IsSuccess)</span><br><span class="line">            <span class="keyword">return</span> EStatus.Failure;</span><br><span class="line">        <span class="keyword">return</span> EStatus.Running;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>BtRepeat.cs</li>
+</ol>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">BtRepeat</span> : <span class="title">BtDecorator</span></span><br><span class="line">{</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">int</span> conunter;<span class="comment">//&#x5F53;&#x524D;&#x91CD;&#x590D;&#x6B21;&#x6570;</span></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">int</span> limit;<span class="comment">//&#x91CD;&#x590D;&#x9650;&#x5EA6;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BtRepeat</span>(<span class="params"><span class="built_in">int</span> limit</span>)</span></span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">this</span>.limit = limit;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">OnInitialize</span>()</span></span><br><span class="line">    {</span><br><span class="line">        conunter = <span class="number">0</span>;<span class="comment">//&#x8FDB;&#x5165;&#x65F6;&#xFF0C;&#x5C06;&#x6B21;&#x6570;&#x6E05;&#x96F6;</span></span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> EStatus <span class="title">OnUpdate</span>()</span></span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">while</span> (<span class="literal">true</span>)</span><br><span class="line">        {</span><br><span class="line">            child.Tick();</span><br><span class="line">            <span class="keyword">if</span> (child.IsRunning)</span><br><span class="line">                <span class="keyword">return</span> EStatus.Running;</span><br><span class="line">            <span class="keyword">if</span> (child.IsFailure)</span><br><span class="line">                <span class="keyword">return</span> EStatus.Failure;</span><br><span class="line">            <span class="comment">//&#x5B50;&#x8282;&#x70B9;&#x6267;&#x884C;&#x6210;&#x529F;&#xFF0C;&#x5C31;&#x589E;&#x52A0;&#x4E00;&#x6B21;&#x8BA1;&#x7B97;&#xFF0C;&#x8FBE;&#x5230;&#x8BBE;&#x5B9A;&#x9650;&#x5EA6;&#x624D;&#x8FD4;&#x56DE;&#x6210;&#x529F;</span></span><br><span class="line">            <span class="keyword">if</span> (++conunter &gt;= limit)</span><br><span class="line">                <span class="keyword">return</span> EStatus.Success;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<h2><span id="&#x4E09;-behaviortreebuildercs&#x4E3B;&#x8981;&#x4F7F;&#x7528;&#x8FD9;&#x4E2A;&#x7C7B;&#x6765;&#x6784;&#x5EFA;&#x548C;&#x63A7;&#x5236;&#x884C;&#x4E3A;&#x5C5E;">&#x4E09;&#x3001;BehaviorTreeBuilder.cs(&#x4E3B;&#x8981;&#x4F7F;&#x7528;&#x8FD9;&#x4E2A;&#x7C7B;&#x6765;&#x6784;&#x5EFA;&#x548C;&#x63A7;&#x5236;&#x884C;&#x4E3A;&#x5C5E;)</span><a href="#&#x4E09;-behaviortreebuildercs&#x4E3B;&#x8981;&#x4F7F;&#x7528;&#x8FD9;&#x4E2A;&#x7C7B;&#x6765;&#x6784;&#x5EFA;&#x548C;&#x63A7;&#x5236;&#x884C;&#x4E3A;&#x5C5E;" class="header-anchor">#</a></h2>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">BehaviorTreeBuilder</span></span><br><span class="line">{</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">readonly</span> Stack&lt;BtBehaviour&gt; nodeStack;<span class="comment">//&#x6784;&#x5EFA;&#x6811;&#x7ED3;&#x6784;&#x7528;&#x7684;&#x6808;</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">readonly</span> BehaviorTree bhTree;<span class="comment">//&#x6784;&#x5EFA;&#x7684;&#x6811;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BehaviorTreeBuilder</span>()</span></span><br><span class="line">    {</span><br><span class="line">        bhTree = <span class="keyword">new</span> BehaviorTree(<span class="literal">null</span>);<span class="comment">//&#x6784;&#x9020;&#x4E00;&#x4E2A;&#x6CA1;&#x6709;&#x6839;&#x7684;&#x6811;</span></span><br><span class="line">        nodeStack = <span class="keyword">new</span> Stack&lt;BtBehaviour&gt;();<span class="comment">//&#x521D;&#x59CB;&#x5316;&#x6784;&#x5EFA;&#x6808;</span></span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> BehaviorTreeBuilder <span class="title">AddBehavior</span>(<span class="params">BtBehaviour behavior</span>)</span></span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">if</span> (bhTree.HaveRoot)<span class="comment">//&#x6709;&#x6839;&#x8282;&#x70B9;&#x65F6;&#xFF0C;&#x52A0;&#x5165;&#x6784;&#x5EFA;&#x6808;</span></span><br><span class="line">        {</span><br><span class="line">            nodeStack.Peek().AddChild(behavior);</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">else</span> <span class="comment">//&#x5F53;&#x6811;&#x6CA1;&#x6839;&#x65F6;&#xFF0C;&#x65B0;&#x589E;&#x5F97;&#x8282;&#x70B9;&#x89C6;&#x4E3A;&#x6839;&#x8282;&#x70B9;</span></span><br><span class="line">        {</span><br><span class="line">            bhTree.SetRoot(behavior);</span><br><span class="line">        }</span><br><span class="line">        <span class="comment">//&#x53EA;&#x6709;&#x7EC4;&#x5408;&#x8282;&#x70B9;&#x548C;&#x4FEE;&#x9970;&#x8282;&#x70B9;&#x9700;&#x8981;&#x8FDB;&#x6784;&#x5EFA;&#x5806;</span></span><br><span class="line">        <span class="keyword">if</span> (behavior <span class="keyword">is</span> BtComposite || behavior <span class="keyword">is</span> BtDecorator)</span><br><span class="line">        {</span><br><span class="line">            nodeStack.Push(behavior);</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">TreeTick</span>()</span></span><br><span class="line">    {</span><br><span class="line">        bhTree.Tick();</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> BehaviorTreeBuilder <span class="title">Back</span>()</span></span><br><span class="line">    {</span><br><span class="line">        nodeStack.Pop();</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> BehaviorTree <span class="title">End</span>()</span></span><br><span class="line">    {</span><br><span class="line">        nodeStack.Clear();</span><br><span class="line">        <span class="keyword">return</span> bhTree;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">//---------&#x5305;&#x88C5;&#x5404;&#x8282;&#x70B9;---------</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> BehaviorTreeBuilder <span class="title">Sequence</span>()</span></span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">var</span> tp = <span class="keyword">new</span> BtSequence();</span><br><span class="line">        AddBehavior(tp);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> BehaviorTreeBuilder <span class="title">Seletctor</span>()</span></span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">var</span> tp = <span class="keyword">new</span> BtSelector();</span><br><span class="line">        AddBehavior(tp);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> BehaviorTreeBuilder <span class="title">Filter</span>()</span></span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">var</span> tp = <span class="keyword">new</span> BtFilter();</span><br><span class="line">        AddBehavior(tp);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> BehaviorTreeBuilder <span class="title">Parallel</span>(<span class="params">BtParallel.Policy success, BtParallel.Policy failure</span>)</span></span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">var</span> tp = <span class="keyword">new</span> BtParallel(success, failure);</span><br><span class="line">        AddBehavior(tp);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> BehaviorTreeBuilder <span class="title">Monitor</span>(<span class="params">BtParallel.Policy success, BtParallel.Policy failure</span>)</span></span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">var</span> tp = <span class="keyword">new</span> BtMonitor(success, failure);</span><br><span class="line">        AddBehavior(tp);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> BehaviorTreeBuilder <span class="title">ActiveSelector</span>()</span></span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">var</span> tp = <span class="keyword">new</span> BtActiveSelector();</span><br><span class="line">        AddBehavior(tp);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> BehaviorTreeBuilder <span class="title">Repeat</span>(<span class="params"><span class="built_in">int</span> limit</span>)</span></span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">var</span> tp = <span class="keyword">new</span> BtRepeat(limit);</span><br><span class="line">        AddBehavior(tp);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> BehaviorTreeBuilder <span class="title">Inverter</span>()</span></span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">var</span> tp = <span class="keyword">new</span> BtInverter();</span><br><span class="line">        AddBehavior(tp);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> BehaviorTreeBuilder <span class="title">DebugNode</span>(<span class="params"><span class="built_in">string</span> word</span>)</span></span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">var</span> node = <span class="keyword">new</span> DebugNode(word);</span><br><span class="line">        AddBehavior(node);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">OnDisable</span>()</span></span><br><span class="line">    {</span><br><span class="line">        nodeStack.Clear();</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<h1><span id="&#x6784;&#x5EFA;&#x884C;&#x4E3A;&#x6811;&#x548C;&#x884C;&#x4E3A;&#x6811;&#x7684;&#x4F7F;&#x7528;">&#x6784;&#x5EFA;&#x884C;&#x4E3A;&#x6811;&#x548C;&#x884C;&#x4E3A;&#x6811;&#x7684;&#x4F7F;&#x7528;</span><a href="#&#x6784;&#x5EFA;&#x884C;&#x4E3A;&#x6811;&#x548C;&#x884C;&#x4E3A;&#x6811;&#x7684;&#x4F7F;&#x7528;" class="header-anchor">#</a></h1>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Awake</span>()</span>{</span><br><span class="line">    builder = <span class="keyword">new</span> BehaviorTreeBuilder();</span><br><span class="line">    <span class="comment">//&#x884C;&#x4E3A;&#x6811;</span></span><br><span class="line">    BtBehaviour IsFindPlayerCondition = <span class="keyword">new</span> BtActionNode(<span class="keyword">this</span>, IsFindPlayer);</span><br><span class="line">    BtBehaviour EnterAtkDisCondition = <span class="keyword">new</span> BtActionNode(<span class="keyword">this</span>, EnterAtkDis);</span><br><span class="line">    BtBehaviour EnterDashDisCondition = <span class="keyword">new</span> BtActionNode(<span class="keyword">this</span>, EnterDashDis);</span><br><span class="line">    BtBehaviour EnterLAtkDisCondition = <span class="keyword">new</span> BtActionNode(<span class="keyword">this</span>, EnterLtkDis);</span><br><span class="line">    BtBehaviour EnterObeservehDisCondition = <span class="keyword">new</span> BtActionNode(<span class="keyword">this</span>, EnterObeservehDis);</span><br><span class="line">    BtBehaviour CanAttackCondition = <span class="keyword">new</span> BtActionNode(<span class="keyword">this</span>, CanAttack);</span><br><span class="line">    BtBehaviour CanDodgeCondition = <span class="keyword">new</span> BtActionNode(<span class="keyword">this</span>, CanDodge);</span><br><span class="line">    BtBehaviour CanSkillCondition = <span class="keyword">new</span> BtActionNode(<span class="keyword">this</span>, CanSkill);</span><br><span class="line">    BtBehaviour CanSkillACondition = <span class="keyword">new</span> BtActionNode(<span class="keyword">this</span>, CanSkillA);</span><br><span class="line">    BtBehaviour CanSkillBCondition = <span class="keyword">new</span> BtActionNode(<span class="keyword">this</span>, CanSkillB);</span><br><span class="line">    BtBehaviour BeAttackCondition = <span class="keyword">new</span> BtActionNode(<span class="keyword">this</span>, IsBeAttacked);</span><br><span class="line"></span><br><span class="line">    BtBehaviour NearPlayerAciton = <span class="keyword">new</span> BtActionNode(<span class="keyword">this</span>, NearPlayer);</span><br><span class="line">    BtBehaviour AttackPlayerAction = <span class="keyword">new</span> BtActionNode(<span class="keyword">this</span>, AttackPlayer);</span><br><span class="line">    BtBehaviour RollBackwardsAction = <span class="keyword">new</span> BtActionNode(<span class="keyword">this</span>, RollBackwards);</span><br><span class="line">    BtBehaviour ObservePlayerAction = <span class="keyword">new</span> BtActionNode(<span class="keyword">this</span>, ObservePlayer);</span><br><span class="line">    BtBehaviour BackOffAction = <span class="keyword">new</span> BtActionNode(<span class="keyword">this</span>, BackOff);</span><br><span class="line">    BtBehaviour DashSkillAction = <span class="keyword">new</span> BtActionNode(<span class="keyword">this</span>, UseDashSkill);</span><br><span class="line">    BtBehaviour CloseSkillAction = <span class="keyword">new</span> BtActionNode(<span class="keyword">this</span>, UseCloseSkill);</span><br><span class="line">    BtBehaviour IdleAction = <span class="keyword">new</span> BtActionNode(<span class="keyword">this</span>, Idle);</span><br><span class="line">    BtBehaviour BeAttackAcion = <span class="keyword">new</span> BtActionNode(<span class="keyword">this</span>, BeAttacked);</span><br><span class="line"></span><br><span class="line">    builder</span><br><span class="line">        .Seletctor()<span class="comment">//1</span></span><br><span class="line">            .Sequence()</span><br><span class="line">                .AddBehavior(BeAttackCondition)</span><br><span class="line">                .AddBehavior(BeAttackAcion)</span><br><span class="line">            .Back()</span><br><span class="line">            .Sequence()<span class="comment">//11</span></span><br><span class="line">                .AddBehavior(IsFindPlayerCondition)<span class="comment">//111</span></span><br><span class="line">                    .Seletctor()<span class="comment">//112</span></span><br><span class="line">                        .Sequence()<span class="comment">//1121</span></span><br><span class="line"></span><br><span class="line">                            .Sequence()</span><br><span class="line">                                .Inverter()</span><br><span class="line">                                .AddBehavior(EnterAtkDisCondition)</span><br><span class="line">                                .Back()</span><br><span class="line">                            .Back()</span><br><span class="line"></span><br><span class="line">                            .Seletctor()</span><br><span class="line">                                .Sequence()<span class="comment">//1121121</span></span><br><span class="line">                                    .AddBehavior(EnterDashDisCondition)</span><br><span class="line">                                    .AddBehavior(CanSkillCondition)</span><br><span class="line">                                    .AddBehavior(CanSkillACondition)</span><br><span class="line">                                    .AddBehavior(DashSkillAction)</span><br><span class="line">                                .Back()</span><br><span class="line">                                .Seletctor()</span><br><span class="line">                                    .Seletctor()</span><br><span class="line">                                        .Sequence()</span><br><span class="line">                                            .AddBehavior(CanAttackCondition)</span><br><span class="line">                                            .AddBehavior(NearPlayerAciton)</span><br><span class="line">                                        .Back()</span><br><span class="line">                                        .Sequence()</span><br><span class="line">                                            .AddBehavior(EnterObeservehDisCondition)</span><br><span class="line">                                            .AddBehavior(ObservePlayerAction)</span><br><span class="line">                                        .Back()</span><br><span class="line">                                    .Back()</span><br><span class="line">                                .Back()</span><br><span class="line">                            .Back()</span><br><span class="line">                        .Back()</span><br><span class="line">                        .Sequence()<span class="comment">//1122</span></span><br><span class="line">                            .AddBehavior(EnterAtkDisCondition)</span><br><span class="line">                                .Seletctor()</span><br><span class="line">                                    .Sequence()<span class="comment">//&#x662F;&#x5426;&#x80FD;&#x591F;&#x653B;&#x51FB;</span></span><br><span class="line">                                        .AddBehavior(CanAttackCondition)</span><br><span class="line">                                        .AddBehavior(AttackPlayerAction)</span><br><span class="line">                                        .Back()</span><br><span class="line">                                    .Seletctor()</span><br><span class="line">                                        .Sequence()<span class="comment">//&#x80FD;&#x5426;&#x4F7F;&#x7528;&#x8FD1;&#x6218;&#x6280;&#x80FD;</span></span><br><span class="line">                                            .AddBehavior(CanSkillCondition)</span><br><span class="line">                                            .AddBehavior(CanSkillBCondition)</span><br><span class="line">                                            .AddBehavior(CloseSkillAction)</span><br><span class="line">                                        .Back()</span><br><span class="line">                                        .Seletctor()</span><br><span class="line">                                            .Sequence()<span class="comment">//&#x7FFB;&#x6EDA;</span></span><br><span class="line">                                                .AddBehavior(CanDodgeCondition)</span><br><span class="line">                                                .AddBehavior(RollBackwardsAction)</span><br><span class="line">                                            .Back()</span><br><span class="line">                                            .AddBehavior(BackOffAction)</span><br><span class="line">                                        .Back()</span><br><span class="line">                                    .Back()</span><br><span class="line">                                .Back()</span><br><span class="line">                        .Back()<span class="comment">//1122</span></span><br><span class="line">                    .Back()<span class="comment">//112</span></span><br><span class="line">            .Back()<span class="comment">//11</span></span><br><span class="line">            .Sequence()<span class="comment">//12</span></span><br><span class="line"></span><br><span class="line">                .Sequence()</span><br><span class="line">                    .Inverter()</span><br><span class="line">                    .AddBehavior(IsFindPlayerCondition)</span><br><span class="line">                    .Back()</span><br><span class="line">                .Back()</span><br><span class="line"></span><br><span class="line">                .AddBehavior(IdleAction)</span><br><span class="line">            .Back()<span class="comment">//12</span></span><br><span class="line">        .Back()<span class="comment">//1</span></span><br><span class="line">    .End();</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<h1><span id="&#x53C2;&#x8003;&#x5185;&#x5BB9;">&#x53C2;&#x8003;&#x5185;&#x5BB9;</span><a href="#&#x53C2;&#x8003;&#x5185;&#x5BB9;" class="header-anchor">#</a></h1>
+<p><a target="_blank" rel="noopener" href="https://developer.unity.cn/projects/6569d98aedbc2a0a165f740e">https://developer.unity.cn/projects/6569d98aedbc2a0a165f740e</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/12/30/%E9%BB%91%E6%9D%BF%E6%A8%A1%E5%BC%8F/" rel="prev" title="黑板模式">
+      <i class="fa fa-chevron-left"></i> 黑板模式
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/12/30/%E6%91%84%E5%83%8F%E6%9C%BA%E6%8E%A7%E5%88%B6%E8%84%9A%E6%9C%AC/" rel="next" title="摄像机控制脚本">
+      摄像机控制脚本 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">完整代码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text">一、Base部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text">二、Composite</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text">三、BehaviorTreeBuilder.cs(主要使用这个类来构建和控制行为属)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">构建行为树和行为树的使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">参考内容</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ITTT"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">ITTT</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/originone494" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;originone494" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:2531293780@qq.com" title="E-Mail → mailto:2531293780@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ITTT</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">113k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:25</span>
+</div>
+
+<!-- 网站运行时间的设置 -->
+<span id="timeDate">载入天数...</span>
+<span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("12/29/2025 17:04:14"); //此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒.";
+    }
+setInterval("createtime()",250);
+</script>
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/js/fix-toc.js"></script>
+</body>
+</html>

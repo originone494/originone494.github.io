@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"originone494.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="&#x5341;&#x4E94;&#x3001;&#x6DFB;&#x52A0;&#x9057;&#x7269;&#x903B;&#x8F91;# &#x524D;&#x9762;&#x6211;&#x4EEC;&#x4E3A;&#x6E38;&#x620F;&#x6DFB;&#x52A0;&#x4E86;&#x4E00;&#x4E2A;&#x9057;&#x7269;&#xFF0C;&amp;#x730">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何在杀戮尖塔2制作一个遗物Mod（三）">
+<meta property="og:url" content="https://originone494.github.io/2026/03/19/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AA%E9%81%97%E7%89%A9Mod%EF%BC%88%E4%B8%89%EF%BC%89/index.html">
+<meta property="og:site_name" content="OneBlog">
+<meta property="og:description" content="&#x5341;&#x4E94;&#x3001;&#x6DFB;&#x52A0;&#x9057;&#x7269;&#x903B;&#x8F91;# &#x524D;&#x9762;&#x6211;&#x4EEC;&#x4E3A;&#x6E38;&#x620F;&#x6DFB;&#x52A0;&#x4E86;&#x4E00;&#x4E2A;&#x9057;&#x7269;&#xFF0C;&amp;#x730">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://originone494.github.io/2026/03/19/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AA%E9%81%97%E7%89%A9Mod%EF%BC%88%E4%B8%89%EF%BC%89/1.png">
+<meta property="og:image" content="https://originone494.github.io/2026/03/19/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AA%E9%81%97%E7%89%A9Mod%EF%BC%88%E4%B8%89%EF%BC%89/3.png">
+<meta property="og:image" content="https://originone494.github.io/2026/03/19/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AA%E9%81%97%E7%89%A9Mod%EF%BC%88%E4%B8%89%EF%BC%89/2.png">
+<meta property="og:image" content="https://originone494.github.io/2026/03/19/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AA%E9%81%97%E7%89%A9Mod%EF%BC%88%E4%B8%89%EF%BC%89/4.png">
+<meta property="article:published_time" content="2026-03-19T15:37:58.000Z">
+<meta property="article:modified_time" content="2026-03-29T06:58:53.479Z">
+<meta property="article:author" content="ITTT">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://originone494.github.io/2026/03/19/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AA%E9%81%97%E7%89%A9Mod%EF%BC%88%E4%B8%89%EF%BC%89/1.png">
+
+<link rel="canonical" href="https://originone494.github.io/2026/03/19/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AA%E9%81%97%E7%89%A9Mod%EF%BC%88%E4%B8%89%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>如何在杀戮尖塔2制作一个遗物Mod（三） | OneBlog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">OneBlog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://originone494.github.io/2026/03/19/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AA%E9%81%97%E7%89%A9Mod%EF%BC%88%E4%B8%89%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ITTT">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="OneBlog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          如何在杀戮尖塔2制作一个遗物Mod（三）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2026-03-19 23:37:58" itemprop="dateCreated datePublished" datetime="2026-03-19T23:37:58+08:00">2026-03-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2026-03-29 14:58:53" itemprop="dateModified" datetime="2026-03-29T14:58:53+08:00">2026-03-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%85%B6%E4%BB%96/" itemprop="url" rel="index"><span itemprop="name">其他</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1><span id="&#x5341;&#x4E94;-&#x6DFB;&#x52A0;&#x9057;&#x7269;&#x903B;&#x8F91;">&#x5341;&#x4E94;&#x3001;&#x6DFB;&#x52A0;&#x9057;&#x7269;&#x903B;&#x8F91;</span><a href="#&#x5341;&#x4E94;-&#x6DFB;&#x52A0;&#x9057;&#x7269;&#x903B;&#x8F91;" class="header-anchor">#</a></h1>
+<p>&#x524D;&#x9762;&#x6211;&#x4EEC;&#x4E3A;&#x6E38;&#x620F;&#x6DFB;&#x52A0;&#x4E86;&#x4E00;&#x4E2A;&#x9057;&#x7269;&#xFF0C;&#x730E;&#x4EBA;&#x6740;&#x624B;&#x6740;&#x624B;</p>
+<p>&#x4E0D;&#x8FC7;&#xFF0C;&#x8FD9;&#x4E2A;&#x9057;&#x7269;&#x8FD8;&#x6CA1;&#x6709;&#x4EFB;&#x4F55;&#x6548;&#x679C;</p>
+<p>&#x63A5;&#x4E0B;&#x6765;&#xFF0C;&#x6211;&#x4EEC;&#x8981;&#x5199;&#x9057;&#x7269;&#x7684;&#x903B;&#x8F91;&#x4EE3;&#x7801;</p>
+<h2><span id="&#x9057;&#x7269;&#x6548;&#x679C;">&#x9057;&#x7269;&#x6548;&#x679C;</span><a href="#&#x9057;&#x7269;&#x6548;&#x679C;" class="header-anchor">#</a></h2>
+<p>&#x9996;&#x5148;&#xFF0C;&#x73B0;&#x5728;relic.json&#x51B3;&#x5B9A;&#x597D;&#x9057;&#x7269;&#x7684;&#x6548;&#x679C;</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  <span class="string">&quot;ORIGINRELICBOX-LIE_REN_SHA_SHOU_SHA_SHOU.title&quot;</span>: <span class="string">&quot;&#x730E;&#x4EBA;&#x6740;&#x624B;&#x6740;&#x624B;&quot;</span>,</span><br><span class="line">  <span class="string">&quot;ORIGINRELICBOX-LIE_REN_SHA_SHOU_SHA_SHOU.description&quot;</span>: </span><br><span class="line">  <span class="string">&quot;&#x6218;&#x6597;&#x5F00;&#x59CB;&#x65F6;&#xFF0C;&#x82E5;&#x623F;&#x95F4;&#x4E2D;&#x5B58;&#x5728;[gold]&#x730E;&#x4EBA;&#x6740;&#x624B;[/gold]&#xFF0C;&#x5219;&#x83B7;&#x5F97;&#x6548;&#x679C;&#xFF1A;&#x6BCF;&#x6253;&#x51FA;&#x4E00;&#x5F20;&#x724C;&#xFF0C;&#x5728;&#x672C;&#x56DE;&#x5408;&#x83B7;&#x5F97;&#x4E00;&#x70B9;[gold]&#x529B;&#x91CF;[/gold]&#xFF0C;&#x4E00;&#x70B9;[gold]&#x654F;&#x6377;[/gold]&#x3002;\n&#x6839;&#x636E;&#x5728;&#x4E00;&#x573A;&#x6218;&#x6597;&#x4E2D;&#x6253;&#x51FA;&#x724C;&#x7684;&#x6570;&#x91CF;&#xFF0C; &#x5728;&#x4E0B;&#x4E00;&#x573A;&#x6218;&#x6597;&#x4E2D;&#x9002;&#x7528;&#x4EE5;&#x4E0B;&#x6548;&#x679C;&#xFF1A;\n[blue]10[/blue]&#x5F20;&#x4EE5;&#x4E0A;&#xFF1A;&#x6218;&#x6597;&#x5F00;&#x59CB;&#x65F6;&#x83B7;&#x5F97;[blue]5[/blue]&#x70B9;&#x683C;&#x6321;&#x3002;\n[blue]20[/blue]&#x5F20;&#x4EE5;&#x4E0A;&#xFF1A;&#x6218;&#x6597;&#x5F00;&#x59CB;&#x65F6;&#x6062;&#x590D;[blue]2[/blue]&#x70B9;&#x751F;&#x547D;&#x3002;\n[blue]30[/blue]&#x5F20;&#x4EE5;&#x4E0A;&#xFF1A;&#x6218;&#x6597;&#x5F00;&#x59CB;&#x65F6;&#x83B7;&#x5F97;&#x4E00;&#x70B9;[gold]&#x529B;&#x91CF;[/gold]&#x548C;&#x4E00;&#x70B9;[gold]&#x654F;&#x6377;[/gold]&#x3002;\n[blue]40[/blue]&#x5F20;&#x4EE5;&#x4E0A;&#xFF1A;&#x6218;&#x6597;&#x5F00;&#x59CB;&#x65F6;&#x62BD;[blue]2[/blue]&#x5F20;&#x724C;&#x3002;\n[blue]50[/blue]&#x5F20;&#x4EE5;&#x4E0A;&#xFF1A;&#x56DE;&#x5408;&#x5F00;&#x59CB;&#x65F6;&#x83B7;&#x5F97;{Energy:energyIcons()}&#x3002;&quot;</span>,</span><br><span class="line">  <span class="string">&quot;ORIGINRELICBOX-LIE_REN_SHA_SHOU_SHA_SHOU.flavor&quot;</span>: <span class="string">&quot;.&quot;</span></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x5728;godot&#x8FDB;&#x884C;&#x5BFC;&#x51FA;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x5728;&#x6E38;&#x620F;&#x4E2D;&#x770B;&#x5230;&#x9057;&#x7269;&#x7684;&#x6548;&#x679C;&#x63CF;&#x8FF0;</p>
+<img src="/2026/03/19/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AA%E9%81%97%E7%89%A9Mod%EF%BC%88%E4%B8%89%EF%BC%89/1.png" class title="alt text">
+<h2><span id="&#x9057;&#x7269;&#x6548;&#x679C;&#x903B;&#x8F91;">&#x9057;&#x7269;&#x6548;&#x679C;&#x903B;&#x8F91;</span><a href="#&#x9057;&#x7269;&#x6548;&#x679C;&#x903B;&#x8F91;" class="header-anchor">#</a></h2>
+<p>&#x63A5;&#x7740;&#xFF0C;&#x5F00;&#x59CB;&#x5199;&#x9057;&#x7269;&#x7684;&#x6548;&#x679C;&#xFF0C;&#x8FD9;&#x91CC;&#x53EF;&#x4EE5;&#x5F00;&#x59CB;&#x81EA;&#x7531;&#x53D1;&#x6325;</p>
+<p>&#x5927;&#x81F4;&#x9700;&#x8981;&#x6CE8;&#x610F;&#xFF1A;</p>
+<p>&#x4E00;&#x3001;&#x5982;&#x679C;&#x60F3;&#x8981;&#x5728;sl&#x540E;&#x4FDD;&#x7559;&#x9057;&#x7269;&#x7684;&#x8BA1;&#x6570;&#xFF0C;&#x9700;&#x8981;&#x52A0;&#x4E0A;[SavedProperty]&#x5B57;&#x6BB5;&#x3002;&#x53EA;&#x6709;&#x6807;&#x8BB0;&#x4E86;[SavedProperty]&#x7684;&#x5C5E;&#x6027;&#x624D;&#x4F1A;&#x88AB;&#x5E8F;&#x5217;&#x5316;&#x5230;&#x5B58;&#x6863;&#x4E2D;</p>
+<p>&#x6211;&#x5F00;&#x4E86;&#x4E00;&#x628A;&#x6E38;&#x620F;&#x8FDB;&#x884C;&#x6D4B;&#x8BD5;</p>
+<p>&#x73B0;&#x5728;&#x6211;&#x6709;&#x9057;&#x7269;&#x730E;&#x4EBA;&#x6740;&#x624B;&#x6740;&#x624B;&#x548C;&#x5F00;&#x5FC3;&#x5C0F;&#x82B1;</p>
+<p>&#x4E24;&#x4E2A;&#x90FD;&#x662F;&#x80FD;&#x591F;&#x8DE8;&#x6218;&#x6597;&#x8BA1;&#x6570;&#x7684;&#x9057;&#x7269;</p>
+<img src="/2026/03/19/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AA%E9%81%97%E7%89%A9Mod%EF%BC%88%E4%B8%89%EF%BC%89/3.png" class title="alt text">
+<p>&#x6253;&#x5F00;&#x5B58;&#x6863;&#x7684;&#x6587;&#x4EF6;&#x5939;&#xFF0C;&#x8FDB;&#x5165;modded\profile1\saves</p>
+<p>&#x91CC;&#x9762;&#x6709;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;current_run.save&#xFF0C;&#x8BB0;&#x5F55;&#x4E86;&#x5F53;&#x524D;&#x5B58;&#x6863;&#x7684;&#x6E38;&#x620F;&#x7684;&#x5404;&#x79CD;&#x4FE1;&#x606F;</p>
+<p>&#x5728;&#x91CC;&#x9762;&#x53EF;&#x4EE5;&#x627E;&#x5230;&#x9057;&#x7269;&#x7684;&#x4FE1;&#x606F;</p>
+<p>&#x53EF;&#x4EE5;&#x770B;&#x5230;&#xFF0C;&#x730E;&#x4EBA;&#x6740;&#x624B;&#x6740;&#x624B;&#x9057;&#x7269;&#x4E0B;&#x9762;&#x6CA1;&#x6709;&#x88AB;&#x5B58;&#x50A8;&#x7684;&#x4FE1;&#x606F;</p>
+<p>&#x800C;&#x5F00;&#x5FC3;&#x5C0F;&#x82B1;&#x4E0B;&#x5B58;&#x4E0B;&#x4E86;TurnsSeen&#x7684;&#x53D8;&#x91CF;&#xFF0C;&#x4ECE;&#x800C;&#x80FD;&#x591F;&#x6B63;&#x5E38;&#x5DE5;&#x4F5C;</p>
+<img src="/2026/03/19/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AA%E9%81%97%E7%89%A9Mod%EF%BC%88%E4%B8%89%EF%BC%89/2.png" class title="alt text">
+<p>&#x5728;&#x6E38;&#x620F;&#x6E90;&#x7801;&#x4E2D;&#x627E;&#x5230;&#x5F00;&#x5FC3;&#x5C0F;&#x82B1;&#x7684;&#x4EE3;&#x7801;</p>
+<img src="/2026/03/19/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AA%E9%81%97%E7%89%A9Mod%EF%BC%88%E4%B8%89%EF%BC%89/4.png" class title="alt text">
+<p>&#x53EF;&#x4EE5;&#x770B;&#x5230;TurnsSeen&#x7528;&#x4E86;[SavedProperty]&#x5B57;&#x6BB5;</p>
+<p>&#x4E0D;&#x8FC7;&#x4E0D;&#x77E5;&#x9053;&#x4EC0;&#x4E48;&#x539F;&#x56E0;&#xFF0C;&#x6211;&#x7684;&#x5199;&#x7684;&#x4EE3;&#x7801;&#x4E2D;&#x7684;[SavedProperty]&#x6CA1;&#x8D77;&#x4F5C;&#x7528;&#x3002;&#x4E00;&#x65E6;sl&#xFF0C;&#x9057;&#x7269;&#x7684;&#x8BA1;&#x6570;&#x5C31;&#x4F1A;&#x4E22;&#x5931;</p>
+<p>&#x4E8C;&#x3001;&#x4E0B;&#x9762;&#x8FD9;&#x6BB5;&#x4EE3;&#x7801;&#x53EF;&#x4EE5;&#x904D;&#x5386;&#x623F;&#x95F4;&#x6240;&#x6709;&#x654C;&#x4EBA;</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">IReadOnlyList&lt;Creature&gt; creature = Owner.Creature.CombatState.HittableEnemies;</span><br><span class="line"><span class="keyword">foreach</span> (<span class="keyword">var</span> monster <span class="keyword">in</span> creature)</span><br><span class="line">{</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x4E09;&#x3001;</p>
+<p>&#x589E;&#x52A0;&#x80FD;&#x91CF;&#xFF1A;PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, player);</p>
+<p>&#x6DFB;&#x52A0;&#x80FD;&#x529B;&#xFF1A;PowerCmd.Apply<xxx>(targrt,amount,applier,cardSource,silent=true);</xxx></p>
+<p>&#x5230;&#x8FD9;&#x91CC;&#xFF0C;&#x867D;&#x7136;&#x6709;&#x4E9B;bug&#xFF0C;&#x4F46;&#x4E00;&#x4E2A;&#x5B8C;&#x6574;&#x7684;&#x9057;&#x7269;&#x5DEE;&#x4E0D;&#x591A;&#x5C31;&#x505A;&#x597D;&#x4E86;</p>
+<h2><span id="&#x62BD;&#x8C61;&#x57FA;&#x7C7B;&#x63D0;&#x4F9B;&#x4E86;&#x5F88;&#x591A;&#x53EF;&#x91CD;&#x5199;&#x7684;&#x65B9;&#x6CD5;">&#x62BD;&#x8C61;&#x57FA;&#x7C7B;&#x63D0;&#x4F9B;&#x4E86;&#x5F88;&#x591A;&#x53EF;&#x91CD;&#x5199;&#x7684;&#x65B9;&#x6CD5;</span><a href="#&#x62BD;&#x8C61;&#x57FA;&#x7C7B;&#x63D0;&#x4F9B;&#x4E86;&#x5F88;&#x591A;&#x53EF;&#x91CD;&#x5199;&#x7684;&#x65B9;&#x6CD5;" class="header-anchor">#</a></h2>
+<p>&#x5982;&#x679C;&#x6709;&#x60F3;&#x8981;&#x5B9E;&#x73B0;&#x7684;&#x6548;&#x679C;&#xFF0C;&#x53EF;&#x4EE5;&#x5148;&#x4ECE;&#x4E0B;&#x9762;&#x627E;&#x5230;&#x5408;&#x9002;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x7136;&#x540E;&#x5728;AbstractModel.cs&#x91CC;&#x5BFB;&#x627E;&#x4F7F;&#x7528;&#x7684;&#x65B9;&#x6CD5;</p>
+<p>AbstractModel.cs&#x4F4D;&#x4E8E;Slay the Spire 2\src\Core\Models&#x4E2D;</p>
+<p>&#x6218;&#x6597;&#x5F00;&#x59CB; / &#x7ED3;&#x675F;</p>
+<p>BeforeCombatStart&#xFF1A;&#x6218;&#x6597;&#x5F00;&#x59CB;&#x524D;&#x89E6;&#x53D1;<br>
+AfterCombatVictory&#xFF1A;&#x6218;&#x6597;&#x80DC;&#x5229;&#x65F6;&#x89E6;&#x53D1;</p>
+<p>&#x56DE;&#x5408;&#x6D41;&#x7A0B;</p>
+<p>AfterPlayerTurnStart&#xFF1A;&#x73A9;&#x5BB6;&#x56DE;&#x5408;&#x5F00;&#x59CB;&#x65F6;&#x89E6;&#x53D1;<br>
+BeforeTurnEnd&#xFF1A;&#x56DE;&#x5408;&#x7ED3;&#x675F;&#x65F6;&#x89E6;&#x53D1;</p>
+<p>&#x5361;&#x724C;&#x64CD;&#x4F5C;</p>
+<p>BeforeCardPlayed&#xFF1A;&#x5361;&#x724C;&#x6253;&#x51FA;&#x524D;&#x89E6;&#x53D1;<br>
+AfterCardPlayed&#xFF1A;&#x5361;&#x724C;&#x6253;&#x51FA;&#x540E;&#x89E6;&#x53D1;<br>
+AfterCardDrawn&#xFF1A;&#x5361;&#x724C;&#x88AB;&#x62BD;&#x5230;&#x65F6;&#x89E6;&#x53D1;<br>
+AfterCardExhausted&#xFF1A;&#x5361;&#x724C;&#x88AB;&#x6D88;&#x8017;&#x65F6;&#x89E6;&#x53D1;</p>
+<p>&#x653B;&#x51FB;&#x4E0E;&#x4F24;&#x5BB3;</p>
+<p>BeforeAttack&#xFF1A;&#x653B;&#x51FB;&#x524D;&#x89E6;&#x53D1;<br>
+AfterDamageGiven&#xFF1A;&#x9020;&#x6210;&#x4F24;&#x5BB3;&#x540E;&#x89E6;&#x53D1;<br>
+BeforeDamageReceived&#xFF1A;&#x53D7;&#x5230;&#x4F24;&#x5BB3;&#x524D;&#x89E6;&#x53D1;<br>
+AfterDeath&#xFF1A;&#x6B7B;&#x4EA1;&#x540E;&#x89E6;&#x53D1;</p>
+<p>&#x683C;&#x6321;&#x4E0E;&#x80FD;&#x91CF;</p>
+<p>AfterBlockGained&#xFF1A;&#x83B7;&#x5F97;&#x683C;&#x6321;&#x540E;&#x89E6;&#x53D1;<br>
+AfterEnergySpent&#xFF1A;&#x80FD;&#x91CF;&#x6D88;&#x8017;&#x65F6;&#x89E6;&#x53D1;</p>
+<p>ModifyAttackHitCount	&#x4FEE;&#x6539;&#x653B;&#x51FB;&#x6B21;&#x6570;<br>
+ModifyDamageAdditive/ModifyDamageMultiplicative	&#x4F24;&#x5BB3;&#x52A0;&#x6CD5; / &#x4E58;&#x6CD5;&#x4FEE;&#x6B63;<br>
+ModifyBlockAdditive/ModifyBlockMultiplicative	&#x683C;&#x6321;&#x52A0;&#x6CD5; / &#x4E58;&#x6CD5;&#x4FEE;&#x6B63;&#x3002;<br>
+ModifyCardPlayCount	&#x4FEE;&#x6539;&#x5361;&#x724C;&#x6253;&#x51FA;&#x6B21;&#x6570;<br>
+ModifyHandDraw	&#x4FEE;&#x6539;&#x62BD;&#x724C;&#x6570;&#x91CF;<br>
+ModifyPowerAmountGiven/ModifyPowerAmountReceived	&#x4FEE;&#x6539;&#x7ED9;&#x4E88; / &#x63A5;&#x6536;&#x7684;&#x80FD;&#x529B;&#x6570;&#x503C;<br>
+TryModifyEnergyCostInCombat	&#x5C1D;&#x8BD5;&#x4FEE;&#x6539;&#x6218;&#x6597;&#x4E2D;&#x5361;&#x724C;&#x8D39;&#x7528;</p>
+<p>ShouldAddToDeck	&#x662F;&#x5426;&#x5141;&#x8BB8;&#x52A0;&#x5165;&#x724C;&#x7EC4;&#x3002;<br>
+ShouldClearBlock	&#x56DE;&#x5408;&#x7ED3;&#x675F;&#x662F;&#x5426;&#x6E05;&#x9664;&#x683C;&#x6321;&#x3002;<br>
+ShouldDie	&#x662F;&#x5426;&#x5E94;&#x8BE5;&#x6B7B;&#x4EA1;<br>
+ShouldDraw	&#x662F;&#x5426;&#x5E94;&#x8BE5;&#x62BD;&#x724C;&#xFF08;&#x53EF;&#x8DF3;&#x8FC7;&#x62BD;&#x724C;&#xFF09;&#x3002;<br>
+ShouldTakeExtraTurn	&#x662F;&#x5426;&#x83B7;&#x5F97;&#x989D;&#x5916;&#x56DE;&#x5408;&#x3002;</p>
+<p>AfterMapGenerated	&#x5730;&#x56FE;&#x751F;&#x6210;&#x540E;&#x89E6;&#x53D1;&#xFF0C;&#x53EF;&#x4FEE;&#x6539;&#x5E03;&#x5C40;&#x3002;<br>
+ModifyRewards	&#x4FEE;&#x6539;&#x5956;&#x52B1;&#x5185;&#x5BB9;<br>
+AfterRestSiteHeal/AfterRestSiteSmith	&#x4F11;&#x606F;&#x70B9;&#x6CBB;&#x7597; / &#x953B;&#x9020;&#x540E;&#x89E6;&#x53D1;&#x3002;<br>
+ModifyRestSiteHealAmount	&#x4FEE;&#x6539;&#x4F11;&#x606F;&#x70B9;&#x6CBB;&#x7597;&#x91CF;&#x3002;</p>
+<p>AfterOrbChanneled/AfterOrbEvoked	&#x5B9D;&#x73E0;&#x5145;&#x80FD; / &#x89E6;&#x53D1;&#x65F6;&#x89E6;&#x53D1;&#x3002;<br>
+BeforePotionUsed/AfterPotionUsed	&#x836F;&#x6C34;&#x4F7F;&#x7528;&#x524D;&#x540E;&#x89E6;&#x53D1;&#x3002;<br>
+AfterSummon	&#x53EC;&#x5524;&#x540E;&#x89E6;&#x53D1;</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2026/03/18/%E5%A6%82%E4%BD%95%E5%9C%A8%E6%9D%80%E6%88%AE%E5%B0%96%E5%A1%942%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AA%E9%81%97%E7%89%A9Mod%EF%BC%88%E4%BA%8C%EF%BC%89/" rel="prev" title="如何在杀戮尖塔2制作一个遗物Mod（二）">
+      <i class="fa fa-chevron-left"></i> 如何在杀戮尖塔2制作一个遗物Mod（二）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2026/03/24/%E6%95%B0%E7%BB%84%E5%A4%84%E7%90%86/" rel="next" title="数组处理">
+      数组处理 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">十五、添加遗物逻辑</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text">遗物效果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text">遗物效果逻辑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text">抽象基类提供了很多可重写的方法</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ITTT"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">ITTT</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/originone494" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;originone494" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:2531293780@qq.com" title="E-Mail → mailto:2531293780@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ITTT</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">113k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:25</span>
+</div>
+
+<!-- 网站运行时间的设置 -->
+<span id="timeDate">载入天数...</span>
+<span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("12/29/2025 17:04:14"); //此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒.";
+    }
+setInterval("createtime()",250);
+</script>
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/js/fix-toc.js"></script>
+</body>
+</html>
