@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"originone494.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="&#x5728;&#x7EBF;&#x6D41;&#x7A0B;&#x601D;&#x8DEF;#  vector_stores.py# 1234567891011121314151617from langchain_community.vectorstores import Chromaimport config_dataclass VectorStoreService:    def __in">
+<meta property="og:type" content="article">
+<meta property="og:title" content="实现：大模型RAG与Agent智能体（二）">
+<meta property="og:url" content="https://originone494.github.io/2026/04/03/%E5%AE%9E%E7%8E%B0%EF%BC%9A%E5%A4%A7%E6%A8%A1%E5%9E%8BRAG%E4%B8%8EAgent%E6%99%BA%E8%83%BD%E4%BD%93%EF%BC%88%E4%BA%8C%EF%BC%89/index.html">
+<meta property="og:site_name" content="OneBlog">
+<meta property="og:description" content="&#x5728;&#x7EBF;&#x6D41;&#x7A0B;&#x601D;&#x8DEF;#  vector_stores.py# 1234567891011121314151617from langchain_community.vectorstores import Chromaimport config_dataclass VectorStoreService:    def __in">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://originone494.github.io/2026/04/03/%E5%AE%9E%E7%8E%B0%EF%BC%9A%E5%A4%A7%E6%A8%A1%E5%9E%8BRAG%E4%B8%8EAgent%E6%99%BA%E8%83%BD%E4%BD%93%EF%BC%88%E4%BA%8C%EF%BC%89/image-1.png">
+<meta property="og:image" content="https://originone494.github.io/2026/04/03/%E5%AE%9E%E7%8E%B0%EF%BC%9A%E5%A4%A7%E6%A8%A1%E5%9E%8BRAG%E4%B8%8EAgent%E6%99%BA%E8%83%BD%E4%BD%93%EF%BC%88%E4%BA%8C%EF%BC%89/image-2.png">
+<meta property="article:published_time" content="2026-04-03T09:50:01.000Z">
+<meta property="article:modified_time" content="2026-04-04T05:27:12.881Z">
+<meta property="article:author" content="ITTT">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://originone494.github.io/2026/04/03/%E5%AE%9E%E7%8E%B0%EF%BC%9A%E5%A4%A7%E6%A8%A1%E5%9E%8BRAG%E4%B8%8EAgent%E6%99%BA%E8%83%BD%E4%BD%93%EF%BC%88%E4%BA%8C%EF%BC%89/image-1.png">
+
+<link rel="canonical" href="https://originone494.github.io/2026/04/03/%E5%AE%9E%E7%8E%B0%EF%BC%9A%E5%A4%A7%E6%A8%A1%E5%9E%8BRAG%E4%B8%8EAgent%E6%99%BA%E8%83%BD%E4%BD%93%EF%BC%88%E4%BA%8C%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>实现：大模型RAG与Agent智能体（二） | OneBlog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">OneBlog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://originone494.github.io/2026/04/03/%E5%AE%9E%E7%8E%B0%EF%BC%9A%E5%A4%A7%E6%A8%A1%E5%9E%8BRAG%E4%B8%8EAgent%E6%99%BA%E8%83%BD%E4%BD%93%EF%BC%88%E4%BA%8C%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ITTT">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="OneBlog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          实现：大模型RAG与Agent智能体（二）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2026-04-03 17:50:01" itemprop="dateCreated datePublished" datetime="2026-04-03T17:50:01+08:00">2026-04-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2026-04-04 13:27:12" itemprop="dateModified" datetime="2026-04-04T13:27:12+08:00">2026-04-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" itemprop="url" rel="index"><span itemprop="name">人工智能</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>15 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1><span id="&#x5728;&#x7EBF;&#x6D41;&#x7A0B;&#x601D;&#x8DEF;">&#x5728;&#x7EBF;&#x6D41;&#x7A0B;&#x601D;&#x8DEF;</span><a href="#&#x5728;&#x7EBF;&#x6D41;&#x7A0B;&#x601D;&#x8DEF;" class="header-anchor">#</a></h1>
+<img src="/2026/04/03/%E5%AE%9E%E7%8E%B0%EF%BC%9A%E5%A4%A7%E6%A8%A1%E5%9E%8BRAG%E4%B8%8EAgent%E6%99%BA%E8%83%BD%E4%BD%93%EF%BC%88%E4%BA%8C%EF%BC%89/image-1.png" class title="alt text">
+<h1><span id="vector_storespy">vector_stores.py</span><a href="#vector_storespy" class="header-anchor">#</a></h1>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> langchain_community.vectorstores <span class="keyword">import</span> Chroma</span><br><span class="line"><span class="keyword">import</span> config_data</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">VectorStoreService</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, embedding</span>):</span><br><span class="line">        <span class="variable language_">self</span>.embedding = embedding</span><br><span class="line">        <span class="variable language_">self</span>.vector_store = Chroma(</span><br><span class="line">            collection_name=config_data.collection_name,</span><br><span class="line">            embedding_function=<span class="variable language_">self</span>.embedding,</span><br><span class="line">            persist_directory=config_data.persist_dir</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_retriever</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;&#x8FD4;&#x56DE;&#x5411;&#x91CF;&#x68C0;&#x7D22;&#x5668;&#xFF0C;&#x65B9;&#x4FBF;&#x52A0;&#x5165;chain&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.vector_store.as_retriever(search_kwargs={<span class="string">&quot;k&quot;</span>: config_data.simplarity_threshold})</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1><span id="ragpy"></span><a href="#ragpy" class="header-anchor">#</a></h1>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> langchain_community.chat_models <span class="keyword">import</span> ChatTongyi</span><br><span class="line"><span class="keyword">from</span> langchain_community.embeddings <span class="keyword">import</span> DashScopeEmbeddings</span><br><span class="line"><span class="keyword">from</span> langchain_core.output_parsers <span class="keyword">import</span> StrOutputParser</span><br><span class="line"><span class="keyword">from</span> langchain_core.prompts <span class="keyword">import</span> ChatPromptTemplate</span><br><span class="line"><span class="keyword">from</span> langchain_core.runnables <span class="keyword">import</span> RunnablePassthrough</span><br><span class="line"><span class="keyword">from</span> vector_stores <span class="keyword">import</span> VectorStoreService</span><br><span class="line"><span class="keyword">from</span> docx <span class="keyword">import</span> Document</span><br><span class="line"><span class="keyword">import</span> config_data</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">print_promot</span>(<span class="params">prompt</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;=&quot;</span> * <span class="number">20</span>)</span><br><span class="line">    <span class="built_in">print</span>(prompt.to_string())</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;=&quot;</span> * <span class="number">20</span>)</span><br><span class="line">    <span class="keyword">return</span> prompt</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">RagService</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="variable language_">self</span>.vector_service = VectorStoreService(embedding=DashScopeEmbeddings(</span><br><span class="line">            model=config_data.embedding_model_name,</span><br><span class="line">            dashscope_api_key=config_data.api_key))</span><br><span class="line">        <span class="variable language_">self</span>.prompt_template = ChatPromptTemplate.from_messages(</span><br><span class="line">            [</span><br><span class="line">                (<span class="string">&quot;system&quot;</span>, <span class="string">&quot;&#x4EE5;&#x6211;&#x63D0;&#x4F9B;&#x7684;&#x5DF2;&#x77E5;&#x53C2;&#x8003;&#x8D44;&#x6599;&#x4E3A;&#x4E3B;&#xFF0C;&#x7B80;&#x6D01;&#x548C;&#x4E13;&#x4E1A;&#x5730;&#x56DE;&#x7B54;&#x7528;&#x6237;&#x7684;&#x95EE;&#x9898;&#x3002;&#x53C2;&#x8003;&#x8D44;&#x6599;&#xFF1A;{context}&quot;</span>),</span><br><span class="line">                (<span class="string">&quot;user&quot;</span>, <span class="string">&quot;&#x8BF7;&#x56DE;&#x7B54;&#x7528;&#x6237;&#x63D0;&#x95EE;&#xFF1A;{input}&quot;</span>)</span><br><span class="line">            ]</span><br><span class="line">        )</span><br><span class="line">        <span class="variable language_">self</span>.chat_model = ChatTongyi(model=config_data.chat_model_name, api_key=config_data.api_key)</span><br><span class="line">        <span class="variable language_">self</span>.chain = <span class="variable language_">self</span>.__get_chain()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__get_chain</span>(<span class="params">self</span>):</span><br><span class="line">        retriever = <span class="variable language_">self</span>.vector_service.get_retriever()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">format_document</span>(<span class="params">docs: <span class="built_in">list</span>[Document]</span>):</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> docs:</span><br><span class="line">                <span class="keyword">return</span> <span class="string">&quot;&#x65E0;&#x76F8;&#x5173;&#x53C2;&#x8003;&#x8D44;&#x6599;&quot;</span></span><br><span class="line"></span><br><span class="line">            formatted_str = <span class="string">&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> doc <span class="keyword">in</span> docs:</span><br><span class="line">                formatted_str += <span class="string">f&quot;&#x6587;&#x6863;&#x7247;&#x6BB5;&#xFF1A;<span class="subst">{doc.page_content}</span>\n&#x6587;&#x6863;&#x5143;&#x6570;&#x636E;<span class="subst">{doc.metadata}</span>\n\n&quot;</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> formatted_str</span><br><span class="line"></span><br><span class="line">        chain = (</span><br><span class="line">                {</span><br><span class="line">                    <span class="string">&quot;input&quot;</span>: RunnablePassthrough(),</span><br><span class="line">                    <span class="string">&quot;context&quot;</span>: retriever | format_document</span><br><span class="line">                } | <span class="variable language_">self</span>.prompt_template | print_promot |<span class="variable language_">self</span>.chat_model | StrOutputParser()</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> chain</span><br></pre></td></tr></table></figure>
+<h1><span id="&#x589E;&#x52A0;&#x5386;&#x53F2;&#x6D88;&#x606F;&#x529F;&#x80FD;">&#x589E;&#x52A0;&#x5386;&#x53F2;&#x6D88;&#x606F;&#x529F;&#x80FD;</span><a href="#&#x589E;&#x52A0;&#x5386;&#x53F2;&#x6D88;&#x606F;&#x529F;&#x80FD;" class="header-anchor">#</a></h1>
+<p>&#x5B8C;&#x6210; file_history_store.py</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">Sequence</span></span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">from</span> langchain_core.chat_history <span class="keyword">import</span> BaseChatMessageHistory</span><br><span class="line"><span class="keyword">from</span> langchain_core.messages <span class="keyword">import</span> BaseMessage, messages_to_dict, messages_from_dict</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_history</span>(<span class="params">session_id</span>):</span><br><span class="line">    <span class="keyword">return</span> FileChatMessageHistory(session_id,<span class="string">&quot;./chat_history&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">FileChatMessageHistory</span>(<span class="title class_ inherited__">BaseChatMessageHistory</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, session_id, storage_path</span>):</span><br><span class="line">        <span class="variable language_">self</span>.session_id = session_id  <span class="comment"># &#x4F1A;&#x8BDD;id</span></span><br><span class="line">        <span class="variable language_">self</span>.storage_path = storage_path  <span class="comment"># &#x4E0D;&#x540C;&#x4F1A;&#x8BDD;id&#x7684;&#x5B58;&#x50A8;&#x6587;&#x4EF6;&#x6240;&#x5728;&#x7684;&#x6587;&#x4EF6;&#x5939;&#x8DEF;&#x5F84;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># &#x5B8C;&#x6574;&#x7684;&#x6587;&#x4EF6;&#x8DEF;&#x5F84;</span></span><br><span class="line">        <span class="variable language_">self</span>.file_path = os.path.join(<span class="variable language_">self</span>.storage_path, <span class="variable language_">self</span>.session_id)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># &#x786E;&#x4FDD;&#x6587;&#x4EF6;&#x5939;&#x662F;&#x5B58;&#x5728;&#x7684;</span></span><br><span class="line">        os.makedirs(os.path.dirname(<span class="variable language_">self</span>.file_path), exist_ok=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">add_messages</span>(<span class="params">self, messages: <span class="type">Sequence</span>[BaseMessage]</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        all_messages = <span class="built_in">list</span>(<span class="variable language_">self</span>.messages)</span><br><span class="line">        all_messages.extend(messages)</span><br><span class="line"></span><br><span class="line">        new_messages = [messages_to_dict(message) <span class="keyword">for</span> message <span class="keyword">in</span> all_messages]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(<span class="variable language_">self</span>.file_path, <span class="string">&quot;w&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">            json.dump(new_messages, f)</span><br><span class="line"></span><br><span class="line"><span class="meta">    @property </span><span class="comment"># &#x5C06; messages &#x65B9;&#x6CD5;&#x53D8;&#x6210;&#x6210;&#x5458;&#x53D8;&#x91CF;&#x5C5E;&#x6027;&#x4F7F;&#x7528;</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">messages</span> (<span class="variable language_">self</span>) -&gt; <span class="built_in">list</span>[BaseMessage]:</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">with</span> <span class="built_in">open</span>(<span class="variable language_">self</span>.file_path, <span class="string">&quot;r&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">                messages_data = json.load(f)</span><br><span class="line">                <span class="keyword">return</span> messages_from_dict(messages_data)</span><br><span class="line">        <span class="keyword">except</span> FileNotFoundError:</span><br><span class="line">            <span class="keyword">return</span> []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">clear</span>(<span class="params">self</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(<span class="variable language_">self</span>.file_path, <span class="string">&quot;w&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">            json.dump([], f)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>&#x5728; <a target="_blank" rel="noopener" href="http://rag.py">rag.py</a> &#x91CC;&#x65B0;&#x589E;&#x4E00;&#x4E9B;&#x5185;&#x5BB9;</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> operator <span class="keyword">import</span> itemgetter</span><br><span class="line"><span class="keyword">from</span> langchain_community.chat_models <span class="keyword">import</span> ChatTongyi</span><br><span class="line"><span class="keyword">from</span> langchain_community.embeddings <span class="keyword">import</span> DashScopeEmbeddings</span><br><span class="line"><span class="keyword">from</span> langchain_core.output_parsers <span class="keyword">import</span> StrOutputParser</span><br><span class="line"><span class="keyword">from</span> langchain_core.prompts <span class="keyword">import</span> ChatPromptTemplate, MessagesPlaceholder</span><br><span class="line"><span class="keyword">from</span> langchain_core.runnables <span class="keyword">import</span> RunnablePassthrough, RunnableWithMessageHistory, RunnableLambda</span><br><span class="line"><span class="keyword">from</span> vector_stores <span class="keyword">import</span> VectorStoreService</span><br><span class="line"><span class="keyword">from</span> file_history_store <span class="keyword">import</span> get_history</span><br><span class="line"><span class="keyword">from</span> langchain_core.documents <span class="keyword">import</span> Document</span><br><span class="line"><span class="keyword">import</span> config_data</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">print_promot</span>(<span class="params">prompt</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;=&quot;</span> * <span class="number">20</span>)</span><br><span class="line">    <span class="built_in">print</span>(prompt.to_string())</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;=&quot;</span> * <span class="number">20</span>)</span><br><span class="line">    <span class="keyword">return</span> prompt</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">RagService</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="variable language_">self</span>.vector_service = VectorStoreService(embedding=DashScopeEmbeddings(</span><br><span class="line">            model=config_data.embedding_model_name,</span><br><span class="line">            dashscope_api_key=config_data.api_key))</span><br><span class="line">        <span class="variable language_">self</span>.prompt_template = ChatPromptTemplate.from_messages(</span><br><span class="line">            [</span><br><span class="line">                (<span class="string">&quot;system&quot;</span>, <span class="string">&quot;&#x4EE5;&#x6211;&#x63D0;&#x4F9B;&#x7684;&#x5DF2;&#x77E5;&#x53C2;&#x8003;&#x8D44;&#x6599;&#x4E3A;&#x4E3B;&#xFF0C;&#x7B80;&#x6D01;&#x548C;&#x4E13;&#x4E1A;&#x5730;&#x56DE;&#x7B54;&#x7528;&#x6237;&#x7684;&#x95EE;&#x9898;&#x3002;&#x53C2;&#x8003;&#x8D44;&#x6599;&#xFF1A;{context}&quot;</span>),</span><br><span class="line">                (<span class="string">&quot;system&quot;</span>, <span class="string">&quot;&#x7528;&#x6237;&#x7684;&#x5BF9;&#x8BDD;&#x5386;&#x53F2;&#x8BB0;&#x5F55;&#x5982;&#x4E0B;&#xFF1A;&quot;</span>),</span><br><span class="line">                MessagesPlaceholder(<span class="string">&quot;history&quot;</span>),</span><br><span class="line">                (<span class="string">&quot;user&quot;</span>, <span class="string">&quot;&#x8BF7;&#x56DE;&#x7B54;&#x7528;&#x6237;&#x63D0;&#x95EE;&#xFF1A;{input}&quot;</span>)</span><br><span class="line">            ]</span><br><span class="line">        )</span><br><span class="line">        <span class="variable language_">self</span>.chat_model = ChatTongyi(model=config_data.chat_model_name, api_key=config_data.api_key)</span><br><span class="line">        <span class="variable language_">self</span>.chain = <span class="variable language_">self</span>.__get_chain()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__get_chain</span>(<span class="params">self</span>):</span><br><span class="line">        retriever = <span class="variable language_">self</span>.vector_service.get_retriever()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">format_document</span>(<span class="params">docs: <span class="built_in">list</span>[Document]</span>):</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> docs:</span><br><span class="line">                <span class="keyword">return</span> <span class="string">&quot;&#x65E0;&#x76F8;&#x5173;&#x53C2;&#x8003;&#x8D44;&#x6599;&quot;</span></span><br><span class="line"></span><br><span class="line">            formatted_str = <span class="string">&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> doc <span class="keyword">in</span> docs:</span><br><span class="line">                formatted_str += <span class="string">f&quot;&#x6587;&#x6863;&#x7247;&#x6BB5;&#xFF1A;<span class="subst">{doc.page_content}</span>\n&#x6587;&#x6863;&#x5143;&#x6570;&#x636E;<span class="subst">{doc.metadata}</span>\n\n&quot;</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> formatted_str</span><br><span class="line"></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">format_for_retriever</span>(<span class="params">value: <span class="built_in">dict</span></span>) -&gt; <span class="built_in">str</span>:</span><br><span class="line">            <span class="keyword">return</span> value[<span class="string">&quot;input&quot;</span>]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">format_for_prompt_template</span>(<span class="params">value</span>):</span><br><span class="line">            new_value = {}</span><br><span class="line">            new_value[<span class="string">&quot;input&quot;</span>] = value[<span class="string">&quot;input&quot;</span>][<span class="string">&quot;input&quot;</span>]</span><br><span class="line">            new_value[<span class="string">&quot;context&quot;</span>] = value[<span class="string">&quot;context&quot;</span>]</span><br><span class="line">            new_value[<span class="string">&quot;history&quot;</span>] = value[<span class="string">&quot;input&quot;</span>][<span class="string">&quot;history&quot;</span>]</span><br><span class="line">            <span class="keyword">return</span> new_value</span><br><span class="line"></span><br><span class="line">        chain = (</span><br><span class="line">                {</span><br><span class="line">                    <span class="string">&quot;input&quot;</span>: RunnablePassthrough(),</span><br><span class="line">                    <span class="string">&quot;context&quot;</span>: RunnableLambda(format_for_retriever) | retriever | format_document</span><br><span class="line">                } | RunnableLambda(</span><br><span class="line">            format_for_prompt_template) | <span class="variable language_">self</span>.prompt_template | print_promot | <span class="variable language_">self</span>.chat_model | StrOutputParser()</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        core_chain = (</span><br><span class="line">                {</span><br><span class="line">                    <span class="comment"># &#x63D0;&#x53D6; context: &#x53EA;&#x53D6; &quot;input&quot; &#x5B57;&#x6BB5;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#x4F20;&#x7ED9; retriever</span></span><br><span class="line">                    <span class="string">&quot;context&quot;</span>: itemgetter(<span class="string">&quot;input&quot;</span>) | retriever | format_document,</span><br><span class="line">                    <span class="comment"># &#x63D0;&#x53D6; input: &#x900F;&#x4F20; &quot;input&quot; &#x5B57;&#x6BB5;</span></span><br><span class="line">                    <span class="string">&quot;input&quot;</span>: itemgetter(<span class="string">&quot;input&quot;</span>),</span><br><span class="line">                    <span class="comment"># &#x63D0;&#x53D6; history: &#x900F;&#x4F20; &quot;history&quot; &#x5B57;&#x6BB5; (&#x7531; RunnableWithMessageHistory &#x6CE8;&#x5165;)</span></span><br><span class="line">                    <span class="string">&quot;history&quot;</span>: itemgetter(<span class="string">&quot;history&quot;</span>),</span><br><span class="line">                }</span><br><span class="line">                | <span class="variable language_">self</span>.prompt_template</span><br><span class="line">                | print_promot</span><br><span class="line">                | <span class="variable language_">self</span>.chat_model</span><br><span class="line">                | StrOutputParser()</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        conversion_chain = RunnableWithMessageHistory(</span><br><span class="line">            chain,</span><br><span class="line">            get_history,</span><br><span class="line">            input_messages_key=<span class="string">&quot;input&quot;</span>,</span><br><span class="line">            history_messages_key=<span class="string">&quot;history&quot;</span>,</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> conversion_chain</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    session_config = {</span><br><span class="line">        <span class="string">&quot;configurable&quot;</span>: {</span><br><span class="line">            <span class="string">&quot;session_id&quot;</span>: <span class="string">&quot;user_001&quot;</span></span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    res = RagService().chain.invoke({<span class="string">&quot;input&quot;</span>: <span class="string">&quot;&#x300A;&#x8BC6;&#x8D28;&#x5B58;&#x5728;&#x300B;&#x4EC0;&#x4E48;&#x65F6;&#x5019;&#x4E0A;&#x67B6;stream&quot;</span>}, session_config)</span><br><span class="line">    <span class="built_in">print</span>(res)</span><br></pre></td></tr></table></figure>
+<h1><span id="&#x804A;&#x5929;&#x754C;&#x9762;">&#x804A;&#x5929;&#x754C;&#x9762;</span><a href="#&#x804A;&#x5929;&#x754C;&#x9762;" class="header-anchor">#</a></h1>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> rag <span class="keyword">import</span> RagService</span><br><span class="line"><span class="keyword">import</span> streamlit <span class="keyword">as</span> st</span><br><span class="line"><span class="keyword">from</span> streamlit <span class="keyword">import</span> session_state</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> config_data</span><br><span class="line"></span><br><span class="line"><span class="comment"># &#x6807;&#x9898;</span></span><br><span class="line">st.title(<span class="string">&quot;&#x667A;&#x80FD;&#x95EE;&#x7B54;&quot;</span>)</span><br><span class="line">st.divider()  <span class="comment"># &#x5206;&#x9694;&#x7B26;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># &#x5728;&#x9875;&#x9762;&#x6700;&#x4E0B;&#x65B9;&#x63D0;&#x4F9B;&#x7528;&#x6237;&#x8F93;&#x5165;&#x680F;</span></span><br><span class="line">prompt = st.chat_input()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="string">&quot;message&quot;</span> <span class="keyword">not</span> <span class="keyword">in</span> session_state:</span><br><span class="line">    st.session_state[<span class="string">&quot;message&quot;</span>] = [{<span class="string">&quot;role&quot;</span>: <span class="string">&quot;assistant&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;&#x4F60;&#x597D;&#xFF0C;&#x6709;&#x4EC0;&#x4E48;&#x53EF;&#x4EE5;&#x5E2E;&#x52A9;&#x4F60;&#xFF1F;&quot;</span>}]</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="string">&quot;rag&quot;</span> <span class="keyword">not</span> <span class="keyword">in</span> session_state:</span><br><span class="line">    st.session_state[<span class="string">&quot;rag&quot;</span>] = RagService()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> message <span class="keyword">in</span> st.session_state[<span class="string">&quot;message&quot;</span>]:</span><br><span class="line">    st.chat_message(message[<span class="string">&quot;role&quot;</span>]).write(message[<span class="string">&quot;content&quot;</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> prompt:</span><br><span class="line">    <span class="comment"># &#x5728;&#x9875;&#x9762;&#x8F93;&#x51FA;&#x7528;&#x6237;&#x8F93;&#x5165;</span></span><br><span class="line">    st.chat_message(<span class="string">&quot;user&quot;</span>).write(prompt)</span><br><span class="line">    st.session_state[<span class="string">&quot;message&quot;</span>].append({<span class="string">&quot;role&quot;</span>: <span class="string">&quot;user&quot;</span>, <span class="string">&quot;content&quot;</span>: prompt})</span><br><span class="line"></span><br><span class="line">    ai_res_list = []</span><br><span class="line">    <span class="keyword">with</span> st.spinner(<span class="string">&quot;&#x601D;&#x8003;&#x4E2D;...&quot;</span>):</span><br><span class="line">        time.sleep(<span class="number">1</span>)</span><br><span class="line">        res_stream = st.session_state[<span class="string">&quot;rag&quot;</span>].chain.stream({<span class="string">&quot;input&quot;</span>: prompt}, config_data.session_config)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">capture</span>(<span class="params">generatoor,cache_list</span>):</span><br><span class="line">            <span class="keyword">for</span> chunk <span class="keyword">in</span> generatoor:</span><br><span class="line">                cache_list.append(chunk)</span><br><span class="line">                <span class="keyword">yield</span> chunk</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        st.chat_message(<span class="string">&quot;assistant&quot;</span>).write_stream(capture(res_stream, ai_res_list))</span><br><span class="line">        st.session_state[<span class="string">&quot;message&quot;</span>].append({<span class="string">&quot;role&quot;</span>: <span class="string">&quot;assistant&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;&quot;</span>.join(ai_res_list)})</span><br></pre></td></tr></table></figure>
+<p>&#x6548;&#x679C;&#x5C55;&#x793A;&#xFF1A;</p>
+<img src="/2026/04/03/%E5%AE%9E%E7%8E%B0%EF%BC%9A%E5%A4%A7%E6%A8%A1%E5%9E%8BRAG%E4%B8%8EAgent%E6%99%BA%E8%83%BD%E4%BD%93%EF%BC%88%E4%BA%8C%EF%BC%89/image-2.png" class title="alt text">
+<p>&#x5230;&#x6B64;&#xFF0C;&#x4E00;&#x4E2A;&#x7B80;&#x5355;&#x7684;&#x8C03;&#x7528;&#x4E86; rag &#x7684;&#x5927;&#x6A21;&#x578B;&#x5C31;&#x5236;&#x4F5C;&#x597D;&#x4E86;&#x3002;</p>
+<h1><span id="&#x53C2;&#x8003;&#x5185;&#x5BB9;">&#x53C2;&#x8003;&#x5185;&#x5BB9;</span><a href="#&#x53C2;&#x8003;&#x5185;&#x5BB9;" class="header-anchor">#</a></h1>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1yjz5BLEoY?spm_id_from=333.788.videopod.episodes&amp;vd_source=5ddeed13107206194ba5b740648582d3&amp;p=51">https://www.bilibili.com/video/BV1yjz5BLEoY?spm_id_from=333.788.videopod.episodes&amp;vd_source=5ddeed13107206194ba5b740648582d3&amp;p=51</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2026/04/02/%E5%A6%82%E4%BD%95AI%E7%94%9F%E5%9B%BE%E5%B7%A5%E5%85%B7%E7%94%9F%E6%88%90%E6%83%B3%E8%A6%81%E7%9A%84%E5%9B%BE%E7%89%87/" rel="prev" title="如何AI生图工具生成想要的图片">
+      <i class="fa fa-chevron-left"></i> 如何AI生图工具生成想要的图片
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2026/04/04/%E5%AE%9E%E7%8E%B0%EF%BC%9A%E5%A4%A7%E6%A8%A1%E5%9E%8BRAG%E4%B8%8EAgent%E6%99%BA%E8%83%BD%E4%BD%93%EF%BC%88%E4%B8%89%EF%BC%89/" rel="next" title="实现：大模型RAG与Agent智能体（三）">
+      实现：大模型RAG与Agent智能体（三） <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">在线流程思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">vector_stores.py</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">#</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">增加历史消息功能</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">聊天界面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">参考内容</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ITTT"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">ITTT</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/originone494" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;originone494" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:2531293780@qq.com" title="E-Mail → mailto:2531293780@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ITTT</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">128k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:52</span>
+</div>
+
+<!-- 网站运行时间的设置 -->
+<span id="timeDate">载入天数...</span>
+<span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("12/29/2025 17:04:14"); //此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒.";
+    }
+setInterval("createtime()",250);
+</script>
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/js/fix-toc.js"></script>
+</body>
+</html>
