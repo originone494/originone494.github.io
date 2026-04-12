@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"originone494.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":300,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"Available values":"default | flat | mac","style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="&#x5B89;&#x88C5;# &#x5728; cmd &#x4F7F;&#x7528;&#x6307;&#x4EE4; pip install -U deepeval &#x81EA;&#x5B9A;&#x4E49;&#x5927;&#x6A21;&#x578B;# &#x5982;&#x679C;&#x4F60;&#x6709; OpenAI &#x7684; API &#x7684;&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何用deepeval来评估你的RAG大模型">
+<meta property="og:url" content="https://originone494.github.io/2026/04/12/%E5%A6%82%E4%BD%95%E7%94%A8deepeval%E6%9D%A5%E8%AF%84%E4%BC%B0%E4%BD%A0%E7%9A%84RAG%E5%A4%A7%E6%A8%A1%E5%9E%8B/index.html">
+<meta property="og:site_name" content="OneBlog">
+<meta property="og:description" content="&#x5B89;&#x88C5;# &#x5728; cmd &#x4F7F;&#x7528;&#x6307;&#x4EE4; pip install -U deepeval &#x81EA;&#x5B9A;&#x4E49;&#x5927;&#x6A21;&#x578B;# &#x5982;&#x679C;&#x4F60;&#x6709; OpenAI &#x7684; API &#x7684;&amp;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-04-12T14:17:36.000Z">
+<meta property="article:modified_time" content="2026-04-12T14:41:31.517Z">
+<meta property="article:author" content="ITTT">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://originone494.github.io/2026/04/12/%E5%A6%82%E4%BD%95%E7%94%A8deepeval%E6%9D%A5%E8%AF%84%E4%BC%B0%E4%BD%A0%E7%9A%84RAG%E5%A4%A7%E6%A8%A1%E5%9E%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>如何用deepeval来评估你的RAG大模型 | OneBlog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">OneBlog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">38</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://originone494.github.io/2026/04/12/%E5%A6%82%E4%BD%95%E7%94%A8deepeval%E6%9D%A5%E8%AF%84%E4%BC%B0%E4%BD%A0%E7%9A%84RAG%E5%A4%A7%E6%A8%A1%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ITTT">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="OneBlog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          如何用deepeval来评估你的RAG大模型
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2026-04-12 22:17:36 / 修改时间：22:41:31" itemprop="dateCreated datePublished" datetime="2026-04-12T22:17:36+08:00">2026-04-12</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" itemprop="url" rel="index"><span itemprop="name">人工智能</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>11 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1><span id="&#x5B89;&#x88C5;">&#x5B89;&#x88C5;</span><a href="#&#x5B89;&#x88C5;" class="header-anchor">#</a></h1>
+<p>&#x5728; cmd &#x4F7F;&#x7528;&#x6307;&#x4EE4; <code>pip install -U deepeval</code></p>
+<h1><span id="&#x81EA;&#x5B9A;&#x4E49;&#x5927;&#x6A21;&#x578B;">&#x81EA;&#x5B9A;&#x4E49;&#x5927;&#x6A21;&#x578B;</span><a href="#&#x81EA;&#x5B9A;&#x4E49;&#x5927;&#x6A21;&#x578B;" class="header-anchor">#</a></h1>
+<p>&#x5982;&#x679C;&#x4F60;&#x6709; OpenAI &#x7684; API &#x7684;&#x8BDD;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x975E;&#x5E38;&#x65B9;&#x4FBF;&#x5730;&#x8C03;&#x7528; OpenAI &#x3002;</p>
+<p>&#x4F46;&#x6211;&#x6CA1;&#x6709;&#xFF0C;&#x6240;&#x4EE5;&#x4E0B;&#x9762;&#x4F1A;&#x8BB2;&#x8BB2;&#x5982;&#x4F55;&#x5728; deepeval &#x4F7F;&#x7528;&#x81EA;&#x5B9A;&#x4E49;&#x7684;&#x5927;&#x6A21;&#x578B;&#x3002;</p>
+<p>&#x53EF;&#x4EE5;&#x4EE5;&#x4E0B;&#x9762;&#x8FD9;&#x6BB5;&#x4EE3;&#x7801;&#x4E3A;&#x6A21;&#x677F;&#xFF0C;&#x7EE7;&#x627F; DeepEvalBaseLLM &#x7C7B;&#x6765;&#x81EA;&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x5927;&#x6A21;&#x578B;&#x3002;</p>
+<p>generate &#x51FD;&#x6570;&#x53EF;&#x4EE5;&#x6839;&#x636E;&#x9700;&#x8981;&#x8FDB;&#x884C;&#x4FEE;&#x6539;&#xFF0C;&#x6BD4;&#x5982;&#x5982;&#x679C;&#x5927;&#x6A21;&#x578B;&#x9700;&#x8981;&#x8FD4;&#x56DE;&#x4E25;&#x683C;&#x7684; json &#x5F62;&#x5F0F;&#x7684;&#x4FE1;&#x606F;&#xFF0C;&#x90A3;&#x4E48;&#x5C31;&#x9700;&#x8981;&#x5728; generate &#x4E2D;&#x8FDB;&#x884C;&#x4FEE;&#x6539;&#x3002;</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> openai</span><br><span class="line"><span class="keyword">from</span> deepeval.models.base_model <span class="keyword">import</span> DeepEvalBaseLLM</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> config_data</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Tongyi</span>(<span class="title class_ inherited__">DeepEvalBaseLLM</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;&#x7528;&#x4E8E; DeepEval &#x8BC4;&#x4F30;&#x7684;&#x963F;&#x91CC;&#x4E91;&#x767E;&#x70BC;&#x5E73;&#x53F0;&#x901A;&#x4E49;&#x5343;&#x95EE;&#x6A21;&#x578B;&#x81EA;&#x5B9A;&#x4E49;&#x7C7B;&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="comment"># &#x521D;&#x59CB;&#x5316;&#x6A21;&#x578B;&#x540D;&#x79F0;&#x548C; API &#x5BC6;&#x94A5;</span></span><br><span class="line">        <span class="variable language_">self</span>.model_name = config_data.chat_model_name</span><br><span class="line">        <span class="variable language_">self</span>.api_key = config_data.api_key</span><br><span class="line">        <span class="comment"># &#x914D;&#x7F6E; OpenAI &#x5BA2;&#x6237;&#x7AEF;&#xFF0C;&#x4F7F;&#x5176;&#x6307;&#x5411;&#x963F;&#x91CC;&#x4E91;&#x767E;&#x70BC;&#x5E73;&#x53F0;&#x7684;&#x517C;&#x5BB9;&#x7AEF;&#x70B9;</span></span><br><span class="line">        <span class="variable language_">self</span>.client = openai.OpenAI(</span><br><span class="line">            api_key=<span class="variable language_">self</span>.api_key,</span><br><span class="line">            base_url=config_data.api_url</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">load_model</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;&#x6B64;&#x65B9;&#x6CD5;&#x9700;&#x8FD4;&#x56DE;&#x6A21;&#x578B;&#x5BF9;&#x8C61;&#x3002;&#x5BF9;&#x4E8E; API &#x8C03;&#x7528;&#xFF0C;&#x901A;&#x5E38;&#x8FD4;&#x56DE;&#x5BA2;&#x6237;&#x7AEF;&#x5B9E;&#x4F8B;&#x672C;&#x8EAB;&#x3002;&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.client</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">generate</span>(<span class="params">self, prompt: <span class="built_in">str</span></span>) -&gt; <span class="built_in">str</span>:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;&#x540C;&#x6B65;&#x751F;&#x6210;&#x65B9;&#x6CD5;&#x3002;&#x6838;&#x5FC3;&#x662F;&#x8C03;&#x7528;&#x6A21;&#x578B; API &#x5E76;&#x63D0;&#x53D6;&#x7EAF;&#x6587;&#x672C;&#x54CD;&#x5E94;&#x3002;&quot;&quot;&quot;</span></span><br><span class="line">        chat_model = <span class="variable language_">self</span>.load_model()</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            response = chat_model.chat.completions.create(</span><br><span class="line">                model=<span class="variable language_">self</span>.model_name,</span><br><span class="line">                messages=[{<span class="string">&quot;role&quot;</span>: <span class="string">&quot;user&quot;</span>, <span class="string">&quot;content&quot;</span>: prompt}]</span><br><span class="line">            )</span><br><span class="line">            <span class="comment"># &#x63D0;&#x53D6;&#x6A21;&#x578B;&#x8FD4;&#x56DE;&#x7684;&#x6587;&#x672C;&#x5185;&#x5BB9;</span></span><br><span class="line">            <span class="keyword">return</span> response.choices[<span class="number">0</span>].message.content</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;&#x8C03;&#x7528;&#x6A21;&#x578B;&#x65F6;&#x53D1;&#x751F;&#x9519;&#x8BEF;&#xFF1A;<span class="subst">{e}</span>&quot;</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">a_generate</span>(<span class="params">self, prompt: <span class="built_in">str</span></span>) -&gt; <span class="built_in">str</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.generate(prompt)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_model_name</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> config_data.chat_model_name</span><br></pre></td></tr></table></figure>
+<p>&#x6211;&#x4EEC;&#x4E5F;&#x53EF;&#x4EE5;&#x81EA;&#x5B9A;&#x4E49;&#x6587;&#x672C;&#x5D4C;&#x5165;&#x6A21;&#x578B;&#xFF0C;&#x4E0D;&#x591F;&#xFF0C;&#x6587;&#x672C;&#x5D4C;&#x5165;&#x6A21;&#x578B;&#x5728;&#x4E4B;&#x540E;&#x7684;&#x5185;&#x5BB9;&#x4E2D;&#x6CA1;&#x6709;&#x7528;&#x5230;&#xFF0C;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x3002;</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">List</span></span><br><span class="line"><span class="keyword">from</span> openai <span class="keyword">import</span> OpenAI</span><br><span class="line"><span class="keyword">from</span> deepeval.models.base_model <span class="keyword">import</span> DeepEvalBaseEmbeddingModel</span><br><span class="line"><span class="keyword">import</span> config_data</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">DashScopeEmbeddingModel</span>(<span class="title class_ inherited__">DeepEvalBaseEmbeddingModel</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;DeepEval &#x81EA;&#x5B9A;&#x4E49;&#x5D4C;&#x5165;&#x6A21;&#x578B; - &#x963F;&#x91CC;&#x4E91;&#x767E;&#x70BC; text-embedding-v4&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, dimensions: <span class="built_in">int</span> = <span class="number">1024</span></span>):</span><br><span class="line">        <span class="comment"># &#x521D;&#x59CB;&#x5316; OpenAI &#x5BA2;&#x6237;&#x7AEF;&#xFF0C;&#x6307;&#x5411;&#x963F;&#x91CC;&#x4E91;&#x767E;&#x70BC;&#x7684;&#x517C;&#x5BB9;&#x7AEF;&#x70B9;</span></span><br><span class="line">        <span class="variable language_">self</span>.client = OpenAI(</span><br><span class="line">            api_key= config_data.api_key,</span><br><span class="line">            base_url=config_data.api_url</span><br><span class="line">        )</span><br><span class="line">        <span class="variable language_">self</span>.model_name = config_data.embedding_model_name</span><br><span class="line">        <span class="variable language_">self</span>.dimensions = dimensions</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">load_model</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;&#x8FD4;&#x56DE;&#x6A21;&#x578B;&#x5BA2;&#x6237;&#x7AEF;&#x5B9E;&#x4F8B;&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.client</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">embed_text</span>(<span class="params">self, text: <span class="built_in">str</span></span>) -&gt; <span class="type">List</span>[<span class="built_in">float</span>]:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;&#x751F;&#x6210;&#x5355;&#x4E2A;&#x6587;&#x672C;&#x7684;&#x5411;&#x91CF;&quot;&quot;&quot;</span></span><br><span class="line">        response = <span class="variable language_">self</span>.client.embeddings.create(</span><br><span class="line">            model=<span class="variable language_">self</span>.model_name,</span><br><span class="line">            <span class="built_in">input</span>=text,</span><br><span class="line">            dimensions=<span class="variable language_">self</span>.dimensions,  <span class="comment"># &#x6307;&#x5B9A;&#x5411;&#x91CF;&#x7EF4;&#x5EA6;</span></span><br><span class="line">            encoding_format=<span class="string">&quot;float&quot;</span></span><br><span class="line">        )</span><br><span class="line">        <span class="keyword">return</span> response.data[<span class="number">0</span>].embedding</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">embed_texts</span>(<span class="params">self, texts: <span class="type">List</span>[<span class="built_in">str</span>]</span>) -&gt; <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">float</span>]]:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;&#x6279;&#x91CF;&#x751F;&#x6210;&#x591A;&#x4E2A;&#x6587;&#x672C;&#x7684;&#x5411;&#x91CF;&#xFF0C;&#x63D0;&#x9AD8;&#x6548;&#x7387;&quot;&quot;&quot;</span></span><br><span class="line">        response = <span class="variable language_">self</span>.client.embeddings.create(</span><br><span class="line">            model=<span class="variable language_">self</span>.model_name,</span><br><span class="line">            <span class="built_in">input</span>=texts,</span><br><span class="line">            dimensions=<span class="variable language_">self</span>.dimensions,  <span class="comment"># &#x6307;&#x5B9A;&#x5411;&#x91CF;&#x7EF4;&#x5EA6;</span></span><br><span class="line">            encoding_format=<span class="string">&quot;float&quot;</span></span><br><span class="line">        )</span><br><span class="line">        <span class="keyword">return</span> [item.embedding <span class="keyword">for</span> item <span class="keyword">in</span> response.data]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">a_embed_text</span>(<span class="params">self, text: <span class="built_in">str</span></span>) -&gt; <span class="type">List</span>[<span class="built_in">float</span>]:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;&#x5F02;&#x6B65;&#x751F;&#x6210;&#x5355;&#x4E2A;&#x6587;&#x672C;&#x7684;&#x5411;&#x91CF;&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.embed_text(text)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">a_embed_texts</span>(<span class="params">self, texts: <span class="type">List</span>[<span class="built_in">str</span>]</span>) -&gt; <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">float</span>]]:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;&#x5F02;&#x6B65;&#x6279;&#x91CF;&#x751F;&#x6210;&#x591A;&#x4E2A;&#x6587;&#x672C;&#x7684;&#x5411;&#x91CF;&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.embed_texts(texts)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_model_name</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;&#x8FD4;&#x56DE;&#x6A21;&#x578B;&#x540D;&#x79F0;&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;DashScope-<span class="subst">{self.model_name}</span>&quot;</span></span><br></pre></td></tr></table></figure>
+<h1><span id="&#x8BC4;&#x4F30;&#x68C0;&#x7D22;">&#x8BC4;&#x4F30;&#x68C0;&#x7D22;</span><a href="#&#x8BC4;&#x4F30;&#x68C0;&#x7D22;" class="header-anchor">#</a></h1>
+<p>&#x8BC4;&#x4F30;&#x68C0;&#x7D22;&#x4E5F;&#x5C31;&#x662F;&#x770B;&#x4F60;&#x7684;&#x68C0;&#x7D22;&#x7B56;&#x7565;&#x662F;&#x5426;&#x5408;&#x7406;&#xFF0C;&#x662F;&#x5426;&#x80FD;&#x4ECE;&#x77E5;&#x8BC6;&#x5E93;&#x4E2D;&#x68C0;&#x7D22;&#x5230;&#x548C;&#x95EE;&#x9898;&#x76F8;&#x5173;&#x7684;&#x6587;&#x672C;&#x5757;&#x3002;</p>
+<p>&#x4E3B;&#x8981;&#x4ECE;&#x4E09;&#x4E2A;&#x65B9;&#x9762;&#x8BC4;&#x4F30;&#x68C0;&#x7D22;&#x3002;</p>
+<p>Contextual Precision&#xFF08;&#x4E0A;&#x4E0B;&#x6587;&#x7CBE;&#x786E;&#x6027;&#xFF09;&#xFF1A;&#x68C0;&#x7D22;&#x5230;&#x7684;&#x6587;&#x6863;&#x7247;&#x6BB5;&#x4E2D;&#xFF0C;&#x771F;&#x6B63;&#x4E0E;&#x95EE;&#x9898;&#x76F8;&#x5173;&#x7684;&#x90A3;&#x4E9B;&#x662F;&#x5426;&#x6392;&#x5728;&#x4E86;&#x524D;&#x9762;&#x3002;</p>
+<p>Contextual Recall&#xFF08;&#x4E0A;&#x4E0B;&#x6587;&#x53EC;&#x56DE;&#x6027;&#xFF09;&#xFF1A;&#x6807;&#x51C6;&#x7B54;&#x6848;&#xFF08;&#x6216;&#x771F;&#x5B9E;&#x7B54;&#x6848;&#xFF09;&#x4E2D;&#x7684;&#x4FE1;&#x606F;&#xFF0C;&#x6709;&#x591A;&#x5C11;&#x80FD;&#x5728;&#x68C0;&#x7D22;&#x5230;&#x7684;&#x6587;&#x6863;&#x7247;&#x6BB5;&#x4E2D;&#x627E;&#x5230;&#x3002;</p>
+<p>Contextual Relevancy&#xFF08;&#x4E0A;&#x4E0B;&#x6587;&#x76F8;&#x5173;&#x6027;&#xFF09;&#xFF1A;&#x68C0;&#x7D22;&#x5230;&#x7684;&#x6587;&#x6863;&#x7247;&#x6BB5;&#x6574;&#x4F53;&#x4E0A;&#x662F;&#x5426;&#x76F4;&#x63A5;&#x56DE;&#x7B54;&#x6216;&#x7D27;&#x6263;&#x95EE;&#x9898;&#xFF0C;&#x4E0D;&#x5305;&#x542B;&#x65E0;&#x5173;&#x5197;&#x4F59;&#x4FE1;&#x606F;&#x3002;</p>
+<p>&#x901A;&#x8FC7;&#x4E0B;&#x9762;&#x8FD9;&#x6BB5;&#x4EE3;&#x7801;&#xFF0C;&#x53EF;&#x4EE5;&#x8FDB;&#x884C; RAG &#x68C0;&#x7D22;&#x7684;&#x8BC4;&#x4F30;&#x3002;</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> deepeval.test_case <span class="keyword">import</span> LLMTestCase</span><br><span class="line"><span class="keyword">from</span> deepeval.metrics <span class="keyword">import</span> ContextualRelevancyMetric, ContextualRecallMetric, ContextualPrecisionMetric</span><br><span class="line"><span class="keyword">from</span> deepeval <span class="keyword">import</span> evaluate</span><br><span class="line"><span class="keyword">from</span> rag <span class="keyword">import</span> RagService</span><br><span class="line"><span class="keyword">import</span> config_data</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> chat_tongyi_deepval <span class="keyword">import</span> Tongyi</span><br><span class="line"></span><br><span class="line">df = pd.read_excel(<span class="string">&quot;./data/val.xlsx&quot;</span>)</span><br><span class="line">sample_df = df.sample(n=<span class="built_in">min</span>(<span class="number">1</span>, <span class="built_in">len</span>(df)), random_state=<span class="number">42</span>)</span><br><span class="line">gold_answer = sample_df[<span class="string">&quot;Answer&quot;</span>].astype(<span class="built_in">str</span>).iloc[<span class="number">0</span>]</span><br><span class="line">question = sample_df[<span class="string">&quot;Question&quot;</span>].astype(<span class="built_in">str</span>).iloc[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># &#x521D;&#x59CB;&#x5316;&#x6A21;&#x578B;&#x548C;&#x6307;&#x6807;</span></span><br><span class="line">model = Tongyi()</span><br><span class="line">relevancy = ContextualRelevancyMetric(model=model)</span><br><span class="line">recall = ContextualRecallMetric(model=model)</span><br><span class="line">precision = ContextualPrecisionMetric(model=model)</span><br><span class="line"></span><br><span class="line"><span class="comment"># &#x521D;&#x59CB;&#x5316; RAG &#x670D;&#x52A1;</span></span><br><span class="line">rag = RagService(collection_name=config_data.evaluate_collection_name, per_dir=config_data.evaluate_dir)</span><br><span class="line"></span><br><span class="line"><span class="comment"># &#x68C0;&#x7D22;&#x548C;&#x751F;&#x6210;</span></span><br><span class="line">retrieved_docs = rag.vector_service.vector_store.similarity_search(query=question, k=config_data.similarity_threshold)</span><br><span class="line">retrieval_contexts = [doc.page_content <span class="keyword">for</span> doc <span class="keyword">in</span> retrieved_docs]</span><br><span class="line">response = rag.test_chain.invoke({<span class="string">&quot;input&quot;</span>: question})</span><br><span class="line"></span><br><span class="line"><span class="comment"># &#x6784;&#x5EFA;&#x5355;&#x4E2A;&#x6D4B;&#x8BD5;&#x7528;&#x4F8B;</span></span><br><span class="line">test_case = LLMTestCase(</span><br><span class="line">    <span class="built_in">input</span>=question,</span><br><span class="line">    actual_output=<span class="built_in">str</span>(response),</span><br><span class="line">    retrieval_context=retrieval_contexts,</span><br><span class="line">    expected_output=gold_answer   <span class="comment"># &#x7528;&#x4E8E;&#x67D0;&#x4E9B;&#x9700;&#x8981;&#x53C2;&#x8003;&#x7B54;&#x6848;&#x7684;&#x6307;&#x6807;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># &#x8BC4;&#x4F30;</span></span><br><span class="line">results = evaluate([test_case], [relevancy, recall, precision])</span><br><span class="line"><span class="built_in">print</span>(results)</span><br></pre></td></tr></table></figure>
+<p>&#x4ECE; val.xlsx &#x4E2D;&#x968F;&#x673A;&#x62BD;&#x53D6;&#x4E00;&#x884C;&#xFF0C;&#x53EF;&#x4EE5;&#x5F97;&#x5230;&#x6807;&#x51C6;&#x56DE;&#x7B54; gold_answer &#x548C; &#x95EE;&#x9898; question &#x3002;</p>
+<p>&#x5C06;&#x95EE;&#x9898;&#x8F93;&#x5165;&#x7ED9; RAG &#xFF0C;&#x8BA9; RAG &#x5728;&#x77E5;&#x8BC6;&#x5E93;&#x4E2D;&#x8FDB;&#x884C;&#x68C0;&#x7D22;&#xFF0C;&#x5E76;&#x5C06;&#x68C0;&#x7D22;&#x5230;&#x7684;&#x8D44;&#x6599;&#x548C;&#x95EE;&#x9898;&#x8F93;&#x5165;&#x5927;&#x6A21;&#x578B;&#xFF0C;&#x5F97;&#x5230;&#x5927;&#x6A21;&#x578B;&#x7684;&#x56DE;&#x7B54;&#x3002;</p>
+<p>&#x5C06;&#x68C0;&#x7D22;&#x5230;&#x7684;&#x8D44;&#x6599;&#x3001;&#x95EE;&#x9898;&#x3001;&#x56DE;&#x7B54;&#x548C;&#x6807;&#x51C6;&#x56DE;&#x7B54;&#x8F93;&#x5165;&#x5230; LLMTestCase &#x4E2D;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x8FDB;&#x884C;&#x8BC4;&#x4F30;&#x3002;</p>
+<p>&#x5176;&#x4E2D;&#xFF0C; RAG &#x76F8;&#x5173;&#x7684;&#x4EE3;&#x7801;&#x5E76;&#x6CA1;&#x6709;&#x7ED9;&#x51FA;&#x3002;</p>
+<p>&#x4E0D;&#x8FC7;&#xFF0C;&#x901A;&#x8FC7;&#x8FD9;&#x6BB5;&#x4EE3;&#x7801;&#x5BB9;&#x6613;&#x7406;&#x89E3;&#x3002;</p>
+<p>&#x9700;&#x8981;&#x6CE8;&#x610F;&#xFF0C;&#x5728;&#x6784;&#x5EFA; ContextualRelevancyMetric &#x7B49;&#x6307;&#x6807;&#x5B9E;&#x4F8B;&#x65F6;&#xFF0C;&#x9700;&#x8981;&#x8F93;&#x5165;&#x5728;&#x53C2;&#x6570;&#x4E2D;&#x8F93;&#x5165;&#x81EA;&#x5DF1;&#x5199;&#x7684;&#x81EA;&#x5B9A;&#x4E49;&#x5927;&#x6A21;&#x578B;&#x3002;</p>
+<p>&#x5199;&#x597D;&#x8FD9;&#x6BB5;&#x4EE3;&#x7801;&#x4E2D;&#xFF0C;&#x53EF;&#x4EE5;&#x5728;&#x547D;&#x4EE4;&#x884C;&#x4E2D;&#x8FD0;&#x884C;&#x6307;&#x4EE4;&#x8FDB;&#x884C;&#x8BC4;&#x4F30;&#x3002;</p>
+<p><code>deepeval test run test_xxx.py</code></p>
+<p>&#x6CE8;&#x610F;&#xFF1A; py &#x6587;&#x4EF6;&#x5FC5;&#x987B;&#x4EE5; test_ &#x4E3A;&#x524D;&#x7F00;&#xFF0C;&#x8FD9;&#x6837;&#x624D;&#x80FD;&#x88AB; deepeval&#x8BC6;&#x522B;&#x3002;</p>
+<p>&#x8FD0;&#x884C;&#x540E;&#xFF0C;&#x7B49;&#x5F85;&#x4E00;&#x6BB5;&#x65F6;&#x95F4;&#xFF0C;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x7ED3;&#x679C;&#x3002;</p>
+<h1><span id="&#x8BC4;&#x4F30;&#x751F;&#x6210;">&#x8BC4;&#x4F30;&#x751F;&#x6210;</span><a href="#&#x8BC4;&#x4F30;&#x751F;&#x6210;" class="header-anchor">#</a></h1>
+<p>&#x8BC4;&#x4F30;&#x751F;&#x6210;&#x5C31;&#x662F;&#x8BC4;&#x4F30;&#x5927;&#x6A21;&#x578B;&#x7684;&#x56DE;&#x7B54;&#x597D;&#x4E0D;&#x597D;&#x3002;</p>
+<p>&#x4ECE;&#x4E24;&#x4E2A;&#x65B9;&#x9762;&#x8FDB;&#x884C;&#x8BC4;&#x4F30;&#x3002;</p>
+<p>Faithfulness&#xFF08;&#x5FE0;&#x5B9E;&#x5EA6;&#xFF09;&#xFF1A;&#x751F;&#x6210;&#x5668;&#x4EA7;&#x751F;&#x7684;&#x7B54;&#x6848;&#x662F;&#x5426;&#x5B8C;&#x5168;&#x57FA;&#x4E8E;&#x68C0;&#x7D22;&#x5230;&#x7684;&#x6587;&#x6863;&#xFF0C;&#x6CA1;&#x6709;&#x7F16;&#x9020;&#x6216;&#x6B6A;&#x66F2;&#x4FE1;&#x606F;&#x3002;</p>
+<p>Answer Relevancy&#xFF08;&#x7B54;&#x6848;&#x76F8;&#x5173;&#x6027;&#xFF09;&#xFF1A;&#x751F;&#x6210;&#x5668;&#x7ED9;&#x51FA;&#x7684;&#x7B54;&#x6848;&#x662F;&#x5426;&#x5207;&#x9898;&#xFF0C;&#x6709;&#x6CA1;&#x6709;&#x7B54;&#x975E;&#x6240;&#x95EE;&#x3002;</p>
+<p>&#x901A;&#x8FC7;&#x4E0B;&#x9762;&#x8FD9;&#x6BB5;&#x4EE3;&#x7801;&#x53EF;&#x4EE5;&#x8FDB;&#x884C;&#x8BC4;&#x4F30;&#x751F;&#x6210;&#x3002;</p>
+<p>&#x60C5;&#x51B5;&#x548C;&#x8BC4;&#x4F30;&#x68C0;&#x7D22;&#x7C7B;&#x4F3C;&#xFF0C;&#x5C31;&#x4E0D;&#x591A;&#x8BF4;&#x4E86;&#x3002;</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> deepeval.test_case <span class="keyword">import</span> LLMTestCase</span><br><span class="line"><span class="keyword">from</span> deepeval <span class="keyword">import</span> evaluate</span><br><span class="line"><span class="keyword">from</span> rag <span class="keyword">import</span> RagService</span><br><span class="line"><span class="keyword">import</span> config_data</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> chat_tongyi_deepval <span class="keyword">import</span> Tongyi</span><br><span class="line"><span class="keyword">from</span> deepeval.metrics <span class="keyword">import</span> AnswerRelevancyMetric, FaithfulnessMetric</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">df = pd.read_excel(<span class="string">&quot;./data/val.xlsx&quot;</span>)</span><br><span class="line">sample_df = df.sample(n=<span class="built_in">min</span>(<span class="number">1</span>, <span class="built_in">len</span>(df)), random_state=<span class="number">42</span>)</span><br><span class="line">gold_answer = sample_df[<span class="string">&quot;Answer&quot;</span>].astype(<span class="built_in">str</span>).iloc[<span class="number">0</span>]</span><br><span class="line">question = sample_df[<span class="string">&quot;Question&quot;</span>].astype(<span class="built_in">str</span>).iloc[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># &#x521D;&#x59CB;&#x5316;&#x6A21;&#x578B;&#x548C;&#x6307;&#x6807;</span></span><br><span class="line">model = Tongyi()</span><br><span class="line">answer_relevancy = AnswerRelevancyMetric(model=model)</span><br><span class="line">faithfulness = FaithfulnessMetric(model=model)</span><br><span class="line"></span><br><span class="line"><span class="comment"># &#x521D;&#x59CB;&#x5316; RAG &#x670D;&#x52A1;</span></span><br><span class="line">rag = RagService(collection_name=config_data.evaluate_collection_name, per_dir=config_data.evaluate_dir)</span><br><span class="line"></span><br><span class="line"><span class="comment"># &#x68C0;&#x7D22;&#x548C;&#x751F;&#x6210;</span></span><br><span class="line">retrieved_docs = rag.vector_service.vector_store.similarity_search(query=question, k=config_data.similarity_threshold)</span><br><span class="line">retrieval_contexts = [doc.page_content <span class="keyword">for</span> doc <span class="keyword">in</span> retrieved_docs]</span><br><span class="line">response = rag.test_chain.invoke({<span class="string">&quot;input&quot;</span>: question})</span><br><span class="line"></span><br><span class="line"><span class="comment"># &#x6784;&#x5EFA;&#x5355;&#x4E2A;&#x6D4B;&#x8BD5;&#x7528;&#x4F8B;</span></span><br><span class="line">test_case = LLMTestCase(</span><br><span class="line">    <span class="built_in">input</span>=question,</span><br><span class="line">    actual_output=<span class="built_in">str</span>(response),</span><br><span class="line">    retrieval_context=retrieval_contexts,</span><br><span class="line">    expected_output=gold_answer   <span class="comment"># &#x7528;&#x4E8E;&#x67D0;&#x4E9B;&#x9700;&#x8981;&#x53C2;&#x8003;&#x7B54;&#x6848;&#x7684;&#x6307;&#x6807;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># &#x8BC4;&#x4F30;</span></span><br><span class="line">results = evaluate([test_case], [answer_relevancy, faithfulness])</span><br><span class="line"><span class="built_in">print</span>(results)</span><br></pre></td></tr></table></figure>
+<h1><span id="&#x53C2;&#x8003;&#x5185;&#x5BB9;">&#x53C2;&#x8003;&#x5185;&#x5BB9;</span><a href="#&#x53C2;&#x8003;&#x5185;&#x5BB9;" class="header-anchor">#</a></h1>
+<p><a target="_blank" rel="noopener" href="https://deepeval.com/docs/getting-started">https://deepeval.com/docs/getting-started</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2026/04/12/2026%E5%B9%B44%E6%9C%8812%E6%97%A5/" rel="prev" title="2026年4月12日">
+      <i class="fa fa-chevron-left"></i> 2026年4月12日
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">自定义大模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">评估检索</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">评估生成</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text">参考内容</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ITTT"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">ITTT</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/originone494" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;originone494" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:2531293780@qq.com" title="E-Mail → mailto:2531293780@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+      <div>
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=450 src="//music.163.com/outchain/player?type=0&id=7668809991&auto=0&height=430"></iframe>
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ITTT</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">156k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">4:43</span>
+</div>
+
+<!-- 网站运行时间的设置 -->
+<span id="timeDate">载入天数...</span>
+<span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("12/29/2025 17:04:14"); //此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒.";
+    }
+setInterval("createtime()",250);
+</script>
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+
+<script src="/js/fix-toc.js"></script>
+
+
+<script async src="/js/mouse_click.js"></script>
+
+
+    </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
